@@ -1,4 +1,9 @@
 {
     "deno.enable": false,
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#332C27",
+        "titleBar.activeBackground": "#483D36",
+        "titleBar.activeForeground": "#FCFCFB"
+    }
 }
