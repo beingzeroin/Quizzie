@@ -1,0 +1,15 @@
+div(classname='history-section')
+  | {quizzes.length === 0 ?
+  p(style='{{' textalign:='' 'center'='' }}='') You have not created any quizzes yet!
+  | 					:
+  gridlist(cols='{getCols()}' classname='grid-list')
+    | {quizzes.map((quiz) => (
+    gridlisttile(key='{quiz._id}' classname='quiz-tile')
+      img(src='../CC LOGO-01.svg')
+      gridlisttilebar(title='{quiz.quizName}' subtitle='{`By:' you`}='' actionicon='{' <tooltip='')
+        iconbutton(aria-label='{`edit' ${quiz.quizname}`}='' component='{Link}' to='{`/editQuiz/${quiz._id}`}')
+          settings(classname='enroll-icon')
+        | 									}
+        | 								/>
+    | 						))}
+  | 				}

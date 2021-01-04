@@ -1,0 +1,15 @@
+container(classname='login-page')
+  div(classname='login-form')
+    typography(variant='h3' color='primary' classname='login-head')
+      | Update Profile
+    br
+    | 				{error === true ? (
+    alert(severity='error')
+      | There was some error! Please try again...
+    | 				) : null}
+    form(classname='form')
+      textinput#name(error='{nameError}' helpertext='{nameError' ?='' "name='' cannot='' be='' empty"='' :='' null}='' label='Name' type='text' classname='form-input' variant='outlined' value='{name}' onchange='{handleNameChange}' onkeypress='{keyPress}')
+      br
+      textinput#phone-number(error='{numberError}' helpertext='{numberError' ?='' "invalid='' phone='' number"='' :='' null}='' type='text' label='Phone Number' classname='form-input' variant='outlined' value='{phoneNumber}' onchange='{handlePhoneNumberChange}' onkeypress='{keyPress}')
+    button(classname='login-btn' onclick='{handleSubmit}')
+      | Update

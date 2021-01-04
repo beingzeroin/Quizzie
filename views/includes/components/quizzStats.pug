@@ -1,0 +1,11 @@
+container(classname='result-page')
+  div(classname='result-head')
+    typography(variant='h4' classname='result-title') Stats
+  div(classname='charts-container' style='{{paddingBottom:' '3%'}}='')
+    div(classname='pie-chart' style='{{marginBottom:' '3%'}}='')
+      pie(data='{{' datasets:='' [{data:='' markspiedata["data"],='' backgroundcolor:='' markspiedata["colors"]}],='' labels:='' markspiedata["labels"]='' }}='' width='{300}' height='{300}' options='{{' maintainaspectratio:='' false,='' responsive:='' true,='' title:='' {='' display:='' text:='' "marks='' obtained",='' fontsize:='' 16='' }}}='')
+    grid(container='' spacing='{0}')
+      grid(item='' xs='{12}' sm='{6}')
+        bar(width='{300}' height='{300}' data='{{' datasets:='' [{='' data:='' [highlowgraph["highest"],='' highlowgraph["average"],='' highlowgraph["lowest"]],='' backgroundcolor:='' ["green",='' "yellow",='' "red"],='' barthickness:='' 70='' }],='' labels:='' ["highest",='' "average",='' "lowest"]='' }}='' options='{{' legend:='' {display:='' false},='' maintainaspectratio:='' false,='' title:='' {='' display:='' true,='' text:='' "highest='' average='' lowest",='' fontsize:='' 16='' },='' scales:='' yaxes:='' [{ticks:='' {beginatzero:='' true}}]}='')
+      grid(item='' xs='{12}' sm='{6}')
+        line(width='{300}' height='{300}' data='{{' datasets:='' [{='' data:='' linegraphdata["data"],='' backgroundcolor:='' "rgba(255,='' 0,='' 255,='' 0.3)",='' bordercolor:='' "rgb(255,='' 255)"='' }],='' labels:='' linegraphdata["labels"]='' }}='' options='{{' maintainaspectratio:='' false,='' title:='' {='' display:='' true,='' text:='' "time='' taken='' (in='' minutes)",='' fontsize:='' 16='' },='' legend:='' {display:='' false}='')
