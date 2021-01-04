@@ -1,67 +1,11 @@
-<Container className="result-page">
-			<div className="result-head">
-				<Typography variant="h4" className="result-title">Stats</Typography>
-			</div>
-			<div className="charts-container" style={{paddingBottom: '3%'}}>
-				<div className="pie-chart" style={{marginBottom: '3%'}}>
-					<Pie data={{
-						datasets: [{data: marksPieData["data"], backgroundColor: marksPieData["colors"]}], 
-						labels: marksPieData["labels"]
-					}} 
-					width={300} height={300} 
-					options={{
-						maintainAspectRatio: false, 
-						responsive: true, 
-						title: {
-							display: true,
-							text: "Marks Obtained",
-							fontSize: 16
-						}}}/>
-				</div>
-				<Grid container spacing={0}>
-					<Grid item xs={12} sm={6}>
-						<Bar width={300} height={300}
-							data={{
-								datasets: [{
-									data: [highLowGraph["highest"], highLowGraph["average"], highLowGraph["lowest"]],
-									backgroundColor: ["green", "yellow", "red"],
-									barThickness: 70
-								}],
-								labels: ["Highest", "Average", "Lowest"]
-							}}
-							options={{
-								legend: {display: false},
-								maintainAspectRatio: false,
-								title: {
-									display: true,
-									text: "Highest/Average/Lowest",
-									fontSize: 16
-								},
-								scales: { yAxes: [{ticks: {beginAtZero: true}}]}
-							}} />
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						<Line width={300} height={300}
-							data={{
-								datasets: [{
-									data: lineGraphData["data"],
-									backgroundColor: "rgba(255, 0, 255, 0.3)",
-									borderColor: "rgb(255, 0, 255)"
-								}],
-								labels: lineGraphData["labels"]
-							}}
-
-							options={{
-								maintainAspectRatio: false,
-								title: {
-									display: true,
-									text: "Time taken (in minutes)",
-									fontSize: 16
-								},
-								legend: {display: false}
-							}} />
-					</Grid>
-				</Grid>
-			</div>
-		</Container>
-	
+container(classname='result-page')
+  div(classname='result-head')
+    typography(variant='h4' classname='result-title') Stats
+  div(classname='charts-container' style='{{paddingBottom:' '3%'}}='')
+    div(classname='pie-chart' style='{{marginBottom:' '3%'}}='')
+      pie(data='{{' datasets:='' [{data:='' markspiedata["data"],='' backgroundcolor:='' markspiedata["colors"]}],='' labels:='' markspiedata["labels"]='' }}='' width='{300}' height='{300}' options='{{' maintainaspectratio:='' false,='' responsive:='' true,='' title:='' {='' display:='' text:='' "marks='' obtained",='' fontsize:='' 16='' }}}='')
+    grid(container='' spacing='{0}')
+      grid(item='' xs='{12}' sm='{6}')
+        bar(width='{300}' height='{300}' data='{{' datasets:='' [{='' data:='' [highlowgraph["highest"],='' highlowgraph["average"],='' highlowgraph["lowest"]],='' backgroundcolor:='' ["green",='' "yellow",='' "red"],='' barthickness:='' 70='' }],='' labels:='' ["highest",='' "average",='' "lowest"]='' }}='' options='{{' legend:='' {display:='' false},='' maintainaspectratio:='' false,='' title:='' {='' display:='' true,='' text:='' "highest='' average='' lowest",='' fontsize:='' 16='' },='' scales:='' yaxes:='' [{ticks:='' {beginatzero:='' true}}]}='')
+      grid(item='' xs='{12}' sm='{6}')
+        line(width='{300}' height='{300}' data='{{' datasets:='' [{='' data:='' linegraphdata["data"],='' backgroundcolor:='' "rgba(255,='' 0,='' 255,='' 0.3)",='' bordercolor:='' "rgb(255,='' 255)"='' }],='' labels:='' linegraphdata["labels"]='' }}='' options='{{' maintainaspectratio:='' false,='' title:='' {='' display:='' true,='' text:='' "time='' taken='' (in='' minutes)",='' fontsize:='' 16='' },='' legend:='' {display:='' false}='')
