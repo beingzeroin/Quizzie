@@ -1,0 +1,22 @@
+container(classname='create-quiz-page')
+  div(classname='create-form')
+    typography(variant='h4' classname='create-head')
+      | Quiz Details
+    div(classname='create-form-inputs')
+      textinput(variant='outlined' label='Quiz Name' value='{quizName}' onchange='{onQuizNameChange}' name='Quiz Name' classname='form-input')
+        muipickersutilsprovider(utils='{DateFnsUtils}')
+          grid(classname='date-time-select' container='' spacing='{3}')
+            grid(item='' xs='{12}' sm='{6}')
+              keyboarddatepicker(disabletoolbar='' variant='inline' format='MM/dd/yyyy' margin='normal' label='Select Quiz Date' value='{quizDate}' onchange='{handleDateChange}')
+            grid(item='' xs='{12}' sm='{6}')
+              keyboardtimepicker(margin='normal' label='Select Quiz Start Time' value='{quizDate}' onchange='{handleDateChange}')
+        p(style='{{' margintop:='' "5%",='' marginbottom:='' "5%"='' }}='')
+          | Quiz Time (in minutes):
+        slider(defaultvalue='{5}' aria-labelledby='quiz time slider' step='{5}' min='{5}' max='{60}' valuelabeldisplay='on' marks='' classname='time-slider' value='{duration}' onchange='{handleTimeChange}')
+          p(style='{{' color:='' "#777"='' }}='') Select quiz type: 
+          tooltip(title='Cannot change quiz type')
+            select(disabled='' value='{type}' onchange='{onTypeChange}' classname='type-select')
+              | Public
+              | Private
+          button(classname='login-btn create-btn' onclick='{handleSubmit}')
+            | Update Quiz

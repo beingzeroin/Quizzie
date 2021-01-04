@@ -1,0 +1,23 @@
+container(classname='dashboard-page')
+  typography(variant='h4' classname='dash-head') {userType === "user"? "Dashboard": "Organizer's Dashboard"}
+  div(classname='dash-section')
+    appbar(position='static' color='default' classname='bg-white tab-bar')
+      tabs(value='{tab}' onchange='{handleTabChange}' indicatorcolor='primary' textcolor='primary' variant='fullWidth' aria-label='full width tabs dashboard')
+        tab(label='Quizzes')
+          tab(label='{userType' =='=' "admin"?='' "your='' quizzes":='' "history"}='')
+            tab(label='Profile')
+    tabpanel(value='{tab}' index='{0}')
+      quizzessection(type='{userType}' profile='{profile}' refresh='{setRefresh}/')
+    tabpanel(value='{tab}' index='{1}')
+      historysection(profile='{profile}' type='{userType}/')
+    tabpanel(value='{tab}' index='{2}')
+      profilesection(profile='{profile}' type='{userType}/')
+  snackbar(open='{blockSnack}' autohideduration='{5000}' onclose='{()' =='')
+    | setBlockSnack(false)}>
+    alert(variant='filled' severity='error' onclose='{()' =='')  setBlockSnack(false)}>You violated the quiz rules!
+  snackbar(open='{timeUpSnack}' autohideduration='{5000}' onclose='{()' =='')
+    | setTimeUpSnack(false)}>
+    alert(variant='filled' severity='error' onclose='{()' =='')  setTimeUpSnack(false)}>Time's Up! Your quiz was not submitted!
+  snackbar(open='{emptySnack}' autohideduration='{5000}' onclose='{()' =='')
+    | setEmptySnack(false)}>
+    alert(variant='filled' severity='error' onclose='{()' =='')  setEmptySnack(false)}>There are no questions in the quiz.

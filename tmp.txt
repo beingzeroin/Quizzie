@@ -1,1 +1,3 @@
-local
+app.engine('pug', require('pug').__express)
+app.set('view engine', 'pug');
+app.set('views','/Frontend/src/pages/dashboard');

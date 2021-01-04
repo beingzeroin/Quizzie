@@ -1,0 +1,13 @@
+div(classname='owner-quizzes')
+  | {quizzes.length === 0? 
+  p No quizzes available now!
+  | :
+  list(aria-label='quiz display' classname='owner-quiz-list')
+    | {quizzes.map(quiz => (
+    listitem(button='' classname='owner-quiz-item' component='{Link}' to='{`/ownerQuizDetails/${quiz._id}`}' key='{quiz._id}')
+      listitemtext(primary='{quiz.quizName}' secondary='{`By:' ${quiz.adminid.name}`}='')
+        listitemsecondaryaction
+          iconbutton(edge='end' aria-label='details' component='{Link}' to='{`/ownerQuizDetails/${quiz._id}`}')
+            arrowforwardios
+    | 				))}
+  |  }

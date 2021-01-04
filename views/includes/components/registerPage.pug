@@ -1,0 +1,50 @@
+container(classname='login-page')
+  div(classname='login-form')
+    typography(variant='h3' color='primary' classname='login-head signup-text')
+      | {type === "user"
+      | ? "Join the force!"
+      | : type === "organizer"
+      | ? "Organizer Sign Up"
+      | : "Owner Signup"}
+    br
+    | 				{signedUp === true ? (
+    alert(severity='success' color='warning')
+      | Succesfully Signed Up! Redirecting...
+    | 				) : null}
+    | 				{error === true ? (
+    alert(severity='error' color='error')
+      | {errorText}
+    | 				) : null}
+    | 				{type !== "owner" ? (
+    a(href='{' type='==' "user"='' ?='' "https:='' quizzie-api.herokuapp.com='' auth='' google"='' :='' admin='' }='' classname='google-link')
+      div(classname='google-btn')
+        div(classname='google-icon-wrapper')
+          img(classname='google-icon' src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
+        p(classname='btn-text')
+          b Sign up with Google
+    | 				) : null}
+    form(classname='form')
+      textinput#name(error='{' namechanged='' ?='' nameerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' nameerror='' label='Name' type='text' classname='form-input' variant='outlined' value='{name}' onchange='{handleNameChange}' onkeypress='{keyPress}')
+      textinput#phone-number(error='{' phonenumberchanged='' ?='' phonenumbererror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' phonenumbererror='' label='Phone Number' type='text' classname='form-input' variant='outlined' value='{phoneNumber}' onchange='{handlePhoneChange}' onkeypress='{keyPress}')
+      | 					{type === "owner" ? (
+      textinput#board-position(error='{' boardpositionchanged='' ?='' boardpositionerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' boardpositionerror='' label='Board Position' type='text' classname='form-input' variant='outlined' value='{boardPosition}' onchange='{handleBoardPositionChange}' onkeypress='{keyPress}')
+      | 					) : null}
+      textinput#email(error='{' emailchanged='' ?='' emailerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' emailerror='' label='Email' type='email' classname='form-input' variant='outlined' value='{email}' onchange='{handleEmailChange}' onkeypress='{keyPress}')
+      textinput#password(error='{' passwordchanged='' ?='' passworderror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' passworderror='' type='{showPassword' "text"='' "password"}='' label='Password' classname='form-input' variant='outlined' value='{password}' onchange='{handlePasswordChange}' onkeypress='{keyPress}' inputprops='{{' endadornment:='' (='' <inputadornment='' position='end')
+        iconbutton(aria-label='show password' onclick='{togglePasswordVisibility}' edge='end')
+          | {showPassword ? (
+          visibility
+            | ) : (
+            visibilityoff
+              | )}
+        | 							),
+        | 						}}
+        | 					>
+      | 					{type === "owner" ? (
+      textinput#owner-code(error='{' codechanged='' ?='' codeerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' codeerror='' label='Secret Code' type='text' classname='form-input' variant='outlined' value='{code}' onchange='{handleCodeChange}' onkeypress='{keyPress}')
+      | 					) : null}
+    button(classname='login-btn signup-btn' onclick='{handleSubmit}')
+      | Sign Up
+    | 				{/* 
+    link(to='/registerOrganiser' classname='link register-link')
+    | Are you an Organiser? Go to the organiser signup! */}

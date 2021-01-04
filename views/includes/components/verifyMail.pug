@@ -1,0 +1,18 @@
+container(classname='login-page')
+  div(classname='login-form')
+    typography(variant='h3' color='primary' classname='login-head forgot-head')
+      | Verify E-mail
+    br
+    | 					{!error ? (
+    alert(severity='info' color='info')
+      | A verification email was sent to {email}
+    | 					) : null}
+    | 					{error ? (
+    alert(severity='error' color='error')
+      | Verification mail could not be sent. Please try
+      | again...
+    | 					) : null}
+    form(classname='form')
+      textinput#verification-code(error='{' codechanged='' ?='' codeerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' codeerror='' label='Verification Code' type='text' classname='form-input' variant='outlined' value='{code}' onchange='{handleCodeChange}')
+        button(classname='login-btn' onclick='{handleSubmit}')
+          | Verify

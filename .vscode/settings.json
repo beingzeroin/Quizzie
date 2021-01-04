@@ -2,8 +2,20 @@
     "deno.enable": false,
     "liveServer.settings.port": 5501,
     "workbench.colorCustomizations": {
-        "activityBar.background": "#15322D",
-        "titleBar.activeBackground": "#1D463F",
-        "titleBar.activeForeground": "#F7FCFB"
-    }
+        "activityBar.background": "#15322e",
+        "titleBar.activeBackground": "#060e0d",
+        "titleBar.activeForeground": "#e7e7e7",
+        "activityBar.activeBackground": "#15322e",
+        "activityBar.activeBorder": "#91429d",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#91429d",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "statusBar.background": "#060e0d",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#15322e",
+        "titleBar.inactiveBackground": "#060e0d99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#060e0d"
 }

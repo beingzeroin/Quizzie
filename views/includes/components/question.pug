@@ -1,0 +1,12 @@
+grid(item='' xs='{10}' md='{8}' lg='{7}' style='{{margin:' 0,='' padding:='' '2%',='' backgroundcolor:='' '#111',='' borderbottom:='' '5px='' solid='' #222',='' minheight:='' '50vh'}}='')
+  formcontrol(style='{{margin:' 'auto',='' width:"100%"}}='' component='fieldset')
+    formlabel(classname='label' component='legend') {props.id}
+    radiogroup(aria-label='correct-choice' value='{value}' onchange='{handleChange}')
+      formcontrollabel(value='op1' control='{<Radio' classname='radio')
+        | } label="Option 1" style={{margin: 0}} />
+        formcontrollabel(value='op2' control='{<Radio' classname='radio')
+          | } label="Option 2" style={{margin: 0}} />
+          formcontrollabel(value='op3' control='{<Radio' classname='radio')
+            | } label="Option 3" style={{margin: 0}} />
+            formcontrollabel(value='op4' control='{<Radio' classname='radio')
+              | } label="Option 4" style={{margin: 0}} />

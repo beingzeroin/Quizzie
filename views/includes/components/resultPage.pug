@@ -1,0 +1,33 @@
+container(classname='result-page')
+  div(classname='result-head')
+    typography(variant='h4' classname='result-title') Results
+  div(classname='result-quiz-info')
+    typography(variant='h5')
+      span(classname='profile-param') Quiz:
+      strong {name}
+    typography(variant='h5')
+      span(classname='profile-param') Scored:
+      strong {marks}
+      |  out of 
+      strong {responses.length}
+  div(classname='result-responses')
+    div(classname='result-response-title')
+      typography(variant='h5') Responses
+    div(classname='result-responses-list')
+      | {responses.map((response) => (
+      expansionpanel(elevation='{3}' classname='expansion' key='{response.quesId}')
+        expansionpanelsummary(classname='question-response' expandicon='{<ExpandMore')
+          | }
+          | aria-controls="question-content"
+          | aria-label="Expand"
+          | >
+          typography(classname='question-label') {response.description} {resIcon(response)}
+        expansionpaneldetails
+          list(component='nav' classname='options-display')
+            | {response.options.map((option) => (
+            listitem(button='' key='{option._id}')
+              listitemicon
+                adjust(style='{{' color:='' response.correctanswer='==' option.text='' ?='' 'green'='' :='' (response.selected='==' option.text?='' 'red':='' 'black')='' }}='')
+              listitemtext(style='{{' color:='' response.correctanswer='==' option.text='' ?='' 'green'='' :='' (response.selected='==' option.text?='' 'red':='' 'black')='' }}='' primary='{option.text}')
+            | 									))}
+      | 					))}

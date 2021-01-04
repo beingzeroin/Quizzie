@@ -1,0 +1,48 @@
+container(classname='login-page')
+  div(classname='login-form')
+    typography(variant='h3' color='primary' classname='login-head')
+      | {type === "user"
+      | ? "Login Now"
+      | : type === "organizer"
+      | ? "Organizer Login"
+      | : "Owner Login"}
+    br
+    | 				{didLogin === false ? (
+    alert(severity='error') {errorText}
+    | 				) : null}
+    | 				{notVerified ? (
+    alert(severity='error')
+      | Your email is not verified.
+      link(classname='link' style='{{' color:='' "red"='' }}='' to='{{' pathname:='' `='' verify='' ${type}`,='' state:='' {='' email:='' verifymail,='' sendcode:='' true,='' },='')
+      | 							Click here to verify...
+    | 				) : null}
+    | 				{type !== "owner" ? (
+    a(href='{' type='==' "user"='' ?='' "https:='' quizzie-api.herokuapp.com='' auth='' google"='' :='' admin='' }='' classname='google-link')
+      div(classname='google-btn')
+        div(classname='google-icon-wrapper')
+          img(classname='google-icon' src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
+        p(classname='btn-text')
+          b Sign in with Google
+    | 				) : null}
+    form(classname='form')
+      textinput#email(error='{' emailchanged='' ?='' emailerror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' emailerror='' label='Email' type='email' classname='form-input' variant='outlined' value='{email}' onchange='{handleEmailChange}' onkeypress='{keyPress}')
+      br
+      textinput#password(error='{' passwordchanged='' ?='' passworderror.length='==' 0='' false='' :='' true='' }='' helpertext='{' null='' passworderror='' type='{showPassword' "text"='' "password"}='' label='Password' classname='form-input' variant='outlined' value='{password}' onchange='{handlePasswordChange}' onkeypress='{keyPress}' inputprops='{{' endadornment:='' (='' <inputadornment='' position='end')
+        iconbutton(aria-label='show password' onclick='{togglePasswordVisibility}' edge='end')
+          | {showPassword ? (
+          visibility
+            | ) : (
+            visibilityoff
+              | )}
+        | 							),
+        | 						}}
+        | 					>
+    div(classname='forgot-section')
+      | {type === "owner" ? null : (
+      link(to='{`/forgotPassword/${type}`}' classname='link forgot-pass')
+      | 							Forgot your password?
+      | 					)}
+    button(classname='login-btn' onclick='{handleSubmit}')
+      | Login
+    link(to='{`/register/${type}`}' classname='link register-link')
+    | 					Don't have an account? Join the Quizzie now!

@@ -1,0 +1,9 @@
+div(classname='owner-quizzes')
+  list(aria-label='users-display' classname='owner-quiz-list')
+    | {users.map((user) => (
+    listitem(button='' key='{user._id}')
+      listitemtext(primary='{user.email}' secondary='{user.name}')
+        listitemsecondaryaction
+          iconbutton(edge='end' aria-label='details')
+            arrowforwardios
+    | 				))}
