@@ -14,6 +14,7 @@ const User = require("../models/user");
 const Question = require("../models/question");
 const redis = require("redis");
 
+const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
 const checkAuthAdmin = require("../middleware/checkAuthAdmin");
@@ -27,45 +28,42 @@ const router = express.Router();
 
 router.use(cookieParser());
 
-////Create and Innitialise the quiz
+////Create and Innitialise the quiz  ----DONE
 router.post(
     "/createQuiz",
-    checkAuth,
-    checkAuthAdmin,
-    verifyURL,
     async(req, res, next) => {
-        if (!req.body.captcha) {
-            return res.status(400).json({
-                message: "No recaptcha token",
-            });
-        }
-        var flag = 0;
-        console.log(req.verifyURL)
-        request(req.verifyURL, (err, response, body) => {
-            body = JSON.parse(body);
-            console.log(err)
-            console.log(body)
-            try {
-                if (!body.success || body.score < 0.4) {
-                    flag = 1
-                    return res.status(401).json({
-                        message: "Something went wrong",
-                    });
-                }
-                if (err) {
-                    return res.status(401).json({
-                        message: err.toString(),
-                    });
-                }
-            } catch (err) {
-                return res.status(500).json({
-                    error: err
-                })
-            }
-        });
-        console.log(flag)
+        // if (!req.body.captcha) {
+        //     return res.status(400).json({
+        //         message: "No recaptcha token",
+        //     });
+        // }
+        // var flag = 0;
+        // console.log(req.verifyURL)
+        // request(req.verifyURL, (err, response, body) => {
+        //     body = JSON.parse(body);
+        //     console.log(err)
+        //     console.log(body)
+        //     try {
+        //         if (!body.success || body.score < 0.4) {
+        //             flag = 1
+        //             return res.status(401).json({
+        //                 message: "Something went wrong",
+        //             });
+        //         }
+        //         if (err) {
+        //             return res.status(401).json({
+        //                 message: err.toString(),
+        //             });
+        //         }
+        //     } catch (err) {
+        //         return res.status(500).json({
+        //             error: err
+        //         })
+        //     }
+        // });
+        // console.log(flag)
         if (req.body.quizType.toLowerCase() == "private") {
-            const quiz = new Quiz({
+            const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
                 adminId: req.user.userId,
@@ -74,27 +72,45 @@ router.post(
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
-            });
-            quiz
-                .save()
-                .then(async(result) => {
-                    const quizId = result._id;
-                    Admin.updateOne({ _id: req.user.userId }, { $push: { quizzes: { quizId } } })
-                        .then(async(result1) => {
-                            res.status(201).json({
-                                message: "created",
-                                result,
-                            });
+            };
+            item.createitem(quiz, Quiz, (err, result) => {
+                    if (err) {
+                        res.status(400).json({ error: "err" });
+                    } else {
+                        const quizId = result._id;
+                        item.updateItemField({ _id: req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
+                            if (err) {
+                                res.status(400).json({ error: "err1" });
+
+                            } else {
+                                res.status(201).json({
+                                    message: "created",
+                                    result,
+                                });
+                            }
                         })
-                        .catch(async(err) => {
-                            res.status(400).json({ error: "err1" });
-                        });
+                    }
                 })
-                .catch((err) => {
-                    res.status(400).json({ error: "err" });
-                });
+                // quiz
+                //     .save()
+                //     .then(async(result) => {
+                //         const quizId = result._id;
+                //         Admin.updateOne({ _id: req.user.userId }, { $push: { quizzes: { quizId } } })
+                //             .then(async(result1) => {
+                //                 res.status(201).json({
+                //                     message: "created",
+                //                     result,
+                //                 });
+                //             })
+                //             .catch(async(err) => {
+                //                 res.status(400).json({ error: "err1" });
+                //             });
+                //     })
+                //     .catch((err) => {
+                //         res.status(400).json({ error: "err" });
+                //     });
         } else {
-            const quiz = new Quiz({
+            const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
                 adminId: req.user.userId,
@@ -103,26 +119,45 @@ router.post(
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
-            });
-            quiz
-                .save()
-                .then(async(result) => {
-                    const quizId = result._id;
-                    Admin.updateOne({ _id: req.user.userId }, { $push: { quizzes: { quizId } } })
-                        .then(async(result1) => {
-                            const date = new Date(Number(result.scheduledFor));
-                            res.status(201).json({
-                                message: "created",
-                                result,
-                            });
+            };
+            item.createitem(quiz, Quiz, (err, result) => {
+                    if (err) {
+                        res.status(400).json({ error: "err" });
+                    } else {
+
+                        const quizId = result._id;
+                        item.updateItemField({ _id: req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
+                            if (err) {
+                                res.status(400).json({ error: "err1" });
+                            } else {
+                                const date = new Date(Number(result.scheduledFor));
+                                res.status(201).json({
+                                    message: "created",
+                                    result,
+                                });
+                            }
                         })
-                        .catch(async(err) => {
-                            res.status(400).json({ error: "err1" });
-                        });
+                    }
                 })
-                .catch((err) => {
-                    res.status(400).json({ error: "err" });
-                });
+                // quiz
+                //     .save()
+                //     .then(async(result) => {
+                //         const quizId = result._id;
+                //         Admin.updateOne({ _id: req.user.userId }, { $push: { quizzes: { quizId } } })
+                //             .then(async(result1) => {
+                //                 const date = new Date(Number(result.scheduledFor));
+                //                 res.status(201).json({
+                //                     message: "created",
+                //                     result,
+                //                 });
+                //             })
+                //             .catch(async(err) => {
+                //                 res.status(400).json({ error: "err1" });
+                //             });
+                //     })
+                //     .catch((err) => {
+                //         res.status(400).json({ error: "err" });
+                //     });
         }
     }
 );

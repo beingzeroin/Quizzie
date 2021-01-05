@@ -12,6 +12,7 @@ const request = require("request");
 const User = require("../models/user");
 const Quiz = require("../models/quiz");
 const emailTemplates = require("../../emails/email");
+
 const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
@@ -195,7 +196,7 @@ router.post("/signup", async(req, res, next) => {
                 error: err,
             });
         } else {
-            if (user.length > 1) {
+            if (user.length >= 1) {
                 res.status(409).json({
                     message: "Email already exists",
                 });
@@ -523,86 +524,47 @@ router.patch(
         // });
         // console.log(flag)
         item.getItemById(req.user.userId, User, (err, result) => {
-                if (err) {
-                    res.status(400).json({
-                        err,
-                    });
-                } else {
-                    bcrypt.compare(req.body.password, result.password, (err, result1) => {
-                        if (err) {
-                            return res.status(500).json({
-                                message: "Auth failed",
-                            });
-                        }
-                        if (result1) {
-                            bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+            if (err) {
+                res.status(400).json({
+                    err,
+                });
+            } else {
+                bcrypt.compare(req.body.password, result.password, (err, result1) => {
+                    if (err) {
+                        return res.status(500).json({
+                            message: "Auth failed",
+                        });
+                    }
+                    if (result1) {
+                        bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+                            if (err) {
+                                res.status(400).json({
+                                    err,
+                                });
+                            }
+                            item.updateItemField({ _id: req.user.userId }, { $set: { password: hash } }, User, (err, result) => {
                                 if (err) {
                                     res.status(400).json({
-                                        err,
+                                        message: "error",
+                                    });
+                                } else {
+                                    res.status(200).json({
+                                        message: "Password changed",
                                     });
                                 }
-                                item.updateItemField({ _id: req.user.userId }, { $set: { password: hash } }, User, (err, result) => {
-                                    if (err) {
-                                        res.status(400).json({
-                                            message: "error",
-                                        });
-                                    } else {
-                                        res.status(200).json({
-                                            message: "Password changed",
-                                        });
-                                    }
-                                })
                             })
-                        } else {
-                            return res.status(401).json({
-                                message: "Auth failed",
-                            });
-                        }
+                        })
+                    } else {
+                        return res.status(401).json({
+                            message: "Auth failed",
+                        });
+                    }
 
-                    })
-                }
+                })
+            }
 
-            })
-            // await User.findOne({ _id: req.user.userId })
-            //     .then(async(result) => {
-            //         bcrypt.compare(req.body.password, result.password, (err, result1) => {
-            //             if (err) {
-            //                 return res.status(500).json({
-            //                     message: "Auth failed",
-            //                 });
-            //             }
-            //             if (result1) {
-            //                 bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
-            //                     if (err) {
-            //                         res.status(400).json({
-            //                             err,
-            //                         });
-            //                     }
+        })
 
-        //                     User.updateOne({ _id: req.user.userId }, { $set: { password: hash } })
-        //                         .then((result) => {
-        //                             res.status(200).json({
-        //                                 message: "Password changed",
-        //                             });
-        //                         })
-        //                         .catch((err) => {
-        //                             res.status(400).json({
-        //                                 message: "error",
-        //                             });
-        //                         });
-        //                 });
-        //             } else {
-        //                 return res.status(401).json({
-        //                     message: "Auth failed",
-        //                 });
-        //             }
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({
-        //             err,
-        //         });
-        //     });
     }
 );
 
