@@ -24,7 +24,7 @@ var fs = require('fs');
 var async = require('async'),
 http = require('http');
 
-app.use(express.static('./Frontend/public'));
+app.use(express.static(__dirname+'/Frontend/public/'));
 app.set('port', process.env.PORT || 3000);
 
 app.set('view engine', 'pug');
@@ -85,7 +85,6 @@ function init() {
   // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
 //   app.use('/api', apiRouter);
 //   app.use('/auth',authRouter);
-
   // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
   app.get('/:pagename', function (req, res) {
     console.log("redirecting to");
@@ -142,7 +141,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors());
-
+app.use("/api",userRoutes);
 // app.use("/user", userRoutes);
 // app.use("/admin", adminRoutes);
 // app.use("/quiz", quizRoutes);
