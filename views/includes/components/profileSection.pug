@@ -1,0 +1,28 @@
+div(classname='profile-section')
+  typography(variant='h6' classname='profile-param')
+    | Name: 
+    span(classname='profile-data') {profile.name}
+  typography(variant='h6' classname='profile-param')
+    | E-mail: 
+    span(classname='profile-data resp-text') {profile.email}
+  typography(variant='h6' classname='profile-param')
+    | Phone Number: 
+    span(classname='profile-data') {profile.mobileNumber}
+  | 			{userType === "user" ?
+  div
+    typography(variant='h6' classname='profile-param')
+      | Quizzes Enrolled: 
+      span(classname='profile-data') {profile.quizzesEnrolled.length}
+    typography(variant='h6' classname='profile-param')
+      | Quizzes Completed: 
+      span(classname='profile-data') {profile.quizzesGiven.length}
+  | 			: 
+  typography(variant='h6' classname='profile-param')
+    | Quizzes Created: 
+    span(classname='profile-data') {profile.quizzes.length}
+  |  }
+  div(classname='m-top')
+    button(classname='profile-btn update-prof-btn' component='{Link}' to='{`/updateProfile/${userType}`}') Update Profile
+    | 				{profile.googleId === undefined ? 
+    button(classname='profile-btn' component='{Link}' to='{`/updatePassword/${userType}`}') Update Password
+    |  : null }

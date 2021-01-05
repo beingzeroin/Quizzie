@@ -1,0 +1,24 @@
+infocontext.provider(value='{info}')
+  router
+    navbar(loggedin='{info.isLoggedIn}')
+      switch
+        route(exact='' path='/' component='{Welcome}')
+          route(exact='' path='/dashboard' component='{Dashboard}')
+            route(exact='' path='/coronilOP' component='{OwnerDashboard}')
+              route(exact='' path='/ownerQuizDetails/:id' component='{OwnerQuizDetails}')
+                route(exact='' path='/results/:id' component='{ResultPage}')
+                  route(exact='' path='/updateProfile/:type' component='{UpdateProfile}')
+                    route(exact='' path='/updatePassword/:type' component='{UpdatePassword}')
+                      route(exact='' path='/createQuiz')
+                        createquiz
+                      route(exact='' path='/editQuiz/:id' component='{EditQuiz}')
+                        route(exact='' path='/quizStats' component='{QuizStats}')
+                          route(exact='' path='/studentResponse' component='{StudentResponses}')
+                            route(exact='' path='/updateQuizDetails/:id' component='{UpdateQuizDetails}')
+                              route(exact='' path='/register/:type' component='{RegisterPage}')
+                                route(exact='' path='/verify/:type' component='{VerifyMail}')
+                                  route(exact='' path='/quiz/' component='{Quiz}')
+                                    route(exact='' path='/login/:type' component='{LoginPage}')
+                                      route(exact='' path='/forgotPassword/:type' component='{ForgotPassword}')
+                                        route(path='*')
+                                          errorpage

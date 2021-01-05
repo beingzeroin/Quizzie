@@ -1,0 +1,199 @@
+div(classname='quizzes-section')
+  div(classname='quiz-btn-section')
+    | {userType === "user" ? (
+    button(classname='join-quiz-btn' onclick='{onJoinClick}')
+      check
+        | Join a Quiz
+    | 					) : null}
+    | 					{userType === "admin" ? (
+    button(classname='create-quiz-btn' component='{Link}' to='/createQuiz')
+      add
+        | Create a quiz
+    | 					) : null}
+  | 				{userType === "user" ? (
+  div(classname='enrolled-list')
+    typography(variant='h5' classname='up-quizzes')
+      | Enrolled Quizzes
+    | 						{quizzesEnrolled.length === 0 ? (
+    p(style='{{' textalign:='' "center"='' }}='')
+      | Sorry! No quizzes available at the moment!
+    | 						) : (
+    div(classname='quiz-list root1')
+      gridlist(cols='{getCols()}' classname='grid-list btn-set')
+        | {quizzesEnrolled.map((quiz) => (
+        gridlisttile(key='{quiz._id}' classname='quiz-tile')
+          img(src='../CC LOGO-01.svg')
+          gridlisttilebar(title='{quiz.quizId.quizName}' actionicon='{' <div='' classname='inline')
+            tooltip(title='Start Quiz')
+              iconbutton(aria-label='{`start' ${quiz.quizid.quizname}`}='' onclick='{()' =='')
+                | handleStartButton(
+                | quiz
+                | )
+                | }
+                | >
+                playcirclefilled(classname='enroll-icon')
+            tooltip(title='Info')
+              iconbutton(aria-label='{`info' ${quiz.quizid.quizname}`}='' onclick='{()' =='')
+                | handleInfoButton(
+                | quiz
+                | )
+                | }
+                | >
+                info(classname='enroll-icon')
+    | 												}
+    | 											/>
+    | 									))}
+  | 						)}
+| 				) : null}
+typography(variant='h5' classname='up-quizzes')
+  | Upcoming Quizzes
+| 				{quizzes.length === 0 ? (
+p(style='{{' textalign:='' "center"='' }}='')
+  | Sorry! No quizzes available at the moment!
+| 				) : (
+div(classname='quiz-list root1')
+  gridlist(cols='{getCols()}' classname='grid-list')
+    | {quizzes.map((quiz) => (
+    gridlisttile(key='{quiz._id}' classname='quiz-tile')
+      img(src='../CC LOGO-01.svg')
+      gridlisttilebar(title='{quiz.quizName}' subtitle='{`By:' ${quiz.adminid.name}`}='' actionicon='{' usertype='==' "user"='' ?='' (='' <tooltip='')
+        iconbutton(aria-label='{`enroll' ${quiz.quizname}`}='' onclick='{()' =='')
+          | handleEnrollButton(
+          | quiz
+          | )
+          | }
+          | >
+          check(classname='enroll-icon')
+        | 											) : null
+        | 										}
+        | 									/>
+    | 							))}
+| 				)}
+dialog(open='{joinModal}' onclose='{onCloseHandle}' aria-labelledby='join-quiz-modal' paperprops='{{' style:='' {='' backgroundcolor:='' "white",='' color:='' "#333",='' minwidth:='' "30%",='' },='' }}='' style='{{' width:='' "100%"='')
+  div(classname='modal-info')
+    | {userType === "admin" ? (
+    typography(variant='h6' classname='type-head join-sub')
+      | Organizers cannot enroll in quizzes.
+    | 						) : (
+    div(style='{{' display:='' "flex",='' flexdirection:='' "column",='' }}='')
+      typography(variant='h5' classname='type-head')
+        | JOIN A PRIVATE QUIZ
+      typography(variant='h6' classname='type-head join-sub')
+        | Enter the code of the quiz you want to join
+      textinput(error='{quizCodeError}' helpertext='{' quizcodeerror='' ?='' "required"='' :='' null='' }='' label='Quiz Code' variant='outlined' value='{quizCode}' onchange='{handleJoinChange}' classname='quiz-code-field')
+        button(classname='join-quiz-btn join-modal-btn' onclick='{handleJoinSubmit}')
+          | Join!
+    | 						)}
+dialog(open='{enrollModal}' onclose='{onCloseHandle}' aria-labelledby='enroll-quiz-modal' paperprops='{{' style:='' {='' backgroundcolor:='' "white",='' color:='' "#333",='' minwidth:='' "30%",='' },='' }}='' style='{{' width:='' "100%"='')
+  div(classname='modal-info')
+    | {userType === "admin" ? (
+    typography(variant='h6' classname='type-head join-sub')
+      | Organizers cannot enroll in quizzes.
+    | 						) : (
+    div
+      typography(variant='h6' classname='type-head join-sub') {`Are you sure you want to join ${enrollQuizName}?`}
+      div(classname='btn-div m-top')
+        | {/* classes in Navbar.css */}
+        button(classname='logout-btn m-right' onclick='{handleEnroll}')
+          | Yes
+        button(classname='cancel-btn m-left' onclick='{onCloseHandle}')
+          | No
+    | 						)}
+dialog(open='{startModal}' onclose='{onCloseHandle}' aria-labelledby='start-quiz-modal' paperprops='{{' style:='' {='' backgroundcolor:='' "white",='' color:='' "#333",='' minwidth:='' "30%",='' },='' }}='' style='{{' width:='' "100%"='')
+  div(classname='modal-info')
+    div
+      typography(variant='h6' classname='type-head join-sub') {`Are you sure you want to start ${enrollQuizName}?`}
+      div(classname='btn-div m-top2 start-div')
+        | {/* classes in Navbar.css */}
+        button(classname='logout-btn m-right' onclick='{handleQuizStart}')
+          | Yes
+        button(classname='cancel-btn m-left' onclick='{onCloseHandle}')
+          | No
+dialog(open='{infoModal}' onclose='{onCloseHandle}' aria-labelledby='info-quiz-modal' paperprops='{{' style:='' {='' backgroundcolor:='' "white",='' color:='' "#333",='' minwidth:='' getinfowidth(),='' maxheight:='' "45%",='' },='' }}='' style='{{' width:='' "100%"='')
+  dialogtitle(style='{{' textalign:='' "center",='' fontweight:='' "bold"='' }}='')
+    | Quiz Info
+  | 					{/* From the profile section */}
+  | 					{infoLoading ? (
+  loading
+    | ) : (
+    div(classname='modal-info no-p-top' style='{{' textalign:='' "center"='' }}='')
+      typography(variant='h6' classname='profile-param info-param')
+        | Name:{" "}
+        span(classname='profile-data')
+          | {currQuiz.quizName}
+      typography(variant='h6' classname='profile-param info-param')
+        | Date:{" "}
+        span(classname='profile-data')
+          | {new Date(
+          | Number(currQuiz.scheduledFor)
+          | ).toDateString()}
+      typography(variant='h6' classname='profile-param info-param')
+        | Time:{" "}
+        span(classname='profile-data')
+          | {new Date(
+          | Number(currQuiz.scheduledFor)
+          | ).toLocaleTimeString()}
+      div(classname='time-sec')
+        typography(variant='h6' classname='profile-param info-param')
+          span(classname='profile-data time-rem')
+            | {timeRemain}
+      button(classname='unenroll-btn' onclick='{handleUnenroll}')
+        block(style='{{' color:='' "white"='' }}='')
+          | Unenroll
+    | 					)}
+snackbar(open='{snackbar}' autohideduration='{2000}' onclose='{()' =='')
+  | setSnackBar(false)}
+  | >
+  alert(variant='filled' severity='success' onclose='{()' =='')
+    | setSnackBar(false)}
+    | >
+    | Successfully Enrolled!
+snackbar(open='{errorSnack}' autohideduration='{2000}' onclose='{()' =='')
+  | setErrorSnack(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setErrorSnack(false)}
+    | >
+    | There was some error. Please try again!
+snackbar(open='{enrollSnack}' autohideduration='{5000}' onclose='{()' =='')
+  | setEnrollSnack(false)}
+  | >
+  alert(variant='filled' severity='info' onclose='{()' =='')
+    | setErrorSnack(false)}
+    | >
+    | Processing... Please Wait!
+snackbar(open='{earlyError}' autohideduration='{5000}' onclose='{()' =='')
+  | setEarlyError(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setEarlyError(false)}
+    | >
+    | The quiz has not yet started!
+snackbar(open='{lateError}' autohideduration='{5000}' onclose='{()' =='')
+  | setLateError(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setLateError(false)}
+    | >
+    | This quiz has ended!
+snackbar(open='{givenSnack}' autohideduration='{5000}' onclose='{()' =='')
+  | setGivenSnack(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setGivenSnack(false)}
+    | >
+    | Already given this quiz!
+snackbar(open='{privateWrongCode}' autohideduration='{5000}' onclose='{()' =='')
+  | setPrivateWrongCode(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setPrivateWrongCode(false)}
+    | >
+    | This quiz code does not exists!
+snackbar(open='{alreadyEnrolled}' autohideduration='{5000}' onclose='{()' =='')
+  | setAlreadyEnrolled(false)}
+  | >
+  alert(variant='filled' severity='error' onclose='{()' =='')
+    | setAlreadyEnrolled(false)}
+    | >
+    | Already enrolled in this quiz!

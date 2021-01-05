@@ -1,0 +1,43 @@
+div(classname='quiz-page')
+  grid(container='' xs='{12}' spacing='{5}' classname='quiz-container')
+    grid(item='' xs='{10}' md='{8}' lg='{7}' classname='q-count')
+      h2(style='{{' padding:='' 0='' }}='')
+        | QUESTION {currentStep} OF {allQuestions.length}
+    grid(item='' xs='{10}' md='{8}' lg='{7}' classname='timer')
+      p(style='{{' margin:='' 0='' }}='')
+        | Time Remaining{" "}
+      h2(classname='rem-time-display')
+        | {restartStatus !== 1
+        | ? timeRemaining
+        | : "Until organizer closes the quiz"}
+      p
+    grid(item='' xs='{10}' md='{8}' lg='{7}' style='{{' margin:='' 0,='' padding:='' "2%",='' borderbottom:='' "3px='' solid='' #222",='' minheight:='' "30vh",='' }}='')
+      formcontrol(style='{{' margin:='' "auto",='' width:='' "100%"='' }}='' component='fieldset')
+        formlabel(classname='label' component='legend')
+          p(classname='question')
+            | {allQuestions[currentQuestion].text}
+        radiogroup(aria-label='correct-choice' value='{currentAns}' onchange='{handleOptionChange}')
+          | {allQuestions[currentQuestion].options.map(
+          | (option) => {
+          | return (
+          formcontrollabel(key='{option._id}' value='{option.text}' control='{' <radio='' classname='radio')
+            | }
+            | label={option.text}
+            | style={{ margin: 0 }}
+            | />
+            | );
+            | }
+            | )}
+    grid(item='' xs='{10}' md='{8}' lg='{7}' classname='button')
+      grid(item='' xs='{6}' classname='button')
+        | {previousButton()}
+      grid(item='' xs='{6}' classname='button')
+        | {nextButton()}
+  dialog(open='{confirmModal}' onclose='{onCloseHandle}' aria-labelledby='form-dialog-title' paperprops='{{' style:='' {='' backgroundcolor:='' "white",='' color:='' "#333",='' minwidth:='' "10%",='' },='' }}='')
+    dialogtitle
+      | Are you sure you want to submit the quiz?
+    div(classname='btn-div')
+      button(classname='logout-btn m-right' onclick='{handleSubmit}')
+        | Yes
+      button(classname='cancel-btn m-left' onclick='{onCloseHandle}')
+        | No

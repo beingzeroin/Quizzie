@@ -1,0 +1,108 @@
+container(classname='edit-quiz-page')
+  typography(variant='h3' classname='dash-head p-top edit-quiz-head')
+    | Quiz Details
+  div(classname='edit-btn-bar')
+    button(classname='edit-details-btn delete-btn' onclick='{handleDeleteBtn}')
+      delete(classname='edit-icon')
+        | Delete Quiz
+  div(classname='quiz-details-sec')
+    typography(variant='h6' classname='quiz-detail-param')
+      | Name:{" "}
+      span(classname='quiz-detail-text')
+        | {quizDetails.quizName}
+    typography(variant='h6' classname='quiz-detail-param')
+      | Date:{" "}
+      span(classname='quiz-detail-text')
+        | {new Date(
+        | Number(quizDetails.scheduledFor)
+        | ).toDateString()}
+    typography(variant='h6' classname='quiz-detail-param')
+      | Time:{" "}
+      span(classname='quiz-detail-text')
+        | {new Date(
+        | Number(quizDetails.scheduledFor)
+        | ).toLocaleTimeString()}
+    typography(variant='h6' classname='quiz-detail-param')
+      | Duration:{" "}
+      span(classname='quiz-detail-text')
+        | {quizDetails.quizDuration} minutes
+    typography(variant='h6' classname='quiz-detail-param')
+      | Type:{" "}
+      span(classname='quiz-detail-text')
+        | {quizDetails.quizType}
+    | 					{quizDetails.quizType === "private" ? (
+    typography(variant='h6' classname='quiz-detail-param')
+      | Quiz Code:{" "}
+      span(classname='quiz-detail-text')
+        | {quizDetails.quizCode}
+    | 					) : null}
+  div(classname='quiz-questions-sec')
+    typography(variant='h4' classname='quiz-questions-head')
+      | Questions
+    div(classname='quiz-questions-display')
+      | {quizQuestions.length === 0 ? (
+      p(style='{{' textalign:='' "center"='' }}='')
+        | No questions added yet!
+      | 						) : (
+      div(classname='questions-list-display')
+        | {quizQuestions.map((question) => (
+        expansionpanel(elevation='{3}' classname='expansion' key='{question._id}')
+          expansionpanelsummary(classname='question-summary' expandicon='{<ExpandMore')
+            | }
+            | aria-controls="question-content"
+            | aria-label="Expand"
+            | >
+            typography(classname='question-label')
+              | {question.description}
+          expansionpaneldetails
+            list(component='nav' classname='options-display')
+              | {question.options.map(
+              | (option) => (
+              listitem(button='' key='{option._id}')
+                listitemicon
+                  adjust(style='{{' color:='' question.correctanswer='==' option.text='' ?='' "green"='' :='' "black",='' }}='')
+                listitemtext(style='{{' color:='' question.correctanswer='==' option.text='' ?='' "green"='' :='' "black",='' }}='' primary='{' }='')
+              | 													)
+              | 												)}
+        | 								))}
+      | 						)}
+    | 					{/* 
+    typography(variant='h4' classname='quiz-questions-head m-top') Submissions
+    div(classname='quiz-students-list')
+      | {responses.length === 0? 
+      p(style='{{' textalign:='' 'center'='' }}='') No responses yet!
+      | 						: 
+      list(aria-label='responses list')
+        | {responses.map((response) => (
+        listitem(button='' key='{response._id}')
+          listitemtext(primary='{response.userId.name}' secondary='{`Scored:' ${response.marks}`}='')
+        | 							))}
+      | 						}
+    |  */}
+  dialog(open='{deleteModal}' onclose='{()' =='')
+    | setDeleteModal(false)}
+    | aria-labelledby="delete-quiz-modal"
+    | PaperProps={{
+    | style: {
+    | backgroundColor: "white",
+    | color: "black",
+    | minWidth: "10%",
+    | },
+    | }}
+    | >
+    dialogtitle
+      | Are you sure you want to delete this quiz?
+    div(classname='btn-div')
+      button(classname='logout-btn m-right bg-red-btn' onclick='{handleDelete}')
+        | Yes
+      button(classname='cancel-btn m-left' onclick='{()' =='')
+        | setDeleteModal(false)}
+        | >
+        | No
+  snackbar(open='{deleteSnack}' autohideduration='{5000}' onclose='{()' =='')
+    | setDeleteSnack(false)}
+    | >
+    alert(variant='filled' severity='info' onclose='{()' =='')
+      | setDeleteSnack(false)}
+      | >
+      | Processing... Please Wait!
