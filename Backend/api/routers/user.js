@@ -16,12 +16,22 @@ const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
 const verifyURL = require("../middleware/verifyURL");
+const { RuleTester } = require("eslint");
+const { Router } = require("express");
 
 const router = express.Router();
 
 sgMail.setApiKey(process.env.SendgridAPIKey);
 
 ///Send Verification email
+
+router.get("/user/:userid", (req,res)=>
+{
+    item.getItemById(req.params.userid,User, (err, result) => {
+        console.log(result);  
+        res.send(result);
+    })
+})
 router.post("/resendVerificationEmail", verifyURL, async(req, res, next) => {
     const { email } = req.body;
     if (!req.body.captcha) {
