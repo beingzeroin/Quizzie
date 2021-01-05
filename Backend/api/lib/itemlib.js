@@ -51,6 +51,25 @@ exports.getItemByQueryWithPopulate = function(query, itemModel, populateJson, cb
     })
 };
 
+exports.getItemByQueryWithSelect = function(query, itemModel, selectJson, cb) {
+    console.log('Getting item with Query ' + JSON.stringify(query) + ' with select');
+    itemModel.find(query).select(selectJson).exec(function(err, Allitems) {
+        if (err) console.log('ERROR: ' + err);
+        cb(err, Allitems);
+    })
+}
+
+exports.getItemByQueryWithPopulateAndSelect = function(query, itemModel, populateJson, selectJson, cb) {
+    console.log('Getting item with Query ' + JSON.stringify(query) + ' with populate and select');
+    itemModel.find(query)
+        .populate(populateJson)
+        .select(selectJson)
+        .exec(function(err, Allitems) {
+            if (err) console.log('ERROR: ' + err);
+            cb(err, Allitems);
+        })
+}
+
 exports.createOrSkipByQuery = function(query, itemModel, itemDetails, cb) {
     console.log('Getting Single item with Query ' + JSON.stringify(query));
     itemModel.findOne(query, function(err, singleItem) {
@@ -143,6 +162,13 @@ exports.updateItemField = function(query, updateDetails, itemModel, cb) {
     });
 };
 
+exports.deleteMultipleItems = function(query, itemModel, cb) {
+    console.log('Delete multiple resuorces which match ..' + query);
+    itemModel.deleteMany(query, (err, details) => {
+        if (err) console.log('ERROR: ' + err);
+        cb(err, details);
+    })
+}
 exports.deleteItem = function(id, softDelete, itemModel, cb) {
     console.log('Delete Resource ' + id);
     // cb(null, null); // Disabled Delete
