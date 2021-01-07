@@ -1,0 +1,36 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+  background-color:rgb(240, 255, 240);
+}
+
+.main {color: dodgerblue; 
+  font-size:300%; 
+  margin-bottom: .8em;
+   margin-left:3.5em;}
+
+input {
+  font-size:100%;
+  margin-bottom:1em;
+  margin-left:5em;
+  width:400px;
+  height:30px;
+}
+.login{
+  color:white; 
+  margin-bottom:2em; 
+  margin-left:15em;
+   margin-right:5em; 
+   background:dodgerblue;
+}
+
+div{margin-left:20em;
+  padding-bottom:16%;
+  margin-top:-2em;
+  background:white;
+  margin-right:25em;
+}
+p { colour:black; font-size:100%; margin-left:8em;}
+
+
