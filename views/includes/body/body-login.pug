@@ -1,0 +1,42 @@
+head
+        title Quizzie| A secure quiz Portal
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+        link(rel="stylesheet" href="/.css")
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        
+        meta(name='google-signin-scope' content='profile email')
+        meta(name='google-signin-client_id' content='MY_CLIENT_ID_ON_GOOGLE_DEV.apps.googleusercontent.com')
+        script(src='https://apis.google.com/js/api.js')
+        script(src='https://apis.google.com/js/platform.js' async='' defer='')
+
+body(style='background:rgb(240, 255, 240)')  
+    div(style='margin-left:20em; margin-top:-2em;background:white;margin-right:25em')
+        p(style='color: dodgerblue; font-size:300%; margin-bottom: 1em; margin-left:3.5em') 
+          b Login Now
+
+        .g-signin2(data-onsuccess='onSignIn' style='margin-left:12em;width:150px;height:35px' )
+        br
+        div
+          input(type='email' placeholder='Email' style='font-size:100%;margin-left:5em;width:400px;height:30px' )
+         
+        br
+        input(type='password' placeholder='Password' style='font-size:100%;margin-left:5em;width:400px;height:30px' )
+        br
+        br
+        a(href="dashboard")
+          button.btn(type="button" href="/dashboard" style='color:white; margin-left:15em; margin-right:5em; background:dodgerblue') Login
+        br
+        br
+        a(href="signup")
+          p(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        
+
