@@ -11,32 +11,21 @@ head
         script(src='https://apis.google.com/js/platform.js' async='' defer='')
 
 body(style='background:rgb(240, 255, 240)')  
-    div(style='margin-left:20em; margin-top:-2em;background:white;margin-right:25em')
+    div(style='margin-left:20em; margin-top:-2em; padding-bottom:12%; background:white;margin-right:25em')
         p(style='color: dodgerblue; font-size:300%; margin-bottom: 1em; margin-left:3em') 
           b Join the force!
 
-        .g-signin2(data-onsuccess='onSignIn' style='margin-left:12em;width:150px;height:35px' )
-        br
-        input(type='text' placeholder='Name' style='font-size:100%;margin-left:5em;width:400px;height:30px'  )
-        br
-        br
-        input(type='' placeholder='Phone Number' style='font-size:100%;margin-left:5em;width:400px;height:30px' )
-        br
-        br
-        input(type='email' placeholder='Email' style='font-size:100%;margin-left:5em;width:400px;height:30px' )
-        br
-        br
-        input(type='password' placeholder='Password' style='font-size:100%;margin-left:5em;width:400px;height:30px' )
-        br
-        br
+        .g-signin2(data-onsuccess='onSignIn' style='margin-left:12em;margin-bottom: 1em;width:150px;height:35px' )
+        
+        input(type='text' placeholder='Name' style='font-size:100%;margin-bottom:2em;margin-left:5em;width:400px;height:30px'  )
+
+        input(type='' placeholder='Phone Number' style='font-size:100%;margin-bottom: 2em;margin-left:5em;width:400px;height:30px' )
+        
+        input(type='email' placeholder='Email' style='font-size:100%;margin-bottom: 2em;margin-left:5em;width:400px;height:30px' )
+        
+        input(type='password' placeholder='Password' style='font-size:100%;margin-bottom: 2em;margin-left:5em;width:400px;height:30px' )
+        
         a(href="dashboard")
           button.btn(type="button" href="/dashboard" style='color:white; margin-left:15em; margin-right:5em; background:dodgerblue') Sign Up
         
-        br
-        br
-        br
-        br
-        br
-        br
-        br
        
