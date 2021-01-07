@@ -277,19 +277,32 @@ router.post("/csv", async(req, res, next) => {
     // });
     // console.log(flag)
     const { questions } = req.body;
-    await Question.insertMany(questions)
-        .then((result) => {
-            res.status(200).json({
-                message: "Success",
-                result,
-            });
+    item.createManyItems(questions, Question, (err, result) => {
+            if (err) {
+                res.status(400).json({
+                    message: "Error",
+                    error: err.toString()
+                });
+            } else {
+                res.status(200).json({
+                    message: "Success",
+                    result,
+                });
+            }
         })
-        .catch((err) => {
-            res.status(400).json({
-                message: "Error",
-                error: err.toString(),
-            });
-        });
+        // await Question.insertMany(questions)
+        //     .then((result) => {
+        //         res.status(200).json({
+        //             message: "Success",
+        //             result,
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         res.status(400).json({
+        //             message: "Error",
+        //             error: err.toString(),
+        //         });
+        //     });
 });
 
 module.exports = router;

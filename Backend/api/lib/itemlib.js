@@ -132,6 +132,14 @@ exports.createitem = function(itemDetails, itemModel, cb) {
     });
 };
 
+exports.createManyItems = function(itemDetails, itemModel, cb) {
+    console.log("Inserting multiple items...");
+    itemModel.insertMany(itemDetails, (err, data) => {
+        if (err) console.log('ERROR ' + err);
+        cb(err, data);
+    })
+}
+
 exports.updateItem = function(itemDetails, itemModel, cb) {
     console.log('Edit Resource ' + itemDetails._id);
     //console.log("MODEL: "+ JSON.stringify(itemModel))
