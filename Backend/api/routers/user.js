@@ -12,6 +12,7 @@ const request = require("request");
 const User = require("../models/user");
 const Quiz = require("../models/quiz");
 const emailTemplates = require("../../emails/email");
+
 const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
@@ -25,7 +26,7 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 ///Send Verification email
 
-router.get("/user/:userid", (req,res)=>
+router.get("/:userid", (req,res)=>
 {
     item.getItemById(req.params.userid,User, (err, result) => {
         console.log(result);  
@@ -205,7 +206,7 @@ router.post("/signup", async(req, res, next) => {
                 error: err,
             });
         } else {
-            if (user.length > 1) {
+            if (user.length >= 1) {
                 res.status(409).json({
                     message: "Email already exists",
                 });
@@ -446,7 +447,7 @@ router.get(
 );
 
 //Update user profile
-router.patch("/updateProfile", (req, res, next) => {
+router.post("/updateProfile", (req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -477,24 +478,28 @@ router.patch("/updateProfile", (req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const id = req.user.userId;
+    const id = "5f37bfefcdd70f3e64bede36" || req.user.userId;
     const updateOps = {};
-    const updatableFields = ["name", "mobileNumber"];
-    var flag = 0;
-    for (const ops of req.body.updateOps) {
-        if (updatableFields.includes(ops.propName)) {
-            updateOps[ops.propName] = ops.value;
-        }
-    }
+    console.log(req.body);
+    updateOps.name=req.body.name;
+    updateOps.mobileNumber=req.body.mobileNumber;
+    console.log(updateOps);
+    // console.log(req.body.name,req.body.mobileNumber);
+    // const updateOps = {};
+    // const updatableFields = ["name", "mobileNumber"];
+    // var flag = 0;
+    // for (const ops of req.body.updateOps) {
+    //     if (updatableFields.includes(ops.propName)) {
+    //         updateOps[ops.propName] = ops.value;
+    //     }
+    // }
     item.updateItemField({ _id: id }, { $set: updateOps }, User, (err, result) => {
         if (err) {
             res.status(500).json({
                 error: err,
             });
         } else {
-            res.status(200).json({
-                message: "Profile updated",
-            });
+            res.redirect("/dashboard");
         }
     })
 
@@ -533,86 +538,47 @@ router.patch(
         // });
         // console.log(flag)
         item.getItemById(req.user.userId, User, (err, result) => {
-                if (err) {
-                    res.status(400).json({
-                        err,
-                    });
-                } else {
-                    bcrypt.compare(req.body.password, result.password, (err, result1) => {
-                        if (err) {
-                            return res.status(500).json({
-                                message: "Auth failed",
-                            });
-                        }
-                        if (result1) {
-                            bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+            if (err) {
+                res.status(400).json({
+                    err,
+                });
+            } else {
+                bcrypt.compare(req.body.password, result.password, (err, result1) => {
+                    if (err) {
+                        return res.status(500).json({
+                            message: "Auth failed",
+                        });
+                    }
+                    if (result1) {
+                        bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+                            if (err) {
+                                res.status(400).json({
+                                    err,
+                                });
+                            }
+                            item.updateItemField({ _id: req.user.userId }, { $set: { password: hash } }, User, (err, result) => {
                                 if (err) {
                                     res.status(400).json({
-                                        err,
+                                        message: "error",
+                                    });
+                                } else {
+                                    res.status(200).json({
+                                        message: "Password changed",
                                     });
                                 }
-                                item.updateItemField({ _id: req.user.userId }, { $set: { password: hash } }, User, (err, result) => {
-                                    if (err) {
-                                        res.status(400).json({
-                                            message: "error",
-                                        });
-                                    } else {
-                                        res.status(200).json({
-                                            message: "Password changed",
-                                        });
-                                    }
-                                })
                             })
-                        } else {
-                            return res.status(401).json({
-                                message: "Auth failed",
-                            });
-                        }
+                        })
+                    } else {
+                        return res.status(401).json({
+                            message: "Auth failed",
+                        });
+                    }
 
-                    })
-                }
+                })
+            }
 
-            })
-            // await User.findOne({ _id: req.user.userId })
-            //     .then(async(result) => {
-            //         bcrypt.compare(req.body.password, result.password, (err, result1) => {
-            //             if (err) {
-            //                 return res.status(500).json({
-            //                     message: "Auth failed",
-            //                 });
-            //             }
-            //             if (result1) {
-            //                 bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
-            //                     if (err) {
-            //                         res.status(400).json({
-            //                             err,
-            //                         });
-            //                     }
+        })
 
-        //                     User.updateOne({ _id: req.user.userId }, { $set: { password: hash } })
-        //                         .then((result) => {
-        //                             res.status(200).json({
-        //                                 message: "Password changed",
-        //                             });
-        //                         })
-        //                         .catch((err) => {
-        //                             res.status(400).json({
-        //                                 message: "error",
-        //                             });
-        //                         });
-        //                 });
-        //             } else {
-        //                 return res.status(401).json({
-        //                     message: "Auth failed",
-        //                 });
-        //             }
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({
-        //             err,
-        //         });
-        //     });
     }
 );
 

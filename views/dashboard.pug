@@ -1,0 +1,22 @@
+extends includes/basePage
+block page-content
+        .container.dashboard-page
+                    h1.dash-head Dashboard
+                    .row.tabs
+                        button.btn.col-4#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
+                        button.btn.col-4#1(type="button"  onclick="openPage('History', this,1)") History
+                        button.btn.col-4#2(type="button" onclick="openPage('Profile', this,2)") Profile
+                    .row 
+                        #Quizzes.tabcontent
+                            h3 Quizzes 
+                            p Home is where the heart is..
+                        #History.tabcontent
+                            h3 History 
+                            p Home is where the heart is..
+                        #Profile.tabcontent
+                            .details(style="margin-bottom:10%")
+
+                            a(href='/updateProfile')
+                                button.btn.btn-primary(type='button') Update Profile
+
+
