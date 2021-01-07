@@ -446,7 +446,7 @@ router.get(
 );
 
 //Update user profile
-router.patch("/updateProfile", (req, res, next) => {
+router.post("/updateProfile", (req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -477,24 +477,28 @@ router.patch("/updateProfile", (req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const id = req.user.userId;
+    const id = "5f37bfefcdd70f3e64bede36" || req.user.userId;
     const updateOps = {};
-    const updatableFields = ["name", "mobileNumber"];
-    var flag = 0;
-    for (const ops of req.body.updateOps) {
-        if (updatableFields.includes(ops.propName)) {
-            updateOps[ops.propName] = ops.value;
-        }
-    }
+    console.log(req.body);
+    updateOps.name=req.body.name;
+    updateOps.mobileNumber=req.body.mobileNumber;
+    console.log(updateOps);
+    // console.log(req.body.name,req.body.mobileNumber);
+    // const updateOps = {};
+    // const updatableFields = ["name", "mobileNumber"];
+    // var flag = 0;
+    // for (const ops of req.body.updateOps) {
+    //     if (updatableFields.includes(ops.propName)) {
+    //         updateOps[ops.propName] = ops.value;
+    //     }
+    // }
     item.updateItemField({ _id: id }, { $set: updateOps }, User, (err, result) => {
         if (err) {
             res.status(500).json({
                 error: err,
             });
         } else {
-            res.status(200).json({
-                message: "Profile updated",
-            });
+            res.redirect("/dashboard");
         }
     })
 

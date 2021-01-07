@@ -86,6 +86,7 @@ function init() {
 //   app.use('/api', apiRouter);
 //   app.use('/auth',authRouter);
   // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
+
   app.get('/:pagename', function (req, res) {
     console.log("redirecting to");
 	console.log(req.params.pagename,__dirname);
@@ -100,7 +101,6 @@ function init() {
       })
     }
   });
-
   http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
   });

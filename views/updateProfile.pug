@@ -1,0 +1,16 @@
+extends includes/basePage
+block page-content
+    .container.Profile
+        h1( style="padding:25% 25% 5% 25%;color:#5190f5" ) Update Profile
+        .login-form
+            form.form(method="post"  action="/api/updateProfile")
+                .form-group(style="padding-bottom:10%")
+                    label Name
+                    br
+                    input.form-control#1(type="text"  name='name' placeholder="Enter Name " required='' )
+                .form-group(style="padding-bottom:10%")
+                    label PhoneNumber
+                    br
+                    input.form-control#2(type="text" name='mobileNumber' placeholder="Enter PhoneNumber "  maxlength="10" minlength="10"  required='')
+                button.btn.btn-primary Update Profile
+
