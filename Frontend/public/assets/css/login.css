@@ -1,6 +1,5 @@
 
 div.main{margin-left:20em;
-   padding-bottom:16%;
    margin-top:-2em;
    margin-right:25em;
    background:white;
@@ -9,7 +8,6 @@ div.main{margin-left:20em;
 p.head{color: dodgerblue;
      font-size:300%; 
      margin-bottom: .5em;
-      margin-left:3.5em;
 }
 
 input.field{ font-size:100%;

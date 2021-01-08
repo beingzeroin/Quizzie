@@ -10,16 +10,16 @@ block head-styles
 block page-content
     body(style='background:rgb(240, 255, 240)')  
        
-        div.main
-            p.head
-                b Join the Force!!
+        div.main(style='padding-bottom:10%')
+            p.head(style='margin-left:2.5em')
+                b Join the force!!
 
             .g-signin2(data-onsuccess='onSignIn' style='margin-left:13em;margin-bottom:1.5em;width:150px;height:35px' )
       
-            input.field(type='text' placeholder='Name' )
+            input.field(type='text' placeholder='Name')
             input.field(type='' placeholder='Phone Number')
-            input.field(type='email' placeholder='Email' )
-            input(type='password' placeholder='Password')
+            input.field(type='email' placeholder='Email')
+            input.field(type='password' placeholder='Password')
         
             a(href="/dashboard")
                 button.btn(type="button" ) Sign Up
