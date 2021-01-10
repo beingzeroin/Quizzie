@@ -339,6 +339,7 @@ router.post("/login", async(req, res, next) => {
                             expiresIn: "1d",
                         }
                     );
+                    req.header['auth-token'] = token;
                     return res.status(200).json({
                         message: "Auth successful",
                         userDetails: {
