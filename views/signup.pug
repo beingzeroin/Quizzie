@@ -7,19 +7,26 @@ block head-styles
     script(src='https://apis.google.com/js/api.js')
     script(src='https://apis.google.com/js/platform.js' async='' defer='')
     link(rel="stylesheet" href="/assets/css/login.css")
+
 block page-content
     body(style='background:rgb(240, 255, 240)')  
        
-        div.main(style='padding-bottom:10%')
+        div.main(style='padding-bottom:12%')
             p.head(style='margin-left:2.5em')
                 b Join the force!!
 
             .g-signin2(data-onsuccess='onSignIn' style='margin-left:13em;margin-bottom:1.5em;width:150px;height:35px' )
-      
-            input.field(type='text' placeholder='Name')
-            input.field(type='' placeholder='Phone Number')
-            input.field(type='email' placeholder='Email')
-            input.field(type='password' placeholder='Password')
+            
+            input.name(type='text' placeholder='Name')
+            p#namealert
+            input.phone(type='number' placeholder='Phone Number')
+            p#phonealert
+            input.email(type='email' placeholder='Email' )
+            p#emailalert
+            input.password(type='password' placeholder='Password')
+            p#passwordalert
         
-            a(href="/dashboard")
-                button.btn(type="button" ) Sign Up
+            button.btn(type="button" onclick='signup()') Sign Up
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+        script(src="/assets/js/signup.js")
+        
