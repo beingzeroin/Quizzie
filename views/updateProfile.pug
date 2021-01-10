@@ -1,4 +1,8 @@
 extends includes/basePage
+block head-styles
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/assets/css/updateProfile.css")
+    
 block page-content
     .container.Profile
         h1( style="padding:25% 25% 5% 25%;color:#5190f5" ) Update Profile
@@ -13,4 +17,9 @@ block page-content
                     br
                     input.form-control#2(type="text" name='mobileNumber' placeholder="Enter PhoneNumber "  maxlength="10" minlength="10"  required='')
                 button.btn.btn-primary Update Profile
+        
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
+    script(src="/assets/js/updateProfile.js")
 
