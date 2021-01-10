@@ -1,0 +1,26 @@
+
+div.main{margin-left:20em;
+   margin-top:-2em;
+   margin-right:25em;
+   background:white;
+}
+
+p.head{color: dodgerblue;
+     font-size:300%; 
+     margin-bottom: .5em;
+}
+
+input.field{ font-size:100%;
+             margin-bottom:1em;
+             margin-left:5em;
+             width:400px;
+             height:30px;
+}
+
+button.btn{ color:white; 
+            margin-bottom:2em;
+            margin-left:15em; 
+            margin-right:5em;
+            background:dodgerblue;
+}
+p.signup{font-size:100%; margin-left:8em;}
