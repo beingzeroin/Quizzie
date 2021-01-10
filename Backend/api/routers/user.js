@@ -446,7 +446,7 @@ router.get(
 );
 
 //Update user profile
-router.post("/updateProfile", (req, res, next) => {
+router.post("/updateProfile", checkAuthUser, (req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -498,7 +498,7 @@ router.post("/updateProfile", (req, res, next) => {
                 error: err,
             });
         } else {
-            res.redirect("/dashboard");
+            res.redirect("/ui/dashboard");
         }
     })
 

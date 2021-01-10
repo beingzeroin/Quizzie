@@ -29,6 +29,7 @@ app.set('views', './views');
 
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
+const uiroutes = require("./Backend/ui/routers/alluiroutes")
 
 
 const dbURI = process.env.dbURI;
@@ -78,6 +79,7 @@ function init() {
     //   app.use('/auth',authRouter);
     // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
 
+    app.use('/ui', uiroutes)
     app.get('/:pagename', function(req, res) {
         console.log("redirecting to");
         console.log(req.params.pagename, __dirname);
