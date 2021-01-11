@@ -8,10 +8,7 @@ body, html {
   font-family: Arial;
   background-color:#f8f9fa;
 }
-.button .btn .tablink{
-  min-width: 33%;
-  background-color:#f8f9fa;
-}
+
 .container.dashboard-page
 {
   background-color: white;
@@ -21,11 +18,6 @@ body, html {
 button.btn:focus,.btn:active {
   outline: none !important;
   box-shadow: none;
-}
-button .row.tabs
-{
-  background-color:#f8f9fa !important;
-  box-shadow: 5px 5px 10px #888888;
 }
 @media screen and (max-width: 768px) {
 	.dashboard-page {
@@ -51,11 +43,6 @@ button .row.tabs
   width: 25%;
 }
 
-.tablink:hover {
-    border: white;
-    color:white;
-} 
-
 /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
   color: rgb(17, 17, 17); 
@@ -68,12 +55,6 @@ button .row.tabs
 {
   color: rgb(6, 184, 255);
 }
-
-/* #Home {background-color: red;}
-#News {background-color: green;}
-#Contact {background-color: blue;}
-#About {background-color: orange;} */
-
  .dashboard-page {
 	display: flex !important;
 	flex-direction: column !important;
@@ -88,3 +69,22 @@ button .row.tabs
 	padding-bottom: 2% !important;
 	text-align: center;
 }
+ul,li
+{
+  float: left;
+}
+ul {
+  position: relative;
+  left: 50%;
+ }
+ li {
+  position: relative;
+  left: -50%;
+  list-style: none;
+ } 
+ li img.bz
+ {
+  width:150px;
+  height:120px;
+  margin:2em;
+ }

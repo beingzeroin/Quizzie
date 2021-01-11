@@ -1,0 +1,53 @@
+extends includes/basePage
+block scripts
+    script(src="/assets/js/editQuiz.js")
+block styles
+    link(rel="stylesheet" href="/assets/css/editQuiz.css")
+block page-content
+    .container.editQuiz
+        .login-form
+            h1(style="color:#5190f5;text-align:center;fontweight:900;" ) Edit Quiz
+            hr(style="background-color:blue;width:100%;height:1px;")
+            .row.edit-btn-bar
+                .col   
+                    button.btn.ml-3(style="background-color:orange;color:white;float:right;") Delete Quiz
+                    button.btn(style="background-color:#2179ED;color:white;float:right;") Edit Details
+            .quiz-details.ml-4.mt-5
+                .row
+                    h6.label Name :  
+                    span.quiz-detail-text #{quizdetails.quizName}
+                .row
+                    h6.label Date :   
+                    span.quiz-detail-text #{quizdetails.scheduledFor.split(' ')[0]}
+                .row
+                    h6.label Time :
+                    span.quiz-detail-text #{quizdetails.scheduledFor.split(' ')[1]}
+                .row
+                    h6.label Duration :
+                    span.quiz-detail-text #{quizdetails.quizDuration} minutes
+                .row
+                    h6.label Type :
+                    span.quiz-detail-text #{quizdetails.quizType}
+                .row
+                    h6.label Quiz Code :
+                    span.quiz-detail-text #{quizdetails.quizCode}
+            .quiz-Questions.mt-5
+                    .row
+                        h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center !important;") Questions
+                        hr(style="background-color:blue;width:100%;height:1.5px;")
+                    .row
+                        button.btn.btn-success.btn-sm.ml-auto(style="float:right") ADD A QUESTION
+                    .row
+
+            .students-list.mt-5
+                    .row
+                        h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center;") Submisssions
+                        hr(style="background-color:blue;width:100%;height:1.5px;") 
+                    .row
+                        button.btn.btn-success.btn-sm.ml-auto(style="background-color:#802BD4") VIEW STATS
+                    .row
+                        h2 empty
+                  
+
+                    
+

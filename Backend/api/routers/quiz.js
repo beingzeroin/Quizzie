@@ -62,23 +62,25 @@ router.post(
         //     }
         // });
         // console.log(flag)
+        AdminId="5ff344f117e710531074f77c";// please remove after login is done
         if (req.body.quizType.toLowerCase() == "private") {
             const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
-                adminId: req.user.userId,
+                adminId:AdminId|| req.user.userId,//remove AdminID 
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
             };
+            //console.log(quiz);
             item.createitem(quiz, Quiz, (err, result) => {
                 if (err) {
                     res.status(400).json({ error: "err" });
                 } else {
-                    const quizId = result._id;
-                    item.updateItemField({ _id: req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
+                    const quizId = result._id;//remove AdminID
+                    item.updateItemField({ _id: AdminId ||req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
                         if (err) {
                             res.status(400).json({ error: "err1" });
 

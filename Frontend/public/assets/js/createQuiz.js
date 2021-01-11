@@ -1,0 +1,36 @@
+var date = new Date();
+var currentDate = date.toISOString().slice(0,10);
+var currentTime = date.getHours() + ':' + date.getMinutes()+":"+date.getSeconds();
+$('#date').val(currentDate);
+$('#time').val(currentTime);
+
+function senddata(data)
+{
+  $.ajax({
+    url: "/api/quiz/createQuiz",
+    method: "POST",
+    data:data,
+    success: function(result) {
+        location.href="/editQuiz/"+result.result._id;
+    },
+    error: function(err) {
+      console.log(err);
+      location.href="/createQuiz"  //change this url ....
+    }
+  });
+}
+
+
+
+function showdata()
+{
+    var date=$("#date").val();
+    var time=$("#time").val();
+    var quizType=$("#quizType").val();
+    var quizName=$("#quizName").val();
+    var quizDuration=$("#range").val();
+    var data={'quizName':quizName,'scheduledFor':date+" "+time,'quizDuration':quizDuration,'quizType':quizType}
+    console.log(data);
+    senddata(data);
+    
+}
