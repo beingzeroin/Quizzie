@@ -24,25 +24,26 @@ const router = express.Router();
 router.use(cookieParser());
 
 router.get(
-	"/google",
-	passport.authenticate("googleAdmin", {
-		scope: ["profile", "email"],
-	})
+    "/google",
+    passport.authenticate("googleAdmin", {
+        scope: ["profile", "email"],
+    })
 );
 
 ///Callback route for google to redirect
 router.get(
-	"/google/redirect",
-	passport.authenticate("googleAdmin"),
-	(req, res, next) => {
-		const x = req.user;
-		var token = encodeURIComponent(req.user.token);
-		var name = encodeURIComponent(req.user.name);
-		res.redirect(
-			303,
-			"https://quizzie.codechefvit.com/?name=" + name + "&token=" + token
-		);
-	}
+    "/google/redirect",
+    passport.authenticate("googleAdmin"),
+    (req, res, next) => {
+        const x = req.user;
+        var token = encodeURIComponent(req.user.token);
+        var name = encodeURIComponent(req.user.name);
+        req.header['auth-token'] = req.user.token;
+        res.redirect(
+            303,
+            'http://localhost:3000/dashboard'
+        );
+    }
 );
 
 module.exports = router;

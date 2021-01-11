@@ -26,10 +26,9 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 ///Send Verification email
 
-router.get("/:userid", (req,res)=>
-{
-    item.getItemById(req.params.userid,User, (err, result) => {
-        console.log(result);  
+router.get("/:userid", (req, res) => {
+    item.getItemById(req.params.userid, User, (err, result) => {
+        console.log(result);
         res.send(result);
     })
 })
@@ -350,7 +349,7 @@ router.post("/login", async(req, res, next) => {
                             expiresIn: "1d",
                         }
                     );
-
+                    req.header['auth-token'] = token;
                     return res.status(200).json({
                         message: "Auth successful",
                         userDetails: {
@@ -479,11 +478,11 @@ router.post("/updateProfile", (req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const id = "5f37bfefcdd70f3e64bede36" || req.user.userId;
+    const id = req.user.userId;
     const updateOps = {};
     console.log(req.body);
-    updateOps.name=req.body.name;
-    updateOps.mobileNumber=req.body.mobileNumber;
+    updateOps.name = req.body.name;
+    updateOps.mobileNumber = req.body.mobileNumber;
     console.log(updateOps);
     // console.log(req.body.name,req.body.mobileNumber);
     // const updateOps = {};
