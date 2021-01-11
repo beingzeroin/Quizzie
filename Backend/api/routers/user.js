@@ -498,7 +498,7 @@ router.patch("/updateProfile", checkAuthUser,(req, res, next) => {
                 error: err,
             });
         } else {
-            res.send("success");
+            res.json({"message":"success"});
         }
     })
 
