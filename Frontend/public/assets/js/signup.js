@@ -16,7 +16,7 @@ function signup()
   var phoneno =String(document.getElementsByClassName("phone")[0].value);
   var password =String(document.getElementsByClassName("password")[0].value);
   var name =String(document.getElementsByClassName("name")[0].value);
- // alert(emailid+phoneno+password+name);
+   //alert(String(window.location.href));
   var c=4;
   if(name=="")
   {document.getElementById("namealert").innerHTML=`Please Enter the name!`; c--;}
@@ -48,7 +48,6 @@ function signup()
             mobileNumber : phoneno,
             password     : password }, 
     success: function (resultData) {
-      alert(resultData.message);
       if (resultData.message == "Email already exists")
         document.getElementById("emailalert").innerHTML=`This email already has an account`;
       if (resultData.message == "user created"){alert("Sucessfully Created");
