@@ -92,10 +92,10 @@ function init() {
       })
     }
   });
-  http.createServer(app).listen(app.get('port'), function () {
-    console.log("Express server listening on port " + app.get('port'));
-  });
-}
+//   http.createServer(app).listen(app.get('port'), function () {
+//     console.log("Express server listening on port " + app.get('port'));
+//   });
+ }
 
 async.series([],
 	function (err, results) {
@@ -201,4 +201,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
-});
+})

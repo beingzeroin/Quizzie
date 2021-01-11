@@ -447,7 +447,7 @@ router.get(
 );
 
 //Update user profile
-router.post("/updateProfile", (req, res, next) => {
+router.patch("/updateProfile", (req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -478,7 +478,7 @@ router.post("/updateProfile", (req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const id = "5f37bfefcdd70f3e64bede36" || req.user.userId;
+    const id ="5ffaf9b04aa7774d3034766c" || req.user.userId;
     const updateOps = {};
     console.log(req.body);
     updateOps.name=req.body.name;
@@ -499,7 +499,7 @@ router.post("/updateProfile", (req, res, next) => {
                 error: err,
             });
         } else {
-            res.redirect("/dashboard");
+            res.send("success");
         }
     })
 

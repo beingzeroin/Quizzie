@@ -1,4 +1,8 @@
 extends includes/basePage
+block scripts
+    script(src="/assets/js/dashboard.js")
+block styles
+    link(rel="stylesheet" href="/assets/css/dashboard.css")
 block page-content
         .container.dashboard-page
                     h1.dash-head Dashboard
@@ -8,8 +12,28 @@ block page-content
                         button.btn.col-4#2(type="button" onclick="openPage('Profile', this,2)") Profile
                     .row 
                         #Quizzes.tabcontent
-                            h3 Quizzes 
-                            p Home is where the heart is..
+                            button.btn.btn-success(type="button" style="margin-top:-10%") JOIN A QUIZ
+                            h3(style="padding-top:3%;color:#066EF7;") Enrolled Quizzes
+                            hr(style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;")
+                            .enrolled-list.root1
+                                ul(style="float:left")
+                                    each q in ['Test1','Test2','Test3','a','b']
+                                        li.d-flex.justify-content-between
+                                            img.bz(src="/assets/img/icons/bzfavicon.png")
+                                            .bottom-left(style="position: absolute;top:18%;left:40%;color:white") #{q}
+                                                i.far.fa-play-circle
+                                                    a(href="/start")
+                            h3(style="padding-top:3%;color:#066EF7;") Upcoming Quizzes
+                            hr(style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;")
+                            .upcoming-list.root2    
+                                ul(style="float:left")
+                                    each q in ['Test1','Test2','Test3']
+                                        li.d-flex.justify-content-between
+                                            img.bz(src="/assets/img/icons/bzfavicon.png")
+                                            .bottom-left(style="position: absolute;top:18%;left:40%;color:white") #{q}
+
+
+
                         #History.tabcontent
                             h3 History 
                             p Home is where the heart is..
