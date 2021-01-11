@@ -12,7 +12,7 @@ const rateLimit = require("express-rate-limit");
 const schedule = require('node-schedule');
 const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
-
+const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
 sgMail.setApiKey(process.env.SendgridAPIKey);
 
 ////routers
@@ -20,15 +20,16 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 const app = express();
 var fs = require('fs');
 var async = require('async'),
-http = require('http');
+    http = require('http');
 
-app.use(express.static(__dirname+'/Frontend/public/'));
+app.use(express.static(__dirname + '/Frontend/public/'));
 
 app.set('view engine', 'pug');
 app.set('views', './views');
 
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
+const uiroutes = require("./Backend/ui/routers/alluiroutes")
 
 
 const dbURI = process.env.dbURI;
@@ -61,52 +62,53 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get('/', async (req, res) => {
-	res.send('hi')
-  })
+app.get('/', async(req, res) => {
+    res.send('hi')
+})
 
 function init() {
-	console.log("init");
-  app.get('/', (req, res) =>{
-	  console.log("rendering indx");
-	   res.render('index')
-	});
-	console.log('no')
+    console.log("init");
+    app.get('/', (req, res) => {
+        console.log("rendering indx");
+        res.render('index')
+    });
+    console.log('no')
 
-  // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
-//   app.use('/api', apiRouter);
-//   app.use('/auth',authRouter);
-  // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
+    // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
+    //   app.use('/api', apiRouter);
+    //   app.use('/auth',authRouter);
+    // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
 
-  app.get('/:pagename', function (req, res) {
-    console.log("redirecting to");
-	console.log(req.params.pagename,__dirname);
-	// let pos = __dirname
-    if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
-      res.render(req.params.pagename, {
-        pageTitle: req.params.pagename
-      })
-    } else {
-      res.render('404', {
-        pageTitle: 'Page Not Found'
-      })
-    }
-  });
-//   http.createServer(app).listen(app.get('port'), function () {
-//     console.log("Express server listening on port " + app.get('port'));
-//   });
- }
+    app.use('/ui', uiroutes)
+    app.get('/:pagename', function(req, res) {
+        console.log("redirecting to");
+        console.log(req.params.pagename, __dirname);
+        // let pos = __dirname
+        if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
+            res.render(req.params.pagename, {   
+                pageTitle: req.params.pagename
+            })
+        } else {
+            res.render('404', {
+                pageTitle: 'Page Not Found'
+            })
+        }
+    });
+    http.createServer(app).listen(app.get('port'), function() {
+        console.log("Express server listening on port " + app.get('port'));
+    });
+}
 
 async.series([],
-	function (err, results) {
-	  if (err) {
-		console.log('Exception initializing database.');
-		throw err;
-	  } else {
-		console.log('Database initialization complete.');
-		init();
-	  }
-	});
+    function(err, results) {
+        if (err) {
+            console.log('Exception initializing database.');
+            throw err;
+        } else {
+            console.log('Database initialization complete.');
+            init();
+        }
+    });
 
 /////Rate Limiter
 const limiter = rateLimit({

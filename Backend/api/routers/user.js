@@ -26,10 +26,9 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 ///Send Verification email
 
-router.get("/:userid", (req,res)=>
-{
-    item.getItemById(req.params.userid,User, (err, result) => {
-        console.log(result);  
+router.get("/:userid", (req, res) => {
+    item.getItemById(req.params.userid, User, (err, result) => {
+        console.log(result);
         res.send(result);
     })
 })
@@ -349,7 +348,7 @@ router.post("/login", async(req, res, next) => {
                             expiresIn: "1d",
                         }
                     );
-
+                    req.header['auth-token'] = token;
                     return res.status(200).json({
                         message: "Auth successful",
                         userDetails: {
@@ -447,7 +446,7 @@ router.get(
 );
 
 //Update user profile
-router.patch("/updateProfile", (req, res, next) => {
+router.patch("/updateProfile", checkAuthUser,(req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -478,11 +477,11 @@ router.patch("/updateProfile", (req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const id ="5ffaf9b04aa7774d3034766c" || req.user.userId;
+    const id = req.user.userId;
     const updateOps = {};
     console.log(req.body);
-    updateOps.name=req.body.name;
-    updateOps.mobileNumber=req.body.mobileNumber;
+    updateOps.name = req.body.name;
+    updateOps.mobileNumber = req.body.mobileNumber;
     console.log(updateOps);
     // console.log(req.body.name,req.body.mobileNumber);
     // const updateOps = {};

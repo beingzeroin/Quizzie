@@ -1,0 +1,21 @@
+extends includes/basePage
+block styles
+    link(rel="stylesheet" href="/assets/css/login.css")
+block page-content
+    body(style='background:rgb(240, 255, 240)')  
+       
+        div.main(style=' padding-bottom:16%')
+            p.head(style='margin-left:3.5em')
+                b Login Now
+
+            .g-signin2(data-onsuccess='onSignIn' style='margin-left:13em;margin-bottom:1em;width:150px;height:35px' )
+      
+            input.field(type='email' placeholder='Email')
+         
+            input.field(type='password' placeholder='Password')
+        
+            a(href="dashboard")
+                button.btn(type="button" href="/dashboard") Login
+      
+            a(href="signup")
+                p.signup(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!

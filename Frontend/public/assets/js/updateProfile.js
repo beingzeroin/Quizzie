@@ -11,7 +11,7 @@ function updatedata(data)
        method: "PATCH",
        success: function(result) {
          console.log(result);
-         location.href="/dashboard";
+         location.href="/ui/dashboard";
        },
        error: function(err) {
          console.log(err);
@@ -22,20 +22,35 @@ function validate()
 {
   var name=document.getElementById("1").value;
   var mobile=document.getElementById("2").value;
-  var check=false;
+  var check=true;
   let c=0;
   let d=0;
   let e=0;
   let f=0;
-  if(name==='')c=1;
-  if(mobile=='')d=1;
-  if(!IsPhoneno(mobile))f=1;
-  if(mobile && mobile.length!=10)e=1;
+  if(name==='')
+  {
+    check=false;
+    c=1;
+  }
+  if(mobile=='')
+  {
+    d=1;
+    check=false;
+  }
+  if(!IsPhoneno(mobile))
+  {
+    f=1;
+    check=false;
+  }
+  if(mobile && mobile.length!=10)
+{
+  e=1;
+  check=false;
+}
   if(c==1 && d==1)
   {
     document.getElementById("nameerror").innerHTML="Please Enter Name";
     document.getElementById("phoneerror").innerHTML="Please Enter Mobile Number";
-    check=true;
   }
   else
   {
@@ -45,12 +60,10 @@ function validate()
       if(e==1)
       {
         document.getElementById("phoneerror").innerHTML="Please Enter 10 digits Mobile Number";
-        check=true;
       }
       else if(f==1)
       {
         document.getElementById("phoneerror").innerHTML="Please Enter Valid  Mobile Number";
-        check=true;
       }
       else 
         document.getElementById("phoneerror").innerHTML='';
@@ -61,12 +74,10 @@ function validate()
       if(e==1)
       {
         document.getElementById("phoneerror").innerHTML="Please Enter 10 digits Mobile Number";
-        check=true;
       }
       else if(f==1)
       {
-        document.getElementById("phoneerror").innerHTML="Please Enter Valid  Mobile Number";
-        check=true;  
+        document.getElementById("phoneerror").innerHTML="Please Enter Valid  Mobile Number"; 
       }
       else
       document.getElementById("phoneerror").innerHTML='';
@@ -75,10 +86,9 @@ function validate()
     {
       document.getElementById("nameerror").innerHTML="";
       document.getElementById("phoneerror").innerHTML="Please Enter Mobile Number";
-      check=true;
     }
   }
-  if(!check)
+  if(check)
   {
    updatedata({"name":name,"mobileNumber":mobile});
   }
