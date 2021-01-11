@@ -15,22 +15,22 @@ block page-content
             .quiz-details.ml-4.mt-5
                 .row
                     h6.label Name :  
-                    span.quiz-detail-text Test
+                    span.quiz-detail-text #{quizdetails.quizName}
                 .row
                     h6.label Date :   
-                    span.quiz-detail-text Mon jan 11 2021
+                    span.quiz-detail-text #{quizdetails.scheduledFor.split(' ')[0]}
                 .row
                     h6.label Time :
-                    span.quiz-detail-text 10:40:25 AM
+                    span.quiz-detail-text #{quizdetails.scheduledFor.split(' ')[1]}
                 .row
                     h6.label Duration :
-                    span.quiz-detail-text 25 minutes
+                    span.quiz-detail-text #{quizdetails.quizDuration} minutes
                 .row
                     h6.label Type :
-                    span.quiz-detail-text private
+                    span.quiz-detail-text #{quizdetails.quizType}
                 .row
                     h6.label Quiz Code :
-                    span.quiz-detail-text 123456
+                    span.quiz-detail-text #{quizdetails.quizCode}
             .quiz-Questions.mt-5
                     .row
                         h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center !important;") Questions
@@ -38,23 +38,6 @@ block page-content
                     .row
                         button.btn.btn-success.btn-sm.ml-auto(style="float:right") ADD A QUESTION
                     .row
-                        ul.collapsible.col.offset-s3.s6(data-collapsible='expandable')
-                            li
-                                .collapsible-header
-                                b 1. What happens if I add a Custom User?
-                                .collapsible-body
-                                p
-                                    | Custom User is a way to view submissions of a friend. Note: Only you can see his/her
-                                    | submissions
-                            li
-                                .collapsible-header
-                                b 2. When can I update the submissions?
-                                .collapsible-body
-                                p
-                                    | You can explicitly update the submissions by clicking on the &quot;Retrieve my
-                                    | submissions&quot; button on profile page. Also, the submissions are automatically updated
-                                    | every morning with a few optimizations - 
-                                    a(href='/ui/retrieval_logic') exact process
 
             .students-list.mt-5
                     .row
