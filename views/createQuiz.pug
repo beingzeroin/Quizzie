@@ -1,0 +1,29 @@
+extends includes/basePage
+block scripts
+    script(src="/assets/js/createQuiz.js")
+block styles
+    link(rel="stylesheet" href="/assets/css/createQuiz.css")
+block page-content
+    .container.CreateQuiz
+        .login-form
+            h1(style="color:#5190f5;text-align:center" ) Quiz Details
+            .row.form-group.mb-3.d-flex.justify-content-center
+                label.form-label.mt-3#quizname(style="text-align:center") Quiz Name
+                input.form-control.col-12.ml-2.mb-3#quizName(type="text" name="quizName" placeholder="Enter Quiz Name" style="text-align:center;") 
+            .row.d-flex(style="display:inline;")
+                .col
+                    span.quiz Select Quiz Date
+                    input.form-control.mb-5.col-12#date(type="date" name='date' step="1")
+                .col
+                    span.quiz Select Quiz Time
+                    input.form-control.mb-5.col-12#time(type="time" name='time' step="1")
+            .row
+                input.form-range.col-12.mb-5#range(type="range" min="5" max="60" step="5" name="quizDuration")
+            .row.d-flex.justify-content-center
+                label.form-label(style="text-align:center") Select Quiz Type
+            .row.form-group.d-flex.justify-content-center
+                select.form-control.col-5#quizType(name="quizType")
+                    option(selected='Private' value="Private" ) Private
+                    option(value='Public') Public
+            .row.mt-5.d-flex.justify-content-center
+                button.btn(type="button" onclick="showdata()" style="background-color:white;border-color:blue;color:blue") Create Quiz

@@ -1,11 +1,5 @@
 extends includes/basePage
-block head-styles
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='google-signin-scope' content='profile email')
-    meta(name='google-signin-client_id' content='MY_CLIENT_ID_ON_GOOGLE_DEV.apps.googleusercontent.com')
-    script(src='https://apis.google.com/js/api.js')
-    script(src='https://apis.google.com/js/platform.js' async='' defer='')
+block styles
     link(rel="stylesheet" href="/assets/css/login.css")
 block page-content
     body(style='background:rgb(240, 255, 240)')  
@@ -23,8 +17,12 @@ block page-content
             button.btn(type="button" onclick='login()' href="/dashboard") Login
       
             a(href="signup")
+<<<<<<< HEAD
                 p.signup(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!
         
         script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
         script(src="/assets/js/login.js")
             
+=======
+                p.signup(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!
+>>>>>>> a0bfb467e9c23b0ee029e5fc2c60aedb4380d672

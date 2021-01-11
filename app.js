@@ -14,7 +14,7 @@ const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
 const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
 sgMail.setApiKey(process.env.SendgridAPIKey);
-
+const itemlib=require("./Backend/api/lib/itemlib");
 ////routers
 
 const app = express();
@@ -29,6 +29,8 @@ app.set('views', './views');
 
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
+const uiroutes = require("./Backend/ui/routers/alluiroutes");
+const quiz = require("./Backend/api/models/quiz");
 
 
 const dbURI = process.env.dbURI;
@@ -72,18 +74,26 @@ function init() {
         res.render('index')
     });
     console.log('no')
-
+    app.get('/editQuiz/:quizid',(req,res)=>
+    {
+        itemlib.getItemById(req.params.quizid,quiz,(err,result)=>
+        {
+            if (err) res.send('Error has occured')
+            else if (result) res.render('editquiz.pug', { quizdetails: result });
+        })
+    })
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
     //   app.use('/api', apiRouter);
     //   app.use('/auth',authRouter);
     // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
 
+    app.use('/ui', uiroutes)
     app.get('/:pagename', function(req, res) {
         console.log("redirecting to");
         console.log(req.params.pagename, __dirname);
         // let pos = __dirname
         if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
-            res.render(req.params.pagename, {
+            res.render(req.params.pagename, {   
                 pageTitle: req.params.pagename
             })
         } else {
@@ -201,4 +211,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
-});
+})

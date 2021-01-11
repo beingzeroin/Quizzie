@@ -7,18 +7,20 @@ body, html {
   font-family: Arial;
   background-color:#f8f9fa;
 }
-
-.container.Profile
+.container.CreateQuiz
 {
     justify-content: center;
     background-color: white;
     height: 100%;
-    margin-left: 30%;
-    width: 40%;
+    margin-left: 25%;
+    width: 50%;
 }
 .login-form {
     min-height: 100%;
     background-color: #fff;
-    margin: 0 25%;
+     margin: 0 5%; 
     flex-direction: column;
+}
+span.quiz{
+    font-size:15px !important;
 }
