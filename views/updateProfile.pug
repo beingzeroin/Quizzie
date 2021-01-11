@@ -11,11 +11,15 @@ block page-content
                 .form-group(style="padding-bottom:10%")
                     label Name
                     br
-                    input.form-control#1(type="text"  name='name' placeholder="Enter Name " required='' )
+                    input.form-control#1(type="text"  name='name' value=user.name  required='' )
                 .form-group(style="padding-bottom:10%")
                     label PhoneNumber
                     br
-                    input.form-control#2(type="text" name='mobileNumber' placeholder="Enter PhoneNumber "  maxlength="10" minlength="10"  required='')
+                    if user.mobileNumber
+                        input.form-control#2(type="text" name='mobileNumber' value=user.mobileNumber maxlength="10" minlength="10"  required='')
+                    else
+                        input.form-control#2(type="text" name='mobileNumber' placeholder=''  maxlength="10" minlength="10"  required='')
+                        
                 button.btn.btn-primary Update Profile
         
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
