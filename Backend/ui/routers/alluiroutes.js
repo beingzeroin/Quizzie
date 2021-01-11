@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const dashboard = require('./dashboard');
-router.use('/dashboard', dashboard);
+const login = require("./login");
+const signup = require("./signup");
 
+router.use('/dashboard', dashboard);
+router.use('/login', login)
+router.use('/signup', signup)
 module.exports = router
