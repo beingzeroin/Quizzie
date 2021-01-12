@@ -64,10 +64,7 @@ app.use(passport.session());
 
 function init() {
     console.log("init");
-    app.get('/', (req, res) => {
-        console.log("rendering indx");
-        res.render('home.pug')
-    });
+
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
     //   app.use('/api', apiRouter);
     //   app.use('/auth',authRouter);
@@ -75,6 +72,10 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
+    app.get('/', (req, res) => {
+        console.log("rendering indx");
+        res.render('home.pug')
+    });
 
 
     // app.get('/:pagename', function(req, res) {
@@ -191,9 +192,9 @@ app.use((error, req, res, next) => {
 //     // console.log(quizzes)
 // });
 
-let PORT = process.env.PORT;
-if (process.env.mode = 'devlopment')
-    PORT = process.env.development
+let PORT = process.env.PORT || 3000;
+// if (process.env.mode = 'devlopment')
+//     PORT = process.env.development
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
