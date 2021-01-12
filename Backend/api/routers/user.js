@@ -447,7 +447,7 @@ router.get(
 );
 
 //Update user profile
-router.patch("/updateProfile", checkAuthUser,(req, res, next) => {
+router.patch("/updateProfile", checkAuthUser, (req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -499,7 +499,7 @@ router.patch("/updateProfile", checkAuthUser,(req, res, next) => {
                 error: err,
             });
         } else {
-            res.json({"message":"success"});
+            res.json({ "message": "success" });
         }
     })
 
