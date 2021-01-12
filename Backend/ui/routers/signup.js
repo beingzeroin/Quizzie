@@ -13,4 +13,5 @@ const router = express.Router();
 router.get("/user", (req, res) => {
     res.render('signup.pug');
 })
+
 module.exports = router
