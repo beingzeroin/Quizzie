@@ -18,42 +18,27 @@ function openPage(pageName, elmnt, id) {
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].style.backgroundColor = "";
     } 
+
+    if(pageName=='History')
+    {   var a =  [{ test: "Test1",
+                    score : 1},
+                  { test: "Test1",
+                    score : 2},
+                  { test: "Test3",
+                    score : 3}];
+        var h="";
+        for( var i=0; i<a.length;i++)
+        { h+=`<a href="results"><div class="test" ><div class="bar"><p class="para">` + a[i].test +
+          `</p><p class="para">Score : ` + a[i].score +
+          `</p></div><a href="results"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
+        }
+        document.getElementById("test").innerHTML=h;
+    }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
 }
 
 let element = document.getElementById("0");
-
-function showdata() {
-    $.ajax({
-        url: "/api/user/5f37bfefcdd70f3e64bede36",
-        method: "GET",
-        success: function(result) {
-            document.getElementById("Profile").querySelectorAll(".details")[0].innerHTML = `
-            <div class="row">
-            <h4><label> name </label> : ${result.name} </h4>
-            </div>
-            <div class="row">
-            <h4><label>Email</label> : ${result.email}</h4>
-            </div>
-            <div class="row">
-            <h4><label>Phone Number</label> : ${result.mobileNumber}</h4>
-            </div>
-            <div class="row">
-            <h4><label>Quizzes Enrolled</label> : 0</h4>
-            </div>
-            <div class="row">
-            <h4><label>Quizzes Completed</label> : 0</h4>
-            </div>
-            `;
-
-        },
-        error: function(err) {
-            console.log(err);
-        }
-    });
-}
 if (typeof(element) != 'undefined' && element != null) {
     element.click();
-    // showdata();
 }

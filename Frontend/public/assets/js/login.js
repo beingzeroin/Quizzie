@@ -39,7 +39,7 @@ function login()
             password     : password }, 
     success: function (resultData) {
       if (resultData.message == "Auth successful")
-                       window.location.href= process.env.developmentUrl + '/ui/dashboard';
+                       window.location.href= '/ui/dashboard';
       },//sucess
     error: function (resultData) {
         alert(JSON.parse(JSON.stringify(resultData.responseText)));

@@ -33,14 +33,14 @@ function login()
   if(c==2)
   { $.ajax({
     type: "POST",
-    url: "/api/owner/login",
+    url: "/api/admin/login",
     async: false,
     data: { email        : emailid,
             password     : password }, 
     success: function (resultData) {
       alert(resultData);
       if (resultData.message == "Auth successful")
-                       window.location.href= process.env.developmentUrl + '/ui/dashboard';
+                       window.location.href= '/ui/dashboard';
       },//sucess
     error: function (resultData) {
         alert(JSON.parse(JSON.stringify(resultData.responseText)));

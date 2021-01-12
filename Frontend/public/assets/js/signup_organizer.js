@@ -41,7 +41,7 @@ function signup()
   if(c==4)
   { $.ajax({
     type: "POST",
-    url: "/api/owner/signup",
+    url: "/api/admin/signup",
     async: false,
     data: { userType     : "Owner",
             email        : emailid,
@@ -52,7 +52,7 @@ function signup()
       if (resultData.message == "Email already exists")
         document.getElementById("emailalert").innerHTML=`This email already has an account`;
       if (resultData.message == "user created"){alert("Sucessfully Created");
-      window.location.href= process.env.developmentUrl + '/ui/login/organizer';
+      window.location.href='/ui/login/organizer';
     }
       },//sucess
     error: function (resultData) {
