@@ -192,9 +192,9 @@ app.use((error, req, res, next) => {
 //     // console.log(quizzes)
 // });
 
-let PORT = process.env.PORT;
-if (process.env.mode = 'devlopment')
-    PORT = process.env.development
+let PORT = process.env.PORT || 3000;
+// if (process.env.mode = 'devlopment')
+//     PORT = process.env.development
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
