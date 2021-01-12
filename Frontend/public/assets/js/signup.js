@@ -51,9 +51,12 @@ function signup()
       if (resultData.message == "Email already exists")
         document.getElementById("emailalert").innerHTML=`This email already has an account`;
       if (resultData.message == "user created"){alert("Sucessfully Created");
-      window.location.href="http://localhost:3000/login";
+      window.location.href= process.env.developmentUrl + '/ui/login/user';
     }
-      }//sucess
+      },//sucess
+    error: function (resultData) {
+      alert(JSON.parse(JSON.stringify(resultData.responseText)));
+      }//error
       });   
   }
 

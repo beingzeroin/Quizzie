@@ -13,4 +13,8 @@ const router = express.Router();
 router.get("/user", (req, res) => {
     res.render('login.pug');
 })
+
+router.get("/organizer", (req, res) => {
+    res.render('login_organizer.pug');
+})
 module.exports = router

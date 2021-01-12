@@ -1,4 +1,4 @@
-function login()
+function signup()
 { 
   //Email verification
   function IsEmail(email){
@@ -13,9 +13,14 @@ function login()
     else return true; }
 
   var emailid =String(document.getElementsByClassName("email")[0].value);
+  var phoneno =String(document.getElementsByClassName("phone")[0].value);
   var password =String(document.getElementsByClassName("password")[0].value);
- // alert(emailid+phoneno+password+name);
-  var c=2;
+  var name =String(document.getElementsByClassName("name")[0].value);
+   //alert(String(window.location.href));
+  var c=4;
+  if(name=="")
+  {document.getElementById("namealert").innerHTML=`Please Enter the name!`; c--;}
+  else document.getElementById("namealert").innerHTML=``;
   if(emailid=="")
   {document.getElementById("emailalert").innerHTML=`Please Enter the email!`; c--;}
   else document.getElementById("emailalert").innerHTML=``;
@@ -23,28 +28,37 @@ function login()
   {document.getElementById("passwordalert").innerHTML=`Please Enter the Password!`; c--;}
   else document.getElementById("passwordalert").innerHTML=``;
 
-  if(c==2)
+  if(c==4)
   { if(!IsEmail(emailid))
     {document.getElementById("emailalert").innerHTML=`Invalid Email!`; c--;}
     else document.getElementById("emailalert").innerHTML=``;
+    if(!IsPhoneno(phoneno) && phoneno!="")
+    {document.getElementById("phonealert").innerHTML=`Invalid PhoneNo.`; c--;}
+    else document.getElementById("phonealert").innerHTML=``;
   }
 
   //ajax call to create an instance to the user in database
-  if(c==2)
+  if(c==4)
   { $.ajax({
     type: "POST",
-    url: "/api/user/login",
+    url: "/api/owner/signup",
     async: false,
-    data: { email        : emailid,
+    data: { userType     : "Owner",
+            email        : emailid,
+            name         : name,
+            mobileNumber : phoneno,
             password     : password }, 
     success: function (resultData) {
-      if (resultData.message == "Auth successful")
-                       window.location.href= process.env.developmentUrl + '/ui/dashboard';
+      if (resultData.message == "Email already exists")
+        document.getElementById("emailalert").innerHTML=`This email already has an account`;
+      if (resultData.message == "user created"){alert("Sucessfully Created");
+      window.location.href= process.env.developmentUrl + '/ui/login/organizer';
+    }
       },//sucess
     error: function (resultData) {
-        alert(JSON.parse(JSON.stringify(resultData.responseText)));
-        }//error
+      alert(JSON.parse(JSON.stringify(resultData.responseText)));
+      }//error
       });   
   }
 
-}//End of signup function
+}//End of signup function 

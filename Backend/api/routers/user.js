@@ -206,7 +206,7 @@ router.post("/signup", async(req, res, next) => {
             });
         } else {
             if (user.length >= 1) {
-                res.json({
+                res.status(409).json({
                     message: "Email already exists",
                 });
             } else {
@@ -321,7 +321,7 @@ router.post("/login", async(req, res, next) => {
             });
         } else {
             if (user.length < 1) {
-                return res.json({
+                return res.status(401).json({
                     message: "Auth failed: Email not found probably",
                 });
             }
@@ -331,9 +331,8 @@ router.post("/login", async(req, res, next) => {
             //     });
             // }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                console.log(err,result);
                 if (err) {
-                    return res.json({
+                    return res.status(401).json({
                         message: "Auth failed",
                     });
                 }
