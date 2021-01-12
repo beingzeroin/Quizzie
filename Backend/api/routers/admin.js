@@ -385,7 +385,7 @@ router.get("/", async(req, res, next) => {
 });
 
 ////Update admin profile
-router.patch("/updateProfile", (req, res, next) => {
+router.patch("/updateProfile", checkAuthAdmin, (req, res) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -404,15 +404,22 @@ router.patch("/updateProfile", (req, res, next) => {
     //         });
     //     }
     // });
+    console.log(req.body);
     const id = req.user.userId;
+    console.log(id)
     const updateOps = {};
-    const updatableFields = ["name", "mobileNumber"];
-    var flag = 0;
-    for (const ops of req.body.updateOps) {
-        if (updatableFields.includes(ops.propName)) {
-            updateOps[ops.propName] = ops.value;
-        }
-    }
+    updateOps.name = req.body.name;
+    updateOps.mobileNumber = req.body.mobileNumber;
+    console.log(updateOps);
+    // const id = req.user.userId;
+    // const updateOps = {};
+    // const updatableFields = ["name", "mobileNumber"];
+    // var flag = 0;
+    // for (const ops of req.body.updateOps) {
+    //     if (updatableFields.includes(ops.propName)) {
+    //         updateOps[ops.propName] = ops.value;
+    //     }
+    // }
     item.updateItemField({ _id: id }, { $set: updateOps }, Admin, (err, result) => {
         if (err) {
             res.status(500).json({
