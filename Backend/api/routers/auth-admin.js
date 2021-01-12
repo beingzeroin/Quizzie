@@ -41,7 +41,7 @@ router.get(
         req.header['auth-token'] = req.user.token;
         res.redirect(
             303,
-            'http://localhost:3000/ui/dashboard'
+            process.env.developmentUrl + '/ui/dashboard'
         );
     }
 );

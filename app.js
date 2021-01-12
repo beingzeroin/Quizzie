@@ -14,7 +14,7 @@ const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
 const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
 sgMail.setApiKey(process.env.SendgridAPIKey);
-const itemlib=require("./Backend/api/lib/itemlib");
+const itemlib = require("./Backend/api/lib/itemlib");
 ////routers
 
 const app = express();
@@ -62,46 +62,35 @@ console.log(Date.now())
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.get('/', async(req, res) => {
-    res.send('hi')
-})
-
 function init() {
     console.log("init");
     app.get('/', (req, res) => {
         console.log("rendering indx");
-        res.render('index')
+        res.render('home.pug')
     });
-    console.log('no')
-    app.get('/editQuiz/:quizid',(req,res)=>
-    {
-        itemlib.getItemById(req.params.quizid,quiz,(err,result)=>
-        {
-            if (err) res.send('Error has occured')
-            else if (result) res.render('editquiz.pug', { quizdetails: result });
-        })
-    })
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
     //   app.use('/api', apiRouter);
     //   app.use('/auth',authRouter);
     // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
 
-    app.use('/ui', uiroutes)
-    app.get('/:pagename', function(req, res) {
-        console.log("redirecting to");
-        console.log(req.params.pagename, __dirname);
-        // let pos = __dirname
-        if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
-            res.render(req.params.pagename, {   
-                pageTitle: req.params.pagename
-            })
-        } else {
-            res.render('404', {
-                pageTitle: 'Page Not Found'
-            })
-        }
-    });
+    app.use('/ui', uiroutes);
+    app.use("/api", apiroutes);
+
+
+    // app.get('/:pagename', function(req, res) {
+    //     console.log("redirecting to");
+    //     console.log(req.params.pagename, __dirname);
+    //     // let pos = __dirname
+    //     if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
+    //         res.render(req.params.pagename, {
+    //             pageTitle: req.params.pagename
+    //         })
+    //     } else {
+    //         res.render('404', {
+    //             pageTitle: 'Page Not Found'
+    //         })
+    //     }
+    // });
     http.createServer(app).listen(app.get('port'), function() {
         console.log("Express server listening on port " + app.get('port'));
     });
@@ -143,12 +132,7 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
-//ALL API ROUTES
-app.use("/api", apiroutes);
 
-app.get('/', async(req, res) => {
-    res.send('hi')
-})
 
 //route not found
 app.use((req, res, next) => {
@@ -207,7 +191,9 @@ app.use((error, req, res, next) => {
 //     // console.log(quizzes)
 // });
 
-const PORT = process.env.PORT || 3000;
+let PORT = process.env.PORT;
+if (process.env.mode = 'devlopment')
+    PORT = process.env.development
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
