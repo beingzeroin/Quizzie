@@ -30,12 +30,4 @@ router.get("/", checkAuth, (req, res) => {
         })
     }
 })
-
-router.get("/result", checkAuthUser, (req, res) => {
-    item.getItemById(req.user.userId, User, (err, result) => {
-        if (err) res.send('Error has occured')
-        else if (result) res.render('result.pug');
-        else res.send("Something went wrong")
-    })
-})
 module.exports = router

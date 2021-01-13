@@ -16,7 +16,6 @@ function openPage(pageName, elmnt, id) {
     }
     tablinks = document.getElementsByClassName("tabs");
     for (i = 0; i < tablinks.length; i++) {
-<<<<<<< HEAD
       tablinks[i].style.backgroundColor = "";
     } 
 
@@ -36,9 +35,7 @@ function openPage(pageName, elmnt, id) {
           `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
         }
         document.getElementById("test").innerHTML=h;
-=======
         tablinks[i].style.backgroundColor = "";
->>>>>>> 77fbf29181dcb6c2e0727cd9fad59f9210bdd2f6
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";

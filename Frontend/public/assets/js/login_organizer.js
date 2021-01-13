@@ -26,7 +26,6 @@ function login() {
         c--;
     } else document.getElementById("passwordalert").innerHTML = ``;
 
-<<<<<<< HEAD
   //ajax call to create an instance to the user in database
   if(c==2)
   { $.ajax({
@@ -45,34 +44,4 @@ function login() {
         }//error
       });   
   }
-=======
-    if (c == 2) {
-        if (!IsEmail(emailid)) {
-            document.getElementById("emailalert").innerHTML = `Invalid Email!`;
-            c--;
-        } else document.getElementById("emailalert").innerHTML = ``;
-    }
->>>>>>> 77fbf29181dcb6c2e0727cd9fad59f9210bdd2f6
-
-    //ajax call to create an instance to the user in database
-    if (c == 2) {
-        $.ajax({
-            type: "POST",
-            url: "/api/owner/login",
-            async: false,
-            data: {
-                email: emailid,
-                password: password
-            },
-            success: function(resultData) {
-                alert(resultData);
-                if (resultData.message == "Auth successful")
-                    window.location.href = '/ui/dashboard';
-            }, //sucess
-            error: function(resultData) {
-                    alert(JSON.parse(JSON.stringify(resultData.responseText)));
-                } //error
-        });
-    }
-
 } //End of signup function
