@@ -43,24 +43,6 @@ function signup() {
         } else document.getElementById("phonealert").innerHTML = ``;
     }
 
-<<<<<<< HEAD
-  //ajax call to create an instance to the user in database
-  if(c==4)
-  { $.ajax({
-    type: "POST",
-    url: "/api/admin/signup",
-    async: false,
-    data: { userType     : "Owner",
-            email        : emailid,
-            name         : name,
-            mobileNumber : phoneno,
-            password     : password }, 
-    success: function (resultData) {
-      if (resultData.message == "Email already exists")
-        document.getElementById("emailalert").innerHTML=`This email already has an account`;
-      if (resultData.message == "user created"){alert("Sucessfully Created");
-      window.location.href='/ui/login/organizer';
-=======
     //ajax call to create an instance to the user in database
     if (c == 4) {
         $.ajax({
@@ -85,7 +67,6 @@ function signup() {
                     alert(JSON.parse(JSON.stringify(resultData.responseText)));
                 } //error
         });
->>>>>>> 77fbf29181dcb6c2e0727cd9fad59f9210bdd2f6
     }
 
 } //End of signup function
