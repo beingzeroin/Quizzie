@@ -19,7 +19,6 @@ const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthOwner = require("../middleware/checkAuthOwner");
 const verifyURL = require("../middleware/verifyURL");
-const user = require("../models/user");
 
 const router = express.Router();
 
