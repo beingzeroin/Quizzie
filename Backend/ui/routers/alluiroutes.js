@@ -18,4 +18,12 @@ router.get("/updateProfile", checkAuthUser, (req, res) => {
         else res.send("Something went wrong")
     })
 })
+
+router.get("/result", checkAuthUser, (req, res) => {
+    item.getItemById(req.user.userId, User, (err, result) => {
+        if (err) res.send('Error has occured')
+        else if (result) res.render('result.pug', { user: result });
+        else res.send("Something went wrong")
+    })
+})
 module.exports = router
