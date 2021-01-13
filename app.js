@@ -71,7 +71,7 @@ function init() {
     console.log("init");
     app.get('/', (req, res) => {
         console.log("rendering indx");
-        res.render('index')
+        res.render('home')
     });
     console.log('no')
     app.get('/editQuiz/:quizid',(req,res)=>
@@ -79,7 +79,11 @@ function init() {
         itemlib.getItemById(req.params.quizid,quiz,(err,result)=>
         {
             if (err) res.send('Error has occured')
-            else if (result) res.render('editquiz.pug', { quizdetails: result });
+            else if (result)
+            {
+                console.log(result);
+                res.render('editquiz.pug', { quizdetails: result });
+            } 
         })
     })
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
