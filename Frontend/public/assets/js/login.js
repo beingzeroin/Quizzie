@@ -6,13 +6,6 @@ function login() {
         else return true;
     }
 
-    //Phone Number verfication
-    function IsPhoneno(phoneno) {
-        var regex = /^([7-9][0-9]{9})$/g;
-        if (!regex.test(phoneno)) return false;
-        else return true;
-    }
-
     var emailid = String(document.getElementsByClassName("email")[0].value);
     var password = String(document.getElementsByClassName("password")[0].value);
     // alert(emailid+phoneno+password+name);

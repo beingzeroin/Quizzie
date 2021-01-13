@@ -88,3 +88,12 @@ ul {
   height:120px;
   margin:2em;
  }
+
+.bar{float:left;
+  margin-right:830px;
+}
+.test{background:azure;
+    padding-bottom:.5%;
+    width:950px;
+    margin-bottom:.5em;}
+.para{margin-left:1em;color:black}
