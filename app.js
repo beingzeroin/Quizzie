@@ -72,7 +72,7 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
-    app.get('/', (req, res) => {
+    app.get('/home', (req, res) => {
         console.log("rendering indx");
         res.render('home.pug')
     });
