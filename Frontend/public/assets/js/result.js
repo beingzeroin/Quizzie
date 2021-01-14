@@ -14,31 +14,29 @@ function show()
  ]
 
  var h="";
-
+ 
  for(var i=0;i<a.length;i++)
- { h+=`<div class="dropdown">
-          <button class="dropbtn">
-          <div class="bar">
-             <p class="para">a`;
-   if(a[i].correct == a[i].chosen)
-        h+=`<p class='right'>&#10004</p>`;
-   else h+=`<p class='wrong'>&#10006</p>`;
-   h+=` </p> 
-   </div>
-   <i class="fa fa-chevron-down fa-2x" aria hidden="true" style="color:black"></i>
-     <div class="dropdown-content">`;
-       for(var j=0;j<a[i].option;j++)
-       {
-        if(j+1==a[i].correct)
-         h+=`<p class='odot fa-2x' style=" color:green">&#8857</p>`;
-        else if(a[i].chosen==j+1)
-         h+=`<p class='odot fa-2x' style="color:red">&#8857</p>`;
-        else h+=`<p class='odot fa-2x' style="color:grey">&#8857</p>`;
-       }
-    h+=`</div>
-   </button>
-   </div>`;
-}
+ {  h+=`<div class="container">
+            <button type="button" id="question" class="btn">
+                <p class="para">a</p>`;
+              if(a[i].chosen==a[i].correct)
+    h+=         `<p class='right'>&#10004</p>`;
+              else
+    h+=         `<p class='wrong'>&#10006</p>`;
+    h+=         `<p class='arrow'>&#9660</p>`;
+    h+=      `</button>`; 
+
+   h+=  `<div class="sol" style="margin-bottom:1em;margin:left:30%; background-color:rgb(238, 241, 241)">`;
+              for(var j=0;j<a[i].option;j++)
+              {
+                if(j+1==a[i].correct)
+                h+=`<p class='odot fa-2x' style="color:green;float:down">&#8857</p>`;
+                else if(a[i].chosen==j+1)
+                 h+=`<p class='odot fa-2x' style="color:red;float:down">&#8857</p>`;
+                else h+=`<p class='odot fa-2x' style="color:grey;float:down">&#8857</p>`;
+              }
+    h+=   `</div></div>`;
+ }
 document.getElementById("questions").innerHTML=h;
 
 }

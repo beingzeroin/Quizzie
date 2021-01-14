@@ -8,7 +8,7 @@ block page-content
         div.main(style=' padding-bottom:16%')
             p.head(style='margin-left:3.5em')
                 b Login Now
-            div(style='margin-left:13em;padding-bottom:3%')
+            div.google
                 a(href="/api/auth/admin/google")
                     .google-btn
                         .google-icon-wrapper
@@ -23,7 +23,7 @@ block page-content
             button.btn(type="button" onclick='login()' href="/ui/dashboard") Login
       
             a(href="/ui/signup/organizer")
-                p.signup(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!
+                p.signup Don't have an account? Join the Quizzie now!
 
         block scripts
             script(src="/assets/js/login_organizer.js")

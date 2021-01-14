@@ -1,59 +1,50 @@
-body{background:rgb(231, 231, 233);}
-div.main{ margin-left:4em;
-    margin-top:-2em;
-    margin-right:4em;
+body{background:rgb(204, 204, 207) !important;}
+div.main{ margin-left:3vw;
+    margin-top:-2vw;
+    margin-right:3vw;
     background:white;
  }
- div#questions{padding-bottom:13%;}
+ div#questions{padding-bottom:13vw;}
 
  b.head{ color: dodgerblue;
     margin-left:11em;
-    font-size:300%; 
+    font-size:3.4vw; 
     margin-bottom: .5em;}
 b.res{ color: dodgerblue;
         margin-left:15.1em;
-        font-size:220%; 
+        font-size:2.5vw; 
         margin-bottom: .5em;}
 b.name,b.score{color: dodgerblue;
     margin-left:2.2em;
-    font-size:150%; 
+    font-size:2vw; 
     margin-bottom:.5em;
 }
 
-div.line{ width:72em;
+div.line{ width:85vw;
           height:6px;
           background:dodgerblue;
-          margin-left:2.2em;
+          margin-left:4vw;
           margin-bottom:3em;
         }
-div.line2{ width:68em;
+div.line2{ width:80vw;
             height:6px;
             background:dodgerblue;
-            margin-left:5em;
+            margin-left:6vw;
             margin-bottom:3em;
           }
+#question{       background-color:rgb(238, 241, 241) !important;
+            border:none; 
+            width:80%;
+            height:4em;
+            text-align:left;
+            display: block;}
+#question:hover{background-color:azure !important;}
+#question:focus {outline:none !important;}
+.para{color:black;font-size:2vw;float:left;}
+.right {color:green; margin-left:1em;font-size:180%;float:left;}
+.wrong {color:red; margin-left:1em;font-size:180%;float:left;}
+.arrow { margin-left:95%;margin-top: 1.8%;font-size:130%;}
+.odot{margin-bottom:.07em; margin-left:1%;}
+.sol{width:80%; height:.5%;}
 
-.bar{float:left;
-     margin-right:800px;}
-.para{color:black;font-size:140%;float:left; }
-
-.right {color:green;float:left; margin-left:1em; margin-top:.3em;}
-.wrong {color:red; float:left; margin-left:1em; margin-top:.3em;}
-
-.dropdown {margin-left:8em; margin-bottom:1em; width:1000px; height:40px;}
-
-.dropbtn{background:rgb(246, 248, 248); border:none;}
-.dropdown-content {
-          display: none;
-          position: absolute;
-          background-color: white;
-          width: 500px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          z-index: 1;
-         }
-.dropdown-content p:hover {background-color:white;}
-.dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .dropbtn {background-color:azure;}
-
-.odot{margin-bottom:.07em; margin-left:-13em; padding-left:none}
     

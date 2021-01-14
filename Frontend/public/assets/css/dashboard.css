@@ -90,10 +90,10 @@ ul {
  }
 
 .bar{float:left;
-  margin-right:830px;
+  margin-right:60vw;
 }
 .test{background:azure;
     padding-bottom:.5%;
-    width:950px;
+    width:70vw;
     margin-bottom:.5em;}
-.para{margin-left:1em;color:black}
+.para{margin-left:1vw;color:black}
