@@ -32,19 +32,31 @@ div.line2{ width:80vw;
             margin-left:6vw;
             margin-bottom:3em;
           }
-#question{       background-color:rgb(238, 241, 241) !important;
+
+#question{  background-color:rgb(243, 226, 238) !important;
             border:none; 
             width:80%;
             height:4em;
             text-align:left;
-            display: block;}
+            display: block;
+            margin-bottom:.1em;
+          }
 #question:hover{background-color:azure !important;}
 #question:focus {outline:none !important;}
 .para{color:black;font-size:2vw;float:left;}
-.right {color:green; margin-left:1em;font-size:180%;float:left;}
-.wrong {color:red; margin-left:1em;font-size:180%;float:left;}
+.right {color:green; 
+        margin-left:1em;
+        font-size:180%;
+        float:left;}
+.wrong {color:red !important;
+        margin-top:.2em;
+        margin-left:1em;
+        font-size:150%;
+        float:left;}
 .arrow { margin-left:95%;margin-top: 1.8%;font-size:130%;}
 .odot{margin-bottom:.07em; margin-left:1%;}
-.sol{width:80%; height:.5%;}
+.sol{ display:none;
+      margin-bottom:1em; 
+      background-color:rgb(230, 236, 236);}
 
     

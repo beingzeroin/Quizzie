@@ -16,17 +16,17 @@ function show()
  var h="";
  
  for(var i=0;i<a.length;i++)
- {  h+=`<div class="container">
-            <button type="button" id="question" class="btn">
+ { 
+    h+=`<div class="container">
+            <button type="button" id="question" class="btn" onclick="drop(${i})">
                 <p class="para">a</p>`;
               if(a[i].chosen==a[i].correct)
     h+=         `<p class='right'>&#10004</p>`;
               else
-    h+=         `<p class='wrong'>&#10006</p>`;
+    h+=         `<p class='wrong'>&#10060</p>`;
     h+=         `<p class='arrow'>&#9660</p>`;
     h+=      `</button>`; 
-
-   h+=  `<div class="sol" style="margin-bottom:1em;margin:left:30%; background-color:rgb(238, 241, 241)">`;
+    h+=  `<div class="sol">`;
               for(var j=0;j<a[i].option;j++)
               {
                 if(j+1==a[i].correct)
@@ -41,3 +41,19 @@ document.getElementById("questions").innerHTML=h;
 
 }
 show();
+
+
+function drop(i)
+{ 
+var x = document.getElementsByClassName("sol")[i];
+var y=  document.getElementsByClassName("question")[i];
+var z=  document.getElementsByClassName("arrow")[i];
+x.style.width="80%";
+if (x.style.display == "none")
+   { x.style.display = "block";
+     y.style.backgroundColor = "pink !important";
+     z.innerHTML = `&#9650`;}
+ else {x.style.display = "none";
+       y.style.backgroundColor = "rgb(241, 238, 240)";
+       z.innerHTML = `&#9660`;}
+}
