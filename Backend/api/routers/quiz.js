@@ -31,7 +31,7 @@ router.use(cookieParser());
 ////Create and Innitialise the quiz  ----DONE
 router.post(
     "/createQuiz",
-    async(req, res, next) => {
+    checkAuthAdmin, async(req, res, next) => {
         // if (!req.body.captcha) {
         //     return res.status(400).json({
         //         message: "No recaptcha token",
@@ -62,12 +62,11 @@ router.post(
         //     }
         // });
         // console.log(flag)
-        AdminId="5ff344f117e710531074f77c";// please remove after login is done
         if (req.body.quizType.toLowerCase() == "private") {
             const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
-                adminId:AdminId|| req.user.userId,//remove AdminID 
+                adminId: req.user.userId, //remove AdminID 
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
@@ -79,8 +78,8 @@ router.post(
                 if (err) {
                     res.status(400).json({ error: "err" });
                 } else {
-                    const quizId = result._id;//remove AdminID
-                    item.updateItemField({ _id: AdminId ||req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
+                    const quizId = result._id; //remove AdminID
+                    item.updateItemField({ _id: req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
                         if (err) {
                             res.status(400).json({ error: "err1" });
 
@@ -151,7 +150,7 @@ router.get("/all", async(req, res, next) => {
 });
 
 ///Enroll/get access to a quiz
-router.patch("/enroll", async(req, res, next) => {
+router.patch("/enroll", checkAuthUser, async(req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -222,7 +221,7 @@ router.patch("/enroll", async(req, res, next) => {
 // Enroll in a private quiz
 router.patch(
     "/enrollPrivate",
-    async(req, res, next) => {
+    checkAuthUser, async(req, res, next) => {
         // if (!req.body.captcha) {
         //     return res.status(400).json({
         //         message: "No recaptcha token",
@@ -258,7 +257,7 @@ router.patch(
                 res.status(404).json({
                     message: "Invalid Code",
                 });
-            } else {
+            } else if (result2) {
                 for (i = 0; i < result2.usersEnrolled.length; i++) {
                     if (result2.usersEnrolled[i].userId == req.user.userId) {
                         return res.status(409).json({ message: "Already enrolled" });
@@ -285,6 +284,10 @@ router.patch(
                         })
                     }
                 })
+            } else {
+                res.status(404).json({
+                    message: "Invalid Code",
+                });
             }
         })
 
@@ -383,7 +386,7 @@ router.get(
     }
 );
 
-router.patch("/unenroll", async(req, res, next) => {
+router.patch("/unenroll", checkAuthUser, async(req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",

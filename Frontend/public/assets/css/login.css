@@ -1,68 +1,88 @@
-
-div.main{margin-left:20em;
-   margin-top:-2em;
-   margin-right:25em;
-   background:white;
+div.main {
+    margin-left: 25vw;
+    margin-top: -2vw;
+    margin-right: 25vw;
+    background: white;
 }
 
-p.head{color: dodgerblue;
-     font-size:300%; 
-     margin-bottom: .5em;
+p.head {
+    color: dodgerblue;
+    font-size: 3.7vw;
+    margin-bottom: .5em;
 }
 
-input.field,input.name,input.email,input.password,input.phone{ font-size:100%;
-             margin-left:5em;
-             width:400px;
-             height:30px;
+input.field,
+input.name,
+input.email,
+input.password,
+input.phone {
+    font-size: 100%;
+    margin-left: 8vw;
+    width: 30vw;
+    height: 3vw;
 }
-p#namealert,p#emailalert,
-p#passwordalert,p#phonealert{     padding-bottom:1%;
-                                  margin-left:7em;
-                                  font-size:70%;
-                                  color:red; }
 
-button.btn{ color:white; 
-            margin-bottom:2em;
-            margin-left:15em; 
-            margin-right:5em;
-            background:dodgerblue;
+p#namealert,
+p#emailalert,
+p#passwordalert,
+p#phonealert {
+    padding-bottom: 1%;
+    margin-left: 8vw;
+    font-size: 70%;
+    color: red;
 }
-p.signup{font-size:100%; margin-left:8em;}
+
+button.btn {
+    color: white;
+    margin-bottom: 2vw;
+    margin-left: 20vw;
+    background: dodgerblue;
+}
+
+p.signup {
+    margin-left: 15vw;
+    font-size: .7vw;
+}
 
 .google-btn {
-   width: 184px;
-   height: 42px;
-   background-color: #4285f4;
-   border-radius: 2px;
-   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
- }
- .google-btn .google-icon-wrapper {
-   position: absolute;
-   margin-top: 1px;
-   margin-left: 1px;
-   width: 40px;
-   height: 40px;
-   border-radius: 2px;
-   background-color: #fff;
- }
- .google-btn .google-icon {
-   position: absolute;
-   margin-top: 11px;
-   margin-left: 11px;
-   width: 18px;
-   height: 18px;
- }
- .google-btn .btn-text {
-   float: right;
-   margin: 11px 11px 0 0;
-   color: #fff;
-   font-size: 14px;
-   letter-spacing: 0.2px;
-   font-family: "Roboto";
- }
- .google-btn:hover {
-   box-shadow: 0 0 6px #4285f4;
- }
- .google-btn:active {
-   background: #1669F2;
- }
+    width: 14vw;
+    height: 3.1vw;
+    background-color: #4285f4;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.google-btn .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.google-btn .google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+}
+
+.google-btn .btn-text {
+    float: right;
+    margin: 11px 11px 0 0;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+}
+
+.google-btn:hover {
+    box-shadow: 0 0 6px #4285f4;
+}
+
+.google-btn:active {
+    background: #1669F2;
+}

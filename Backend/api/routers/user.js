@@ -374,7 +374,7 @@ router.get("/google", (req, res, next) => {
 });
 
 ////Get Profile
-router.get("/", async(req, res, next) => {
+router.get("/", checkAuthUser, async(req, res, next) => {
     populateJson = {
         path: "quizzesEnrolled",
 

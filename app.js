@@ -13,6 +13,7 @@ const schedule = require('node-schedule');
 const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
 const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
+const checksloggedin = require("./Backend/ui/middleware/checkIsLoggedIn")
 sgMail.setApiKey(process.env.SendgridAPIKey);
 const itemlib = require("./Backend/api/lib/itemlib");
 ////routers
@@ -26,7 +27,7 @@ var async = require('async'),
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
+app.get('/', checksloggedin, (req, res) => {
     console.log("rendering indx");
     res.render('home.pug')
 });
@@ -78,7 +79,7 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
-  
+
 
 
     // app.get('/:pagename', function(req, res) {
@@ -95,7 +96,7 @@ function init() {
     //         })
     //     }
     // });
-  
+
 }
 
 async.series([],

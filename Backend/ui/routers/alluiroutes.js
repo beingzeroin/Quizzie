@@ -11,6 +11,7 @@ const Admin = require("../../api/models/admin")
 
 const checkAuthUser = require("../middleware/checkAuthUser")
 const checkAuth = require("../middleware/checkAuth")
+const checksloggedin = require("../middleware/checkIsLoggedIn")
 
 router.use('/dashboard', dashboard);
 
