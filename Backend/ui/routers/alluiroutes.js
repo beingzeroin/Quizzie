@@ -11,6 +11,7 @@ const Admin = require("../../api/models/admin")
 
 const checkAuthUser = require("../middleware/checkAuthUser")
 const checkAuth = require("../middleware/checkAuth")
+const checksloggedin = require("../middleware/checkIsLoggedIn")
 
 router.use('/dashboard', dashboard);
 
@@ -33,5 +34,13 @@ router.get("/updateProfile", checkAuth, (req, res) => {
         })
     }
 
+})
+
+router.get("/result", checkAuthUser, (req, res) => {
+    item.getItemById(req.user.userId, User, (err, result) => {
+        if (err) res.send('Error has occured')
+        else if (result) res.render('result.pug', { user: result });
+        else res.send("Something went wrong")
+    })
 })
 module.exports = router

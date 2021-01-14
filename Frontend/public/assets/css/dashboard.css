@@ -71,7 +71,7 @@ button.btn:focus,
     display: flex !important;
     flex-direction: column !important;
     /* justify-content: center !important;
-	align-items: center !important; */
+align-items: center !important; */
     padding-top: 2% !important;
 }
 
@@ -137,4 +137,21 @@ li img.bz {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+}
+
+.bar {
+    float: left;
+    margin-right: 60vw;
+}
+
+.test {
+    background: azure;
+    padding-bottom: .5%;
+    width: 70vw;
+    margin-bottom: .5em;
+}
+
+.para {
+    margin-left: 1vw;
+    color: black
 }

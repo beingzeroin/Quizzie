@@ -13,6 +13,7 @@ const schedule = require('node-schedule');
 const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
 const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
+const checksloggedin = require("./Backend/ui/middleware/checkIsLoggedIn")
 sgMail.setApiKey(process.env.SendgridAPIKey);
 const itemlib = require("./Backend/api/lib/itemlib");
 ////routers
@@ -22,10 +23,16 @@ var fs = require('fs');
 var async = require('async'),
     http = require('http');
 
-app.use(express.static(__dirname + '/Frontend/public/'));
 
 app.set('view engine', 'pug');
 app.set('views', './views');
+
+app.get('/', checksloggedin, (req, res) => {
+    console.log("rendering indx");
+    res.render('home.pug')
+});
+
+app.use(express.static(__dirname + '/Frontend/public/'));
 
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
@@ -72,10 +79,7 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
-    app.get('/home', (req, res) => {
-        console.log("rendering indx");
-        res.render('home.pug')
-    });
+
 
 
     // app.get('/:pagename', function(req, res) {
@@ -92,9 +96,7 @@ function init() {
     //         })
     //     }
     // });
-    http.createServer(app).listen(app.get('port'), function() {
-        console.log("Express server listening on port " + app.get('port'));
-    });
+
 }
 
 async.series([],
