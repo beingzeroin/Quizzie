@@ -21,9 +21,9 @@ function show()
             <button type="button" id="question" class="btn" onclick="drop(${i})">
                 <p class="para">a</p>`;
               if(a[i].chosen==a[i].correct)
-    h+=         `<p class='right'>&#10004</p>`;
+    h+=         `<p class='right'>&#10003;</p>`;
               else
-    h+=         `<p class='wrong'>&#10060</p>`;
+    h+=         `<p class='wrong'>&#9932</p>`;
     h+=         `<p class='arrow'>&#9660</p>`;
     h+=      `</button>`; 
     h+=  `<div class="sol">`;
@@ -33,7 +33,7 @@ function show()
                 h+=`<p class='odot fa-2x' style="color:green;float:down">&#8857</p>`;
                 else if(a[i].chosen==j+1)
                  h+=`<p class='odot fa-2x' style="color:red;float:down">&#8857</p>`;
-                else h+=`<p class='odot fa-2x' style="color:grey;float:down">&#8857</p>`;
+                else h+=`<p class='odot fa-2x' style="color:black;float:down">&#8857</p>`;
               }
     h+=   `</div></div>`;
  }
@@ -48,12 +48,10 @@ function drop(i)
 var x = document.getElementsByClassName("sol")[i];
 var y=  document.getElementsByClassName("question")[i];
 var z=  document.getElementsByClassName("arrow")[i];
-x.style.width="80%";
+
 if (x.style.display == "none")
    { x.style.display = "block";
-     y.style.backgroundColor = "pink !important";
      z.innerHTML = `&#9650`;}
  else {x.style.display = "none";
-       y.style.backgroundColor = "rgb(241, 238, 240)";
        z.innerHTML = `&#9660`;}
 }
