@@ -1,0 +1,18 @@
+extends includes/basePage
+block scripts
+    script(src="/assets/js/result.js")
+block styles
+    link(rel="stylesheet" href="/assets/css/result.css")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+block page-content
+    body
+        div.main(style=' padding-bottom:2%')
+            b.head Results
+            div.line
+            div(style="padding-bottom:2%;float:down")
+                b.name Quiz: 
+                br
+                b.score Score:
+            b.res Responses
+            div.line2
+            div#questions

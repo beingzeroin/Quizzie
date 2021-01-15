@@ -18,6 +18,7 @@ const checkAuth = require("../middleware/checkAuth")
 router.get("/", checkAuth, (req, res) => {
     if (req.user.userType == 'User') {
         item.getItemById(req.user.userId, User, (err, result) => {
+            console.log(result)
             if (err) res.send('Error has occured')
             else if (result) res.render('dashboard.pug', { user: result });
             else res.send("Something went wrong")
@@ -30,5 +31,4 @@ router.get("/", checkAuth, (req, res) => {
         })
     }
 })
-
 module.exports = router
