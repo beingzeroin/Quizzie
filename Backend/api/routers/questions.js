@@ -233,9 +233,10 @@ router.patch(
         // console.log(flag)
         const updateOps = {};
         var flag = 0;
-        for (const ops of req.body.updateOps) {
-            updateOps[ops.propName] = ops.value;
-        }
+        console.log(req.body);
+        updateOps.description=req.body.description
+        updateOps.options=JSON.parse(req.body.options)
+        updateOps.correctAnswer=req.body.correctAnswer
         item.updateItemField({ _id: req.params.questionId }, { $set: updateOps }, Question, (err, result) => {
                 if (result) {
                     res.status(200).json({

@@ -1,5 +1,7 @@
 extends includes/basePage
 block scripts
+    script.
+        Usertype="#{user.userType}"
     script(src="/assets/js/updateProfile.js")
 block styles
     link(rel="stylesheet" href="/assets/css/updateProfile.css")

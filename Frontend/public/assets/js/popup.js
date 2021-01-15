@@ -7,7 +7,7 @@ function mylogin() {
     <br />
     <br />
     <a href="/login"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
-    <a href="/popup"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
+    <a href="/login_organizer"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
     <br />
     <br />
     </div>
@@ -31,7 +31,7 @@ document.body.style.backgroundColor="darkgray";
     <br />
     <br />
     <a href="/signup"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
-    <a href="/popup"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
+    <a href="/signup_organizer"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
     <br />
     <br />
     </div>

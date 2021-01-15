@@ -8,7 +8,7 @@ body, html {
   background-color:#f8f9fa;
   
 }
-.container.CreateQuiz
+.container.updateQuiz
 {
     justify-content: center;
     background-color: white;
@@ -24,4 +24,11 @@ body, html {
 }
 span.quiz{
     font-size:15px !important;
+}
+button{
+    width: auto !important;
+}
+select
+{
+    width: 30% !important;
 }

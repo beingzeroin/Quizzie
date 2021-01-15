@@ -30,7 +30,7 @@ router.use(cookieParser());
 
 ////Create and Innitialise the quiz  ----DONE
 router.post(
-    "/createQuiz",
+    "/createQuiz",checkAuthAdmin,
     async(req, res, next) => {
         // if (!req.body.captcha) {
         //     return res.status(400).json({
@@ -62,12 +62,11 @@ router.post(
         //     }
         // });
         // console.log(flag)
-        AdminId="5ff344f117e710531074f77c";// please remove after login is done
         if (req.body.quizType.toLowerCase() == "private") {
             const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
-                adminId:AdminId|| req.user.userId,//remove AdminID 
+                adminId:req.user.userId,
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
@@ -79,8 +78,8 @@ router.post(
                 if (err) {
                     res.status(400).json({ error: "err" });
                 } else {
-                    const quizId = result._id;//remove AdminID
-                    item.updateItemField({ _id: AdminId ||req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
+                    const quizId = result._id;
+                    item.updateItemField({ _id: req.user.userId }, { $push: { quizzes: { quizId } } }, Admin, (err, result1) => {
                         if (err) {
                             res.status(400).json({ error: "err1" });
 
@@ -293,7 +292,7 @@ router.patch(
 
 ///Update Quiz
 router.patch(
-    "/updateDetails/:quizId",
+    "/updateDetails/:quizId",checkAuthAdmin,
     async(req, res, next) => {
         // if (!req.body.captcha) {
         //     return res.status(400).json({
@@ -331,7 +330,7 @@ router.patch(
                     message: "Some error",
                 });
             } else {
-                if (result1.adminId != req.user.userId) {
+                if (result1.adminId !="5ffd2e6c3b522d001597235b") {
                     return res.status(401).json({
                         message: "This is not your quiz",
                     });
@@ -339,9 +338,14 @@ router.patch(
                 const id = req.params.quizId;
                 const updateOps = {};
                 var flag = 0;
-                for (const ops of req.body.updateOps) {
-                    updateOps[ops.propName] = ops.value;
-                }
+                updateOps.quizName=req.body.quizName
+                updateOps.scheduledFor=req.body.scheduledFor
+                updateOps.quizDuration=req.body.quizDuration
+                updateOps.quizType=req.body.quizType
+
+                // for (const ops of req.body.updateOps) {
+                //     updateOps[ops.propName] = ops.value;
+                // }
                 item.updateItemField({ _id: id }, { $set: updateOps }, Quiz, (err, result) => {
                     if (err) {
                         res.status(500).json({
@@ -932,10 +936,11 @@ router.post("/check", async(req, res, next) => {
 });
 
 router.delete("/delete", async(req, res, next) => {
+    console.log(req.body);
     item.getItemById(req.body.quizId, Quiz, (err, result) => {
         if (err) {
             res.status(400).json({
-                message: "Error",
+                message: "some error",
             });
         } else {
             var numUsers = result.usersEnrolled.length;
@@ -944,7 +949,7 @@ router.delete("/delete", async(req, res, next) => {
                 item.updateItemField({ _id: currentUser }, { $pull: { quizzesEnrolled: { quizId: req.body.quizId } } }, User, (err, result3) => {
                     if (err) {
                         res.status(400).json({
-                            message: "some error occurred",
+                            message: "some error",
                         });
                     }
                 })
@@ -952,13 +957,13 @@ router.delete("/delete", async(req, res, next) => {
             item.deleteMultipleItems({ quizId: req.body.quizId }, Question, (err, result4) => {
                 if (err) {
                     res.status(400).json({
-                        message: "Some error",
+                        message: "some error",
                     });
                 } else {
                     item.deleteItem(req.body.quizId, false, Quiz, (err, result5) => {
                         if (err) {
                             res.status(400).json({
-                                message: "Some error",
+                                message: "some error",
                             });
                         } else {
                             res.status(200).json({

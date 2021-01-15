@@ -2,7 +2,6 @@
 {box-sizing: border-box}
 
 body, html {
-  height: 100%;
   margin: 0;
   font-family: Arial;
   background-color:#f8f9fa;
@@ -13,8 +12,9 @@ body, html {
     justify-content: center;
     background-color: white;
     height: 100%;
-    margin-left: 9%;
-    margin-right:9%;
+    margin-left: 10%;
+    margin-right:10% ;
+    margin-top: -2% !important;
 }
 .login-form {
     min-height: 100%;
@@ -27,8 +27,8 @@ body, html {
 {
     color: #2179ED;
     font-size: 20px;
-    margin-right: 2%;
-    font-weight: bold;
+    margin-right: 2% !important;
+    font-weight: bold !important;
 }
 input.form-control
 {
@@ -37,8 +37,23 @@ input.form-control
 span.quiz-detail-text
 {
     font-size: 20px;
+    display: inline !important;
 }
 span.options
 {
  margin-left: 40%;
 }
+button{
+    width: auto !important;
+}
+button:focus,button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.accordion-button
+{
+    width:100% !important;
+    background-color: white !important;
+   
+}
+
