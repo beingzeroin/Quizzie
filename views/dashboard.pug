@@ -32,9 +32,10 @@ block page-content
                                                 input#code.form-control.mb-4(style="border-color:black !important" type='text', placeholder='ENTER QUIZ CODE', aria-label='ENTER QUIZ CODE', aria-describedby='addon-wrapping')
                                             button#enrollprivate.btn.btn-success(type='button') JOIN QUIZ
                             else if user.userType=="Admin"
-                                button.btn.btn-danger(type='button', style='margin-top:-10%')
-                                    i.fa.fa-plus(aria-hidden='true')  
-                                    |  CREATE A QUIZ
+                                a(href="/ui/quiz/createQuiz")
+                                    button.btn.btn-danger(type='button', style='margin-top:-10%')
+                                        i.fa.fa-plus(aria-hidden='true')  
+                                        |  CREATE A QUIZ
                             if user.userType=="User"
                                 h3(style="padding-top:3%;color:#066EF7;") Enrolled Quizzes
                                 hr(style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;")

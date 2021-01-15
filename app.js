@@ -35,6 +35,9 @@ app.get('/', checksloggedin, (req, res) => {
 app.use(express.static(__dirname + '/Frontend/public/'));
 
 
+
+
+
 const apiroutes = require("./Backend/api/routers/allapiroutes")
 const uiroutes = require("./Backend/ui/routers/alluiroutes");
 const quiz = require("./Backend/api/models/quiz");
@@ -69,9 +72,13 @@ console.log(Date.now())
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 function init() {
     console.log("init");
-
+    app.get('/', (req, res) => {
+        console.log("rendering indx");
+        res.render('home')
+    });
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
     //   app.use('/api', apiRouter);
     //   app.use('/auth',authRouter);
@@ -79,7 +86,6 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
-
 
 
     // app.get('/:pagename', function(req, res) {
@@ -96,7 +102,6 @@ function init() {
     //         })
     //     }
     // });
-
 }
 
 async.series([],
@@ -193,6 +198,8 @@ app.use((error, req, res, next) => {
 //     }
 //     // console.log(quizzes)
 // });
+
+
 
 let PORT = process.env.PORT || 3000;
 // if (process.env.mode = 'devlopment')
