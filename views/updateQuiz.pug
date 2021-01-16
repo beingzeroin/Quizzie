@@ -1,0 +1,29 @@
+extends includes/basePage
+block scripts
+    script(src="/assets/js/updateQuiz.js")
+block styles
+    link(rel="stylesheet" href="/assets/css/updateQuiz.css")
+block page-content
+    .container.updateQuiz
+        .login-form
+            h1(style="color:#5190f5;text-align:center" ) Quiz Details
+            .row.form-group.mb-3.d-flex.justify-content-center
+                label.form-label.mt-3#quizname(style="text-align:center") Quiz Name
+                input.form-control.col-12.ml-2.mb-3#quizName(type="text" name="quizName" value=quizdetails.quizName placeholder="Enter Quiz Name" style="text-align:center;") 
+            .row.d-flex(style="display:inline;")
+                .col
+                    span.quiz Select Quiz Date
+                    input.form-control.mb-5.col-12#date(type="date" value=(new Date(Number(quizdetails.scheduledFor)).getFullYear() + '-' +('0' + (new Date(Number(quizdetails.scheduledFor)).getMonth()+1)).slice(-2)+ '-' +  ('0' + new Date(Number(quizdetails.scheduledFor)).getDate()).slice(-2) )  name='date' step="1")
+                .col
+                    span.quiz Select Quiz Time
+                    input.form-control.mb-5.col-12#time(type="time" name='time' value=(new Date(Number(quizdetails.scheduledFor)).getHours()+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2)+ ':'+new Date(Number(quizdetails.scheduledFor)).getSeconds()) step="1")
+            .row
+                input.form-range.col-12.mb-5#range(type="range" min="5" max="60" value=quizdetails.quizDuration step="5" name="quizDuration")
+            .row.d-flex.justify-content-center
+                label.form-label(style="text-align:center") Select Quiz Type
+            .row.form-group.d-flex.justify-content-center
+                select.form-control.col-5#quizType(name="quizType" value=quizdetails.quizType)
+                    option(selected='Private' value="Private" ) Private
+                    option(value='Public') Public
+            .row.mt-5.d-flex.justify-content-center
+                button.btn(type="button" onclick="showdata()" style="background-color:white;border-color:blue;color:blue") Update Quiz

@@ -264,7 +264,7 @@ function openPage(pageName, elmnt, id) {
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
 }
 
-let element = document.getElementById("0");
+element = document.getElementById("0");
 
 function showdata() {
     $.ajax({

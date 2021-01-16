@@ -11,11 +11,11 @@ function senddata(data)
     method: "POST",
     data:data,
     success: function(result) {
-        location.href="/editQuiz/"+result.result._id;
+        location.href="/ui/quiz/editQuiz/"+result.result._id;
     },
     error: function(err) {
       console.log(err);
-      location.href="/createQuiz"  //change this url ....
+      location.href="/ui/quiz/createQuiz"  //change this url ....
     }
   });
 }
@@ -29,8 +29,8 @@ function showdata()
     var quizType=$("#quizType").val();
     var quizName=$("#quizName").val();
     var quizDuration=$("#range").val();
-    var data={'quizName':quizName,'scheduledFor':date+" "+time,'quizDuration':quizDuration,'quizType':quizType}
+    var milliseconds=new Date(date+" "+time);
+    var data={'quizName':quizName,'scheduledFor':milliseconds.getTime(),'quizDuration':quizDuration,'quizType':quizType}
     console.log(data);
     senddata(data);
-    
 }

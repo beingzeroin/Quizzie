@@ -49,7 +49,7 @@ router.delete("/:questionId", async(req, res, next) => {
         //     });
 });
 
-router.get("/all/:quizId", checkAuth, async(req, res, next) => {
+router.get("/all/:quizId", async(req, res, next) => {
     item.getItemByQuery({ quizId: req.params.quizId }, Question, (err, result) => {
             if (err) {
                 res.status(400).json({
@@ -111,13 +111,21 @@ router.post("/add", async(req, res, next) => {
                 //     }
                 // });
                 // console.log(flag)
+               
+                    let data=req.body;
+                    console.log(data);
+                    data.options=JSON.parse(data.options);
+                    //console.log(d);
+             
+               
                 const ques = {
-                    _id: new mongoose.Types.ObjectId(),
+                     _id: new mongoose.Types.ObjectId(),
                     quizId: req.body.quizId,
                     description: req.body.description,
-                    options: req.body.options,
+                    options: data.options,
                     correctAnswer: req.body.correctAnswer,
                 }
+                console.log(ques)
                 item.createitem(ques, Question, (err, result) => {
                     if (err) {
                         res.status(400).json({
@@ -225,9 +233,10 @@ router.patch(
         // console.log(flag)
         const updateOps = {};
         var flag = 0;
-        for (const ops of req.body.updateOps) {
-            updateOps[ops.propName] = ops.value;
-        }
+        console.log(req.body);
+        updateOps.description=req.body.description
+        updateOps.options=JSON.parse(req.body.options)
+        updateOps.correctAnswer=req.body.correctAnswer
         item.updateItemField({ _id: req.params.questionId }, { $set: updateOps }, Question, (err, result) => {
                 if (result) {
                     res.status(200).json({

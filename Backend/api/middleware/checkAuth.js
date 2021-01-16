@@ -2,6 +2,7 @@ const JWT = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
     const token = req.header['auth-token'];
+    console.log(token);
     if (!token) return res.status(400).send("Access Denied!, no token entered");
 
     try {
