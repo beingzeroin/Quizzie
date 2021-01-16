@@ -1,8 +1,5 @@
 extends includes/basePage
 block scripts
-    script.
-        usertype="#{user.userType}"
-        userid="#{user._id}"
     script(src="/assets/js/dashboard.js")
 block styles
     link(rel="stylesheet" href="/assets/css/dashboard.css")
@@ -11,49 +8,14 @@ block page-content
                     h1.dash-head Dashboard
                     .row.tabs
                         button.btn.col-4#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
-                        if user.userType=="User"
-                            button.btn.col-4#1(type="button"  onclick="openPage('History', this,1)") History
-                        else if user.userType=="Admin"
-                            button.btn.col-4#1(type="button"  onclick="openPage('YourQuizzes', this,1)") Your Quizzes
+                        button.btn.col-4.history#1(type="button"  onclick="openPage('History', this,1)" style="display:none") History
+                        button.btn.col-4.yourquizzes#3(type="button"  onclick="openPage('YourQuizzes', this,1)" style="display:none") Your Quizzes
                         button.btn.col-4#2(type="button" onclick="openPage('Profile', this,2)") Profile
                     .row 
                         #Quizzes.tabcontent
-                            if user.userType=="User"
-                                button.btn.btn-success(type="button" onclick='privateQuiz()' style="margin-top:-10%") 
-                                    i.fa.fa-check(aria-hidden='true')
-                                    |  JOIN A QUIZ
-                                #privateQuiz.modal
-                                    .modal-dialog.modal-dialog-centered
-                                        .modal-content
-                                            h5(style="text-align:center")
-                                                b JOIN A PRIVATE QUIZ
-                                            p(style="text-align:center") Enter the code of quiz you want to join
-                                            .input-group
-                                                input#code.form-control.mb-4(style="border-color:black !important" type='text', placeholder='ENTER QUIZ CODE', aria-label='ENTER QUIZ CODE', aria-describedby='addon-wrapping')
-                                            button#enrollprivate.btn.btn-success(type='button') JOIN QUIZ
-                            else if user.userType=="Admin"
-                                a(href="/ui/quiz/createQuiz")
-                                    button.btn.btn-danger(type='button', style='margin-top:-10%')
-                                        i.fa.fa-plus(aria-hidden='true')  
-                                        |  CREATE A QUIZ
-                            if user.userType=="User"
-                                h3(style="padding-top:3%;color:#066EF7;") Enrolled Quizzes
-                                hr(style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;")
-                                .enrolled-list.root1
-                                    div#enrolledQuizzes(style="display: inline !important;")
-                                    #quizpopup.modal
-                                        .modal-dialog.modal-dialog-centered
-                                            .modal-content
-                                                div#displayquizpopup
-                                    #unenrollpopup.modal
-                                        .modal-dialog.modal-dialog-centered
-                                            .modal-content
-                                                h5(style="text-align:center") QUIZ INFO
-                                                div#displayunenrollpopup(style="text-align:center")
+                            #userQuiz
+                            #enrolledquiz
 
-                                    
-                                    
-                                    
                             h3.mt-3(style="padding-top:3%;color:#066EF7;float:none") Upcoming Quizzes
                             hr(style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;")
                             .upcoming-list.root2   
@@ -63,33 +25,13 @@ block page-content
                                         .modal-content
                                             div#displayenrollpopup
                                 
-
                         #History.tabcontent
                             div#test
                         #YourQuizzes.tabcontent
                             h3 Your Quizzes                           
                         #Profile.tabcontent
                             .details(style="margin-bottom:10%")
-                            h4
-                                label  name 
-                                |  : #{user.name}
-                                .row
-                            h4
-                                label Email
-                                |  : #{user.email}
-                            if user.mobileNumber
-                                .row
-                                h4
-                                    label Phone Number
-                                    |  : #{user.mobileNumber}
-                            .row
-                            h4
-                                label Quizzes Enrolled
-                                |  : 0
-                            .row
-                            h4
-                                label Quizzes Completed
-                                |  : 0
+                            #userdata
 
                             a(href='/ui/updateProfile')
                                 button.btn.btn-primary(type='button') Update Profile

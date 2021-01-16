@@ -8,8 +8,9 @@ const QUIZ = require("./quiz");
 
 const item = require('../../api/lib/itemlib');
 const User = require("../../api/models/user");
-const Quiz= require("../../api/models/quiz");
+const Quiz = require("../../api/models/quiz");
 const Admin = require("../../api/models/admin")
+
 
 const checkAuthUser = require("../middleware/checkAuthUser")
 const checkAuth = require("../middleware/checkAuth")
@@ -47,4 +48,5 @@ router.get("/result", checkAuthUser, (req, res) => {
         else res.send("Something went wrong")
     })
 })
+module.exports = router
 module.exports = router

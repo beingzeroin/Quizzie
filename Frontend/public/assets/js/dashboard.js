@@ -1,9 +1,65 @@
-if (usertype == "User") {
+$.ajaxSetup({
+    headers: { 'token': localStorage.token }
+});
+
+let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
+<div class="modal" id="privateQuiz">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
+            <p style="text-align:center">Enter the code of quiz you want to join</p>
+            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success" id="enrollprivate" type="button">JOIN QUIZ</button>
+        </div>
+    </div>
+</div>`
+let createquiz = `<button class="btn btn-danger" type="button" style="margin-top:-10%"><i class="fa fa-plus" aria-hidden="true"> </i> CREATE A QUIZ</button>`
+let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizzes</h3>
+<hr style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;" />
+<div class="enrolled-list root1">
+    <div id="enrolledQuizzes" style="display: inline !important;"></div>
+    <div class="modal" id="quizpopup">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div id="displayquizpopup"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="unenrollpopup">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <h5 style="text-align:center">QUIZ INFO</h5>
+            <div id="displayunenrollpopup" style="text-align:center"></div>
+            </div>
+        </div>
+    </div>
+</div>`
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype == "User") {
     $.ajax({
         url: "/api/user/",
         method: "GET",
         success: function(result) {
+            document.getElementsByClassName('history')[0].style.display = "block";
+            document.getElementById("userQuiz").innerHTML = userquiz
+            document.getElementById("enrolledquiz").innerHTML = enrolledQuizzes
             let ans = JSON.stringify(result);
+            let userdata = `<h4><label> name </label> : ${result.result1.name}<div class="row"></div>
+            </h4>
+            <h4><label>Email</label> : ${result.result1.email}</h4>`
+            if (result.result1.mobileNumber) {
+                userdata += `
+            
+                <div class="row"></div>
+                <h4><label>Phone Number</label> :mobile</h4>`
+            }
+
+            userdata += `
+            <div class="row"></div>
+            <h4><label>Quizzes Enrolled</label> : ${(result.result1.quizzesEnrolled).length} </h4>
+            <div class="row"></div>
+            <h4><label>Quizzes Completed</label> : ${(result.result1.quizzesGiven).length}</h4>`
+            document.getElementById("userdata").innerHTML = userdata
             ans = JSON.parse(ans);
             if ((ans.result1.quizzesEnrolled).length == 0) {
                 document.getElementById("enrolledQuizzes").innerHTML = `<p>
@@ -49,7 +105,7 @@ if (usertype == "User") {
                 let code = ``;
                 // alert(JSON.stringify(data.result.find(item => item.quizName == "MCQ")))
                 for (let i = 0; i < publicquizzes.length; i++) {
-                    if (publicquizzes[i].usersEnrolled.find(item => item.userId == userid)) {
+                    if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
                         code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
@@ -81,8 +137,27 @@ if (usertype == "User") {
     })
 }
 
-if (usertype == "Admin") {
+if (localStorage.usertype == "Admin") {
+    $.ajax({
+        url: "/api/admin/",
+        method: "GET",
+        success: function(result) {
+            document.getElementsByClassName('yourquizzes')[0].style.display = "block";
+            document.getElementById("userQuiz").innerHTML = createquiz
+            let userdata = `<h4><label> name </label> : ${result.result1.name}<div class="row"></div>
+            </h4>
+            <h4><label>Email</label> : ${result.result1.email}</h4>`
+            if (result.result1.mobileNumber) {
+                userdata += `
+            
+                <div class="row"></div>
+                <h4><label>Phone Number</label> : ${result.result1.mobileNumber} </h4>`
+            }
 
+
+            document.getElementById("userdata").innerHTML = userdata
+        }
+    })
 
     $.ajax({
         url: "/api/quiz/all",
@@ -97,7 +172,7 @@ if (usertype == "Admin") {
                 let code = ``;
                 // alert(JSON.stringify(data.result.find(item => item.quizName == "MCQ")))
                 for (let i = 0; i < publicquizzes.length; i++) {
-                    if (publicquizzes[i].usersEnrolled.find(item => item.userId == userid)) {
+                    if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
                         code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
@@ -133,12 +208,21 @@ function openPage(pageName, elmnt, id) {
     if (id == 1) {
         document.getElementById("2").style.borderBottomColor = "white";
         document.getElementById("0").style.borderBottomColor = "white";
+        document.getElementById("3").style.borderBottomColor = "white";
     } else if (id == 2) {
         document.getElementById("1").style.borderBottomColor = "white";
         document.getElementById("0").style.borderBottomColor = "white";
+        document.getElementById("3").style.borderBottomColor = "white";
+
+    } else if (id == 3) {
+        document.getElementById("1").style.borderBottomColor = "white";
+        document.getElementById("2").style.borderBottomColor = "white";
+        document.getElementById("0").style.borderBottomColor = "white";
+
     } else {
         document.getElementById("1").style.borderBottomColor = "white";
         document.getElementById("2").style.borderBottomColor = "white";
+        document.getElementById("3").style.borderBottomColor = "white";
     }
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -335,7 +419,9 @@ $("#enrollprivate").click(() => {
 })
 
 function startQuiz(quizid) {
-    alert("hello")
+    location.href = '/ui/quiz/start/' + quizid;
+
+
 }
 
 function enrollQuiz(quizid) {
@@ -348,7 +434,6 @@ function enrollQuiz(quizid) {
             location.reload()
         }
     })
-
 }
 
 function unenroll(quizid) {

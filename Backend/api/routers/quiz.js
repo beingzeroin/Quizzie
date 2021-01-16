@@ -465,7 +465,7 @@ router.patch("/unenroll", checkAuthUser, async(req, res, next) => {
 
 });
 
-router.patch("/start", async(req, res, next) => {
+router.patch("/start", checkAuthUser, async(req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -498,20 +498,20 @@ router.patch("/start", async(req, res, next) => {
     // console.log(flag)
     item.getItemById(req.body.quizId, Quiz, async(err, result0) => {
         if (err) {
-            await res.status(400).json({
+            return res.status(400).json({
                 message: err.toString(),
             });
         } else {
             item.getItemByQueryWithSelect({ quizId: req.body.quizId }, Question, "-__v", async(err, result) => {
-                if (err) {
-                    await res.status(400).json({
+                if (err && !result) {
+                    return res.status(400).json({
                         message: err.toString(),
                     });
                 } else {
                     if (result0.quizRestart == 1) {
                         item.getItemById(req.user.userId, User, async(err, result2) => {
                                 if (err) {
-                                    await res.status(400).json({
+                                    return res.status(400).json({
                                         message: "Some error Occurred",
                                     });
                                 } else {
@@ -547,7 +547,7 @@ router.patch("/start", async(req, res, next) => {
                         var quizId = req.body.quizId;
                         item.updateItemField({ _id: req.user.userId }, { $push: { quizzesStarted: { quizId } } }, User, async(err, result1) => {
                             if (err) {
-                                await res.status(400).json({
+                                return res.status(400).json({
                                     message: "some error occurred",
                                     error: err.toString(),
                                 });
@@ -562,7 +562,7 @@ router.patch("/start", async(req, res, next) => {
                                     };
                                     data.push(object);
                                 }
-                                await res.status(200).json({
+                                return res.status(200).json({
                                     message: "Quiz started for " + req.user.name,
                                     data,
                                     duration: result0.quizDuration,
@@ -580,11 +580,11 @@ router.patch("/start", async(req, res, next) => {
                         ) {
                             item.updateItemField({ _id: req.body.quizId }, { $set: { quizStatus: 2 } }, Quiz, (err, result) => {
                                 if (err) {
-                                    res.status(400).json({
+                                    return res.status(400).json({
                                         message: err.toString(),
                                     });
                                 } else {
-                                    res.status(402).json({
+                                    return res.status(402).json({
                                         message: "Quiz time elapsed",
                                     });
                                 }
@@ -592,7 +592,7 @@ router.patch("/start", async(req, res, next) => {
                         } else if (Date.now() >= result0.scheduledFor) {
                             item.getItemById(req.user.userId, User, async(err, result2) => {
                                 if (err) {
-                                    await res.status(400).json({
+                                    return res.status(400).json({
                                         message: err.toString(),
                                     });
                                 } else {
@@ -628,13 +628,13 @@ router.patch("/start", async(req, res, next) => {
                                     item.updateItemField({ _id: req.user.userId }, { $push: { quizzesStarted: { quizId } } }, User, async(err, result1) => {
 
                                         if (err) {
-                                            await res.status(400).json({
+                                            return res.status(400).json({
                                                 message: "some error occurred",
                                             });
                                         } else {
                                             item.updateItemField({ _id: req.body.quizId }, { $set: { quizStatus: 1 } }, Quiz, async(err, result1) => {
                                                 if (err) {
-                                                    await res.status(400).json({
+                                                    return res.status(400).json({
                                                         err: err.toString(),
                                                     });
                                                 } else {
@@ -648,7 +648,7 @@ router.patch("/start", async(req, res, next) => {
                                                         };
                                                         data.push(object);
                                                     }
-                                                    await res.status(200).json({
+                                                    return res.status(200).json({
                                                         message: "Quiz started for " + req.user.name,
                                                         data,
                                                         duration: result0.quizDuration,
@@ -662,15 +662,16 @@ router.patch("/start", async(req, res, next) => {
                                     })
                                 }
                             })
+                        } else {
+                            return res.status(401).json({
+                                message: "Quiz hasn't started yet",
+                            });
                         }
-                        return res.status(401).json({
-                            message: "Quiz hasn't started yet",
-                        });
                     } else if (result0.quizStatus == 1) {
 
                         item.getItemById(req.user.userId, User, async(err, result2) => {
                             if (err) {
-                                await res.status(400).json({
+                                return res.status(400).json({
                                     message: "Some error Occurred",
                                 });
                             } else {
@@ -705,7 +706,7 @@ router.patch("/start", async(req, res, next) => {
 
                                 item.updateItemField({ _id: req.user.userId }, { $push: { quizzesStarted: { quizId } } }, User, async(err, result1) => {
                                     if (err) {
-                                        await res.status(400).json({
+                                        return res.status(400).json({
                                             message: "some error occurred",
                                             error: err.toString(),
                                         });
@@ -720,7 +721,7 @@ router.patch("/start", async(req, res, next) => {
                                             };
                                             data.push(object);
                                         }
-                                        await res.status(200).json({
+                                        return res.status(200).json({
                                             message: "Quiz started for " + req.user.name,
                                             data,
                                             duration: result0.quizDuration,
@@ -733,7 +734,7 @@ router.patch("/start", async(req, res, next) => {
                             }
                         })
                     } else {
-                        res.status(402).json({
+                        return res.status(402).json({
                             message: "Quiz time elapsed",
                         });
                     }
