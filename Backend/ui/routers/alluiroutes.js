@@ -4,10 +4,12 @@ const router = express.Router();
 const dashboard = require('./dashboard');
 const login = require("./login");
 const signup = require("./signup");
+const quiz = require("./quiz")
 
 const item = require('../../api/lib/itemlib');
 const User = require("../../api/models/user");
 const Admin = require("../../api/models/admin")
+
 
 const checkAuthUser = require("../middleware/checkAuthUser")
 const checkAuth = require("../middleware/checkAuth")
@@ -19,6 +21,7 @@ router.use('/login', login)
 
 router.use('/signup', signup)
 
+router.use('/quiz', quiz)
 router.get("/updateProfile", checkAuth, (req, res) => {
     if (req.user.userType == 'User') {
         item.getItemById(req.user.userId, User, (err, result) => {
@@ -43,4 +46,5 @@ router.get("/result", checkAuthUser, (req, res) => {
         else res.send("Something went wrong")
     })
 })
+module.exports = router
 module.exports = router

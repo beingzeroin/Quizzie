@@ -31,14 +31,17 @@ function login() {
         $.ajax({
             type: "POST",
             url: "/api/user/login",
-            async: false,
             data: {
                 email: emailid,
                 password: password
             },
             success: function(resultData) {
-                if (resultData.message == "Auth successful")
+                if (resultData.message == "Auth successful") {
+                    localStorage.token = resultData.token;
+                    localStorage.userid = resultData.userDetails.userId
+                    localStorage.usertype = resultData.userDetails.userType
                     window.location.href = '/ui/dashboard';
+                }
             }, //sucess
             error: function(resultData) {
                     alert(JSON.parse(JSON.stringify(resultData.responseText)));
@@ -47,3 +50,20 @@ function login() {
     }
 
 } //End of signup function
+function googlelogin() {
+    $.ajax({
+        type: "GET",
+        url: "/api/auth/google",
+        crossDomain: true,
+        "headers": {
+            "accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        success: function(resultData) {
+            localStorage.token = resultData.token;
+            localStorage.userid = resultData.userDetails.userId
+            localStorage.usertype = resultData.userDetails.userType
+            window.location.href = '/ui/dashboard';
+        }
+    })
+}

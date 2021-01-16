@@ -38,11 +38,14 @@ router.get(
         const x = req.user;
         var token = encodeURIComponent(req.user.token);
         var name = encodeURIComponent(req.user.name);
-        req.header['auth-token'] = req.user.token;
-        res.redirect(
-            303,
-            process.env.developmentUrl + '/ui/dashboard'
-        );
+
+
+        // console.log(req.header['auth-token'])
+        res.status(200).json({
+            token: req.user.token,
+            userId: req.user.userId,
+            usertype: req.user.usertype
+        })
     }
 );
 
