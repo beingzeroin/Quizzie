@@ -1,3 +1,8 @@
+$.ajaxSetup({
+  headers: { 'token': localStorage.token }
+});
+if (!localStorage.token) location.href = '/';
+
 function show()
 {  var a = [{ correct : 1,
     chosen  : 2,

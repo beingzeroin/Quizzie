@@ -394,7 +394,7 @@ router.get("/", checkAuthUser, async(req, res, next) => {
 });
 
 router.get(
-    "/quizzesGiven",
+    "/quizzesGiven", checkAuthUser,
     async(req, res, next) => {
 
         populateJson = {
@@ -402,6 +402,8 @@ router.get(
 
             populate: { path: "quizId", populate: { path: "adminId" } }
         }
+        console.log("id",req.user.userId);
+
         item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
             if (err) {
                 res.status(400).json({

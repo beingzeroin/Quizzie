@@ -242,6 +242,14 @@ function openPage(pageName, elmnt, id) {
                     score : 3},
                   { test: "Test4",
                     score : 4}];
+        $.ajax({
+            type: "GET",
+            url: "/api/user/quizzesGiven",
+            success: function(resultData) 
+            {
+               alert(resultData);
+            }
+        }); 
         var h="";
         for( var i=0; i<a.length;i++)
         { h+=`<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
