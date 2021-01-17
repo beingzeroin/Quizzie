@@ -3,5 +3,7 @@ block navbar
         a.navbar-brand(href="/index")
             img(src="/assets/img/icons/logo.jpg" style="width:40px;height:40px;margin-left:50%;margin-top:-1em;" alt="Being Zero")
         span.navbar-brand.mb-0.h1(style="margin-left:3%;") The Quizzie Platform
-        .nav-item.nav-link.ml-auto(style={"font-size":'18px','font-family':'Arial, Helvetica, sans-serif'} ) Welcome,User
-        button.btn.x(type="button"  style={color: 'white', background: 'orange'}) Logout 
+        .nav-item.nav-link.ml-auto(style={"font-size":'110%','font-family':'Arial, Helvetica, sans-serif'} )
+            b Welcome #{user.name}
+        a(href="/")
+            button.btn.x(type="button" style={color: 'white', background: 'orange'}) Logout 
