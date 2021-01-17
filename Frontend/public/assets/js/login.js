@@ -49,7 +49,7 @@ function login() {
         });
     }
 
-} //End of signup function
+} //End of login function
 function googlelogin() {
     $.ajax({
         type: "GET",

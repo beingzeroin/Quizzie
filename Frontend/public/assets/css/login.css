@@ -1,7 +1,7 @@
 body{background:whitesmoke !important;}
-div.main{margin-left:25vw;
+div.main{margin-left:20vw;
   margin-top:-2vw;
-  margin-right:25vw;
+  margin-right:20vw;
   padding-top:1%;
   background:white;
 }
@@ -13,7 +13,7 @@ p.head{color: dodgerblue;
 }
 
 input.field,input.name,input.email,input.password,input.phone{ font-size:100%;
-             margin-left:8vw;
+             margin-left:13vw;
              width: 30vw;
              height:3vw;
 }
@@ -25,13 +25,13 @@ p#passwordalert,p#phonealert{     padding-bottom:1%;
 
 button.btn{ color:white; 
             margin-bottom:2vw;
-            margin-left:20vw; 
+            margin-left:25vw; 
             background:dodgerblue;
 }
-div.google{margin-left:16vw; padding-bottom:3%;}
+div.google{margin-left:20vw; padding-bottom:3%;}
 
 p.signup{ font-size:100%;
-          margin-left:10vw;}
+          margin-left:16vw;}
 
 .google-btn {
   width: 184px;

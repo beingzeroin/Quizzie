@@ -244,7 +244,7 @@ function openPage(pageName, elmnt, id) {
                     score : 4}];
         var h="";
         for( var i=0; i<a.length;i++)
-        { h+=`<a href="results"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
+        { h+=`<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
           `</b><p class="para">Score : ` + a[i].score +
           `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
         }
