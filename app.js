@@ -13,6 +13,7 @@ const schedule = require('node-schedule');
 const sgMail = require("@sendgrid/mail");
 const emailTemplates = require("./Backend/emails/email");
 const checkAuthUser = require("./Backend/api/middleware/checkAuthUser")
+const checksloggedin = require("./Backend/ui/middleware/checkIsLoggedIn")
 sgMail.setApiKey(process.env.SendgridAPIKey);
 const itemlib = require("./Backend/api/lib/itemlib");
 ////routers
@@ -26,12 +27,15 @@ var async = require('async'),
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
+app.get('/', checksloggedin, (req, res) => {
     console.log("rendering indx");
     res.render('home.pug')
 });
 
 app.use(express.static(__dirname + '/Frontend/public/'));
+
+
+
 
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
@@ -68,9 +72,13 @@ console.log(Date.now())
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 function init() {
     console.log("init");
-
+    app.get('/', (req, res) => {
+        console.log("rendering indx");
+        res.render('home')
+    });
     // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
     //   app.use('/api', apiRouter);
     //   app.use('/auth',authRouter);
@@ -78,7 +86,6 @@ function init() {
 
     app.use('/ui', uiroutes);
     app.use("/api", apiroutes);
-  
 
 
     // app.get('/:pagename', function(req, res) {
@@ -95,7 +102,6 @@ function init() {
     //         })
     //     }
     // });
-  
 }
 
 async.series([],
@@ -192,6 +198,8 @@ app.use((error, req, res, next) => {
 //     }
 //     // console.log(quizzes)
 // });
+
+
 
 let PORT = process.env.PORT || 3000;
 // if (process.env.mode = 'devlopment')

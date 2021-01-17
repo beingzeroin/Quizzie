@@ -1,8 +1,9 @@
 const JWT = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
-    const token = req.header['auth-token'];
-    if (!token) return res.status(400).send("Access Denied!, no token entered");
+    const token = req.header("token")
+        // console.log(req.header['auth-token'])
+    if (!token) return res.redirect('/ui/login/organizer')
 
     try {
         const verified = JWT.verify(token, process.env.jwtSecret);
@@ -11,11 +12,10 @@ module.exports = function(req, res, next) {
         if (req.user.userType === "Admin") {
             next();
         } else {
-            res.status(409).json({
-                message: "not an Admin",
-            });
+            res.redirect('/ui/login/organizer')
+
         }
     } catch (err) {
-        res.status(400).send({ error: "auth failed, check auth-token" });
+        res.redirect('/ui/login/organizer');
     }
 };

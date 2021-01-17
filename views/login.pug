@@ -9,12 +9,11 @@ block page-content
             p.head(style='margin-left:3.5em')
                 b Login Now
             div.google
-                a(href="/api/auth/google")
-                    .google-btn
-                        .google-icon-wrapper
-                            img.google-icon(src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
-                        p.btn-text
-                            b Sign in with google
+                .google-btn(onclick='googlelogin()')
+                    .google-icon-wrapper
+                        img.google-icon(src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
+                    p.btn-text
+                        b Sign in with google
             
             input.email(type='text' placeholder='Email')
             p#emailalert

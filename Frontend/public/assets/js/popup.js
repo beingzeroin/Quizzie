@@ -1,8 +1,7 @@
 function mylogin() {
-    document.getElementById("pop").innerHTML =  `
+    document.getElementById("pop").innerHTML = `
     <div id="myModal" class="modal">
     <div class="modal-content" style="background:azure">
-    
     <div><b class="dia">Are you a student or an organizer?</b>
     <br />
     <a href="/ui/login/user"><button class="btns" type="button" style="color:white; margin-left:20%; margin-right:12%; background:dodgerblue">Student</button></a>
@@ -10,37 +9,36 @@ function mylogin() {
     </div>
     </div>`
 
-var modal = document.getElementById("myModal");
-modal.style.display = "block";
-window.onclick = function(event) {if (event.target == modal) 
-{modal.style.display = "none";
-document.body.style.backgroundColor="azure";}}
-document.body.style.backgroundColor="darkgray";
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            document.body.style.backgroundColor = "azure";
+        }
+    }
+    document.body.style.backgroundColor = "darkgray";
 
- }
+}
 
- function mysignup() {
-    document.getElementById("pop").innerHTML =  `
+function mysignup() {
+    document.getElementById("pop").innerHTML = `
     <div id="myModal" class="modal">
-    <div class="modal-content">
-    
-    <div style="background:azure"><h style="margin-left:3em;font-size:120%"><b>Are you a student or an organizer?</b></h>
+    <div class="modal-content" style="background:azure">
+    <div><b class="dia">Are you a student or an organizer?</b>
     <br />
-    <br />
-    <a href="/ui/signup/user"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
-    <a href="/ui/signup/organizer"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
-    <br />
-    <br />
+    <a href="/ui/signup/user"><button class="btns" type="button" style="color:white; margin-left:20%; margin-right:12%; background:dodgerblue">Student</button></a>
+    <a href="/ui/signup/organizer"><button class="btno" type="button" style="color:white;background:Red;margin-right:16%;">Organizer</button></a>
     </div>
     </div>`
 
-var modal = document.getElementById("myModal");
-modal.style.display = "block";
-window.onclick = function(event) {if (event.target == modal) 
-{modal.style.display = "none";
- document.body.style.backgroundColor="azure";
-}}
-document.body.style.backgroundColor="darkgray";
- }
-
-
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            document.body.style.backgroundColor = "azure";
+        }
+    }
+    document.body.style.backgroundColor = "darkgray";
+}

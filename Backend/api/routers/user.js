@@ -348,7 +348,7 @@ router.post("/login", async(req, res, next) => {
                             expiresIn: "1d",
                         }
                     );
-                    req.header['auth-token'] = token;
+                    // req.header['auth-token'] = token;
                     return res.status(200).json({
                         message: "Auth successful",
                         userDetails: {
@@ -374,7 +374,7 @@ router.get("/google", (req, res, next) => {
 });
 
 ////Get Profile
-router.get("/", async(req, res, next) => {
+router.get("/", checkAuthUser, async(req, res, next) => {
     populateJson = {
         path: "quizzesEnrolled",
 
