@@ -3,6 +3,7 @@ div.main{ margin-left:3.5vw;
     margin-top:-2vw;
     margin-right:3.5vw;
     background:white;
+    padding-top:2%;
  }
  div#questions{padding-bottom:5vw;}
 
@@ -23,7 +24,7 @@ b.name,b.score{color: dodgerblue;
 div.line{ width:87vw;
           height:3px;
           background:rgb(100, 100, 189);
-          margin-left:2.2vw;
+          margin-left:2.3vw;
           margin-bottom:3em;
         }
 div.line2{ width:80vw;

@@ -1,15 +1,12 @@
 function mylogin() {
     document.getElementById("pop").innerHTML =  `
     <div id="myModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style="background:azure">
     
-    <div style="background:azure"><h style="margin-left:1vw;font-size:120%"><b>Are you a student or an organizer?</b></h>
+    <div><b class="dia">Are you a student or an organizer?</b>
     <br />
-    <br />
-    <a href="/login"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
-    <a href="/ui/login/organizer"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
-    <br />
-    <br />
+    <a href="/ui/login/user"><button class="btns" type="button" style="color:white; margin-left:20%; margin-right:12%; background:dodgerblue">Student</button></a>
+    <a href="/ui/login/organizer"><button class="btno" type="button" style="color:white;background:Red;margin-right:16%;">Organizer</button></a>
     </div>
     </div>`
 
@@ -30,7 +27,7 @@ document.body.style.backgroundColor="darkgray";
     <div style="background:azure"><h style="margin-left:3em;font-size:120%"><b>Are you a student or an organizer?</b></h>
     <br />
     <br />
-    <a href="/signup"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
+    <a href="/ui/signup/user"><button class="btn" type="button" style="color:white; margin-left:5em; margin-right:5em; background:dodgerblue">Student</button></a>
     <a href="/ui/signup/organizer"><button class="btn" type="button" style="color:white;background:Red;">Organizer</button></a>
     <br />
     <br />
