@@ -2,6 +2,7 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
+
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
@@ -250,14 +251,21 @@ function openPage(pageName, elmnt, id) {
                 score: 4
             }
         ];
+        $.ajax({
+            type: "GET",
+            url: "/api/user/quiz/check",
+            success: function(resultData) {
+                console.log(resultData);
+                alert(JSON.stringify(resultData));
+            }
+        });
         var h = "";
         for (var i = 0; i < a.length; i++) {
-            h += `<a href="results"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
+            h += `<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
                 `</b><p class="para">Score : ` + a[i].score +
                 `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
         }
         document.getElementById("test").innerHTML = h;
-        // tablinks[i].style.backgroundColor = "";
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
@@ -418,7 +426,21 @@ $("#enrollprivate").click(() => {
 })
 
 function startQuiz(quizid) {
-    location.href = '/ui/quiz/start/' + quizid;
+    $.ajax({
+        url: "/api/quiz/start",
+        data: { quizId: quizid },
+        method: "PATCH",
+        success: function(result) {
+            alert(JSON.stringify(result))
+            var strJSON = encodeURIComponent(JSON.stringify(result));
+
+            location.href = '/ui/quiz/start/' + strJSON;
+
+        },
+        error: function(err) {
+            alert(JSON.stringify(err))
+        }
+    })
 
 
 }

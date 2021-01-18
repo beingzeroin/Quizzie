@@ -39,6 +39,7 @@ function login() {
                 if (resultData.message == "Auth successful") {
                     localStorage.token = resultData.token;
                     localStorage.userid = resultData.userDetails.userId
+                    localStorage.username = resultData.userDetails.name
                     localStorage.usertype = resultData.userDetails.userType
                     window.location.href = '/ui/dashboard';
                 }
@@ -49,19 +50,19 @@ function login() {
         });
     }
 
-} //End of signup function
+} //End of login function
 function googlelogin() {
     $.ajax({
         type: "GET",
         url: "/api/auth/google",
-        crossDomain: true,
-        "headers": {
+        headers: {
             "accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
         success: function(resultData) {
             localStorage.token = resultData.token;
             localStorage.userid = resultData.userDetails.userId
+            localStorage.username = resultData.userDetails.name
             localStorage.usertype = resultData.userDetails.userType
             window.location.href = '/ui/dashboard';
         }

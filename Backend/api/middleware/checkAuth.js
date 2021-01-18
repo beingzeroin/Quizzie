@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
-    const token = req.header("token");
+    const token = req.header("token")
     console.log(token);
     if (!token) return res.redirect('/')
 

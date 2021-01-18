@@ -29,8 +29,9 @@ router.get('/updateQuiz/:quizId', (req, res) => {
     res.render('updateQuiz.pug');
 })
 
-router.get("/start/:id", (req, res) => {
-    res.render("startquiz.pug")
+router.get("/start/:data", (req, res) => {
+    let data = decodeURIComponent(req.params.data)
+    res.render("startquiz.pug", { data: data })
 })
 
 router.get("/stats/:quizId", (req, res) => {
