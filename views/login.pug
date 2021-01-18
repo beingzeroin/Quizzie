@@ -2,19 +2,18 @@ extends includes/basePage
 block styles
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     link(rel="stylesheet" href="/assets/css/login.css")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 block page-content
-    body(style='background:rgb(240, 255, 240)')  
-       
+    body
         div.main(style=' padding-bottom:16%')
-            p.head(style='margin-left:3.5em')
+            p.head(style='margin-left:18vw')
                 b Login Now
-            div(style='margin-left:30%;padding-bottom:3%')
-                a(href="/api/auth/google")
-                    .google-btn
-                        .google-icon-wrapper
-                            img.google-icon(src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
-                        p.btn-text
-                            b Sign in with google
+            div.google
+                .google-btn(onclick='googlelogin()')
+                    .google-icon-wrapper
+                        img.google-icon(src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg')
+                    p.btn-text
+                        b Sign in with google
             
             input.email(type='text' placeholder='Email')
             p#emailalert
@@ -23,7 +22,7 @@ block page-content
             button.btn(type="button" onclick='login()' href="/dashboard") Login
       
             a(href="/ui/signup/user")
-                p.signup(style=' colour:black; font-size:100%; margin-left:8em') Don't have an account? Join the Quizzie now!
+                p.signup Don't have an account? Join the Quizzie now!
 
         block scripts
             script(src="/assets/js/login.js")

@@ -4,38 +4,36 @@ html(lang="en")
         title Quizzie| Being Zero
         link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
         link(rel="stylesheet" href="/assets/css/popup.css")
+        link(rel="stylesheet" href="/assets/css/home.css")
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
     body
         block navbar
-            nav.navbar.navbar-light.border.border-dark.shadow-sm.mb-4(style="background-color:white !important;")
+            nav.navbar(style="background-color:white !important;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); height:4em")
                 a.navbar-brand(href="/login")
                     img(src='/assets/img/icons/logo.jpg' width="40px" height="40px")
                 span.navbar-brand.mb-0.h1(style="margin-left:5px") The Quizzie Platform
                 .nav-item.nav-link.ml-auto(style={"font-size":'18px','font-family':'Arial, Helvetica, sans-serif'} )
-                a(href="/login")
-                 button.btn(type="button"  style={color: 'white', background: 'dodgerblue'}) Login
+                button.btn(type="button" onclick="mylogin()" style={color: 'white', background: 'dodgerblue'}) Login
                  
-        div(style='float:left;margin-top:2em')
-           p(style='color: dodgerblue; font-size:350%; margin-bottom: -.5em; margin-left:3em') Welcome  To
-           p(style='color: dodgerblue; font-size:500%; margin-bottom: -.2em; margin-left:2.2em') 
-             b Quizzie
-           p(style='color: dodgerblue; font-size:100%;margin-left:13em')
-             hgd Made With 
-             span(style='font-size:180%;color:red;') &hearts;
-             kdb  By BeingZero
+        div.words
+            div.c(style='float:left;margin-top:2em')
+                p.welcome Welcome To
+                b.quizzie Quizzie
+                p.para Made With 
+                span(style='font-size:180%;color:red;float:left;margin-top:-.3em; margin-right:.2em;') &hearts;
+                p.par By BeingZero
+            img.icon(src='/assets/img/icons/quiz.png')
 
-        img(src="/assets/img/icons/quiz.png" style="margin-left:300px" width="450px" height="280px")
-
-        div
-           p(style='font-size:300%; margin-left:3em;margin-bottom: -.2em') You are not logged in!
-           p(style='font-size:130%; margin-left:11em') Login/Signup to Continue!
-        
-           button.btn(type="button" onclick='mylogin()' style='color:white; margin-left:14.5em; margin-right:5em; background:dodgerblue') Login 
-           button.btn(type="button" onclick='mysignup()'  style={ rightmargin :'50px' ,color: 'white', background: 'Red'}) SignUp
-        div#pop
+        div.details
+           p(style='font-size:300%;margin-bottom: -.2em') You are not logged in!
+           p(style='font-size:130%; margin-left:8%') Login/Signup to Continue!
+           button.btn.x(type="button" onclick='mylogin()') Login 
+           button.btn.y(type="button" onclick='mysignup()') SignUp
+        div.modal
 
         script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
         script(src="/assets/js/popup.js")
+        

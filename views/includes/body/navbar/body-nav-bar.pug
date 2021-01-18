@@ -1,7 +1,9 @@
 block navbar
-    nav.navbar.navbar-light.border.border-dark.shadow-sm.mb-4(style="background-color:white !important;")
+    nav.navbar(style="background-color:white;border:none;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); height:4em")
         a.navbar-brand(href="/index")
-            img(src="/assets/img/icons/bzfavicon.png" width="35px" height="35px" alt="Being Zero")
-        span.navbar-brand.mb-0.h1(style="margin-left:50px") The Quizzie Platform
-        .nav-item.nav-link.ml-auto(style={"font-size":'18px','font-family':'Arial, Helvetica, sans-serif'} ) Welcome,User
-        button.btn(type="button"  style={color: 'white', background: 'orange'}) Logout 
+            img(src="/assets/img/icons/logo.jpg" style="width:40px;height:40px;margin-left:50%;margin-top:-1em;" alt="Being Zero")
+        span.navbar-brand.mb-0.h1(style="margin-left:3%;") The Quizzie Platform
+        .nav-item.nav-link.ml-auto(style={"font-size":'110%','font-family':'Arial, Helvetica, sans-serif'} )
+            b#username Welcome 
+        button.btn.x(type="button" onclick='logout()' style={color: 'white', background: 'orange'}) Logout 
+    

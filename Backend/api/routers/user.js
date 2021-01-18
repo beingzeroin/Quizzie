@@ -393,26 +393,57 @@ router.get("/", checkAuthUser, async(req, res, next) => {
     })
 });
 
-router.get("/quizzesGiven", checkAuthUser, async(req, res, next) => {
-    populateJson = {
-        path: "quizzesGiven",
+router.get(
+    "/quiz/check", checkAuthUser,
+    async(req, res, next) => {
+        populateJson = {
+            path: "quizzesGiven",
 
-        populate: { path: "quizId", populate: { path: "adminId" } }
-    }
-    item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
-        if (err) {
-            res.status(400).json({
-                err,
-            });
-        } else {
-            res.status(200).json({
-                result: result.quizzesGiven,
-            });
+            populate: { path: "quizId", populate: { path: "adminId" } }
         }
-    })
+        console.log("id", req.user.userId);
 
-});
+        item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    err,
+                });
+            } else {
+                return res.status(200).json({
+                    result: result.quizzesGiven,
+                });
+            }
+        })
 
+
+    }
+);
+
+router.get(
+    "/quizzesGiven", checkAuthUser,
+    async(req, res, next) => {
+
+        populateJson = {
+            path: "quizzesGiven",
+
+            populate: { path: "quizId", populate: { path: "adminId" } }
+        }
+        console.log("id", req.user.userId);
+
+        item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
+            if (err) {
+                res.status(400).json({
+                    err,
+                });
+            } else {
+                res.status(200).json({
+                    result: result.quizzesGiven,
+                });
+            }
+        })
+
+    }
+);
 router.get(
     "/studentQuizResult/:quizId",
     async(req, res, next) => {
