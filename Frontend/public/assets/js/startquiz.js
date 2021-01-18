@@ -3,7 +3,6 @@ $.ajaxSetup({
 });
 let currentquestion = 0;
 let questions;
-alert(result)
 result = JSON.parse(result)
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
@@ -132,7 +131,6 @@ function next() {
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
     $('input[type=radio]').change(function() {
         ansdata[currentquestion].selectedOption = this.value;
-        alert(JSON.stringify(ansdata))
 
 
     });
@@ -188,7 +186,6 @@ function prev() {
 
     $('input[type=radio]').change(function() {
         ansdata[currentquestion].selectedOption = this.value;
-        alert(JSON.stringify(ansdata))
 
 
     });
@@ -197,7 +194,6 @@ function prev() {
 }
 $('input[type=radio]').change(function() {
     ansdata[currentquestion].selectedOption = this.value;
-    alert(JSON.stringify(ansdata))
 });
 $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
 

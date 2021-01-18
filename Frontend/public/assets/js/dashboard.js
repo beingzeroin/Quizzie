@@ -432,7 +432,6 @@ function startQuiz(quizid) {
         data: { quizId: quizid },
         method: "PATCH",
         success: function(result) {
-            alert(JSON.stringify(result))
             var strJSON = encodeURIComponent(JSON.stringify(result));
 
             location.href = '/ui/quiz/start/' + strJSON;

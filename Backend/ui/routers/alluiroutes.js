@@ -40,9 +40,11 @@ router.get("/updateProfile", checkAuth, (req, res) => {
     }
 
 })
-
-router.get("/result", (req, res) => {
-     res.render('result.pug');
+router.get("/save", (req, res) => {
+    let data = decodeURIComponent(req.query.data)
+    res.render('save.pug', { data: data })
 })
-module.exports = router
+router.get("/result", (req, res) => {
+    res.render('result.pug');
+})
 module.exports = router
