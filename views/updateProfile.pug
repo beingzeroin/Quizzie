@@ -1,7 +1,5 @@
 extends includes/basePage
 block scripts
-    script.
-        Usertype="#{user.userType}"
     script(src="/assets/js/updateProfile.js")
 block styles
     link(rel="stylesheet" href="/assets/css/updateProfile.css")
@@ -12,16 +10,11 @@ block page-content
             .form
                 .form-group(style="padding-bottom:10%")
                     label Name
-                    br
-                    input.form-control#1(type="text"  name='name' value=user.name  required='' )
+                    input.form-control#1(type="text"  name='name'   required='' )
                     span#nameerror(style="color:red;font-size:15px;")
                 .form-group(style="padding-bottom:10%")
                     label PhoneNumber
-                    br
-                    if user.mobileNumber
-                        input.form-control#2(type="text" name='mobileNumber' value=user.mobileNumber maxlength="10" minlength="10"  required='')
-                    else
-                        input.form-control#2(type="text" name='mobileNumber' placeholder=''  maxlength="10" minlength="10"  required='')
+                        input.form-control#2(type="text" name='mobileNumber'  maxlength="10" minlength="10"  required='')
                     span#phoneerror(style="color:red;font-size:15px;")
                 button.btn.btn-primary(Onclick="validate()") Update Profile
 

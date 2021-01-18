@@ -24,21 +24,8 @@ router.use('/signup', signup)
 
 router.use('/quiz', QUIZ)
 
-router.get("/updateProfile", checkAuth, (req, res) => {
-    if (req.user.userType == 'User') {
-        item.getItemById(req.user.userId, User, (err, result) => {
-            if (err) res.send('Error has occured')
-            else if (result) res.render('updateProfile.pug', { user: result });
-            else res.send("Something went wrong")
-        })
-    } else if (req.user.userType == 'Admin') {
-        item.getItemById(req.user.userId, Admin, (err, result) => {
-            if (err) res.send('Error has occured')
-            else if (result) res.render('updateProfile.pug', { user: result });
-            else res.send("Something went wrong")
-        })
-    }
-
+router.get("/updateProfile", (req, res) => {
+    res.render('updateProfile.pug');
 })
 
 router.get("/result", checkAuthUser, (req, res) => {

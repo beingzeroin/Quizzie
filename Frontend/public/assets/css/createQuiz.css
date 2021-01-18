@@ -6,6 +6,8 @@ body, html {
   margin: 0;
   font-family: Arial;
   background-color:#f8f9fa;
+  max-width: 100%;
+  overflow-x: hidden;
   
 }
 .container.CreateQuiz
@@ -13,8 +15,10 @@ body, html {
     justify-content: center;
     background-color: white;
     height: 100%;
-    margin-left: 25%;
-    width: 50%;
+    margin-left: 15%;
+    margin-right: 15%;
+    width:70%;
+
 }
 .login-form {
     min-height: 100%;
@@ -24,4 +28,11 @@ body, html {
 }
 span.quiz{
     font-size:15px !important;
+}
+button{
+    width: auto !important;
+}
+select
+{
+    width: 30% !important;
 }

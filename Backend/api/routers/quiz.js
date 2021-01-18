@@ -334,7 +334,7 @@ router.patch(
                     message: "Some error",
                 });
             } else {
-                if (result1.adminId !="5ffd2e6c3b522d001597235b") {
+                if (result1.adminId !=req.user.userId) {
                     return res.status(401).json({
                         message: "This is not your quiz",
                     });
@@ -345,7 +345,6 @@ router.patch(
                 updateOps.quizName=req.body.quizName
                 updateOps.scheduledFor=req.body.scheduledFor
                 updateOps.quizDuration=req.body.quizDuration
-                updateOps.quizType=req.body.quizType
 
                 // for (const ops of req.body.updateOps) {
                 //     updateOps[ops.propName] = ops.value;

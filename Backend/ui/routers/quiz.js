@@ -17,29 +17,23 @@ const checkAuth = require("../middleware/checkAuth");
 const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 const Quiz = require("../../api/models/quiz")
 
-router.get('/editQuiz/:quizid', checkAuthAdmin, (req, res) => {
-    item.getItemById(req.params.quizid, Quiz, (err, result) => {
-        if (err) res.send('Error has occured')
-        else if (result) {
-            console.log("quiz details", result);
-            res.render('editQuiz.pug', { quizdetails: result });
-        }
-    })
+router.get('/editQuiz/:quizid', (req, res) => {
+        res.render('editQuiz.pug')
 })
 
-router.get('/createQuiz', checkAuthAdmin, (req, res) => {
+router.get('/createQuiz', (req, res) => {
     res.render('createQuiz.pug');
 })
 
-router.get('/updateQuiz/:quizId', checkAuthAdmin, (req, res) => {
-    item.getItemById(req.params.quizId, Quiz, (err, result) => {
-        if (err) res.send('Error has occured')
-        else if (result) res.render('updateQuiz.pug', { quizdetails: result });
-        else res.send("Something went wrong")
-    })
+router.get('/updateQuiz/:quizId', (req, res) => {
+    res.render('updateQuiz.pug');
 })
 
 router.get("/start/:id", (req, res) => {
     res.render("startquiz.pug")
+})
+
+router.get("/stats/:quizId", (req, res) => {
+    res.render("Stats.pug")
 })
 module.exports = router;
