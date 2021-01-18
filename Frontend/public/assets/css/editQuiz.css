@@ -5,6 +5,8 @@ body, html {
   margin: 0;
   font-family: Arial;
   background-color:#f8f9fa;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .container.editQuiz
@@ -12,9 +14,10 @@ body, html {
     justify-content: center;
     background-color: white;
     height: 100%;
-    margin-left: 10%;
-    margin-right:10% ;
-    margin-top: -2% !important;
+    margin-left: 9%;
+    margin-right: 9%;
+    width:85%;
+    margin-top: -1% !important;
 }
 .login-form {
     min-height: 100%;

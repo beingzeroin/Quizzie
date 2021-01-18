@@ -44,11 +44,12 @@ router.get(
 
 
         // console.log(req.header['auth-token'])
-        res.status(200).json({
-            token: req.user.token,
-            userId: req.user.userId,
-            usertype: req.user.usertype
-        })
+        // res.status(200).json({
+        //     token: req.user.token,
+        //     userId: req.user.userId,
+        //     usertype: req.user.usertype
+        // })
+        res.redirect("/ui/dashboard")
     }
 );
 

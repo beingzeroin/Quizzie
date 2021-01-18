@@ -66,7 +66,7 @@ router.post(
             const quiz = {
                 _id: new mongoose.Types.ObjectId(),
                 quizName: req.body.quizName,
-                adminId: req.user.userId, 
+                adminId: req.user.userId,
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
@@ -296,7 +296,7 @@ router.patch(
 
 ///Update Quiz
 router.patch(
-    "/updateDetails/:quizId",checkAuthAdmin,
+    "/updateDetails/:quizId", checkAuthAdmin,
     async(req, res, next) => {
         // if (!req.body.captcha) {
         //     return res.status(400).json({
@@ -334,7 +334,7 @@ router.patch(
                     message: "Some error",
                 });
             } else {
-                if (result1.adminId !="5ffd2e6c3b522d001597235b") {
+                if (result1.adminId !=req.user.userId) {
                     return res.status(401).json({
                         message: "This is not your quiz",
                     });
@@ -345,7 +345,6 @@ router.patch(
                 updateOps.quizName=req.body.quizName
                 updateOps.scheduledFor=req.body.scheduledFor
                 updateOps.quizDuration=req.body.quizDuration
-                updateOps.quizType=req.body.quizType
 
                 // for (const ops of req.body.updateOps) {
                 //     updateOps[ops.propName] = ops.value;
@@ -806,7 +805,7 @@ router.patch("/finish", async(req, res) => {
 
 });
 
-router.post("/check", async(req, res, next) => {
+router.post("/check", checkAuthUser, async(req, res, next) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
@@ -837,7 +836,8 @@ router.post("/check", async(req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const que_data = req.body.questions;
+    let que_data = req.body.questions;
+    que_data = JSON.parse(que_data);
     var quizId = req.body.quizId;
     const timeEnded = req.body.timeEnded;
     const timeStarted = req.body.timeStarted;
@@ -868,76 +868,149 @@ router.post("/check", async(req, res, next) => {
 
         }
     })
+    item.getItemByQuery({ quizId: quizId }, Question, (err, data) => {
+            if (err) {
+                res.status(400).json({
+                    message: "Some Error",
+                });
+            } else {
+                // console.log()
+                dataQues = data;
+                console.log(data)
+                if (data != null) {
+                    for (i = 0; i < dataQues.length; i++) {
+                        console.log(que_data[i].selectedOption, dataQues[i].correctAnswer)
+                        if (que_data[i].selectedOption == dataQues[i].correctAnswer) {
+                            score += 1;
+                        }
+                        var object = {
+                            description: dataQues[i].description,
+                            selected: que_data[i].selectedOption,
+                            quesId: que_data[i].quesId,
+                            correctAnswer: dataQues[i].correctAnswer,
+                            options: dataQues[i].options,
+                        };
+                        responses.push(object);
+                    }
+                    item.updateItemField({ _id: req.user.userId }, {
+                        $push: {
+                            quizzesGiven: {
+                                quizId,
+                                marks: score,
+                                responses,
+                                timeEnded,
+                                timeStarted,
+                            },
+                        }
+                    }, User, (err, result) => {
+                        if (err) {
+                            res.status(400).json({
+                                message: "Couldnt update",
+                            });
+                        } else {
+                            item.updateItemField({ _id: req.body.quizId }, {
+                                $push: {
+                                    usersParticipated: {
+                                        userId: req.user.userId,
+                                        marks: score,
+                                        responses,
+                                        timeEnded,
+                                        timeStarted,
+                                    },
+                                },
+                            }, Quiz, (err, result7) => {
+                                if (err) {
+                                    res.status(400).json({
+                                        message: "Unexpected Error",
+                                    });
+                                } else {
+                                    res.status(200).json({
+                                        message: "Updated",
+                                        quizId,
+                                        marks: score,
+                                        responses,
+                                        timeEnded,
+                                        timeStarted,
+                                    });
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    console.log("Couldn't find questions in cache");
+                }
 
-    // client.get(req.user.userId, (err, data) => {
-    //     if (err) {
-    //         return res.status(400).json({
-    //             message: "Error in cachin",
-    //         });
-    //     }
-    //     dataQues = JSON.parse(data);
-    //     if (data != null) {
-    //         for (i = 0; i < dataQues.length; i++) {
-    //             if (que_data[i].selectedOption == dataQues[i].correctAnswer) {
-    //                 score += 1;
-    //             }
-    //             var object = {
-    //                 description: dataQues[i].description,
-    //                 selected: que_data[i].selectedOption,
-    //                 quesId: que_data[i].quesId,
-    //                 correctAnswer: dataQues[i].correctAnswer,
-    //                 options: dataQues[i].options,
-    //             };
-    //             responses.push(object);
-    //         }
-    //         item.updateItemField({ _id: req.user.userId }, {
-    //             $push: {
-    //                 quizzesGiven: {
-    //                     quizId,
-    //                     marks: score,
-    //                     responses,
-    //                     timeEnded,
-    //                     timeStarted,
-    //                 },
-    //             }
-    //         }, User, (err, result) => {
-    //             if (err) {
-    //                 res.status(400).json({
-    //                     message: "Couldnt update",
-    //                 });
-    //             } else {
-    //                 item.updateItemField({ _id: req.body.quizId }, {
-    //                     $push: {
-    //                         usersParticipated: {
-    //                             userId: req.user.userId,
-    //                             marks: score,
-    //                             responses,
-    //                             timeEnded,
-    //                             timeStarted,
-    //                         },
-    //                     },
-    //                 }, Quiz, (err, result7) => {
-    //                     if (err) {
-    //                         res.status(400).json({
-    //                             message: "Unexpected Error",
-    //                         });
-    //                     } else {
-    //                         res.status(200).json({
-    //                             message: "Updated",
-    //                             quizId,
-    //                             marks: score,
-    //                             responses,
-    //                             timeEnded,
-    //                             timeStarted,
-    //                         });
-    //                     }
-    //                 })
-    //             }
-    //         })
-    //     } else {
-    //         console.log("Couldn't find questions in cache");
-    //     }
-    // });
+            }
+        })
+        // client.get(req.user.userId, (err, data) => {
+        //     if (err) {
+        //         return res.status(400).json({
+        //             message: "Error in cachin",
+        //         });
+        //     }
+        //     dataQues = JSON.parse(data);
+        //     if (data != null) {
+        //         for (i = 0; i < dataQues.length; i++) {
+        //             if (que_data[i].selectedOption == dataQues[i].correctAnswer) {
+        //                 score += 1;
+        //             }
+        //             var object = {
+        //                 description: dataQues[i].description,
+        //                 selected: que_data[i].selectedOption,
+        //                 quesId: que_data[i].quesId,
+        //                 correctAnswer: dataQues[i].correctAnswer,
+        //                 options: dataQues[i].options,
+        //             };
+        //             responses.push(object);
+        //         }
+        //         item.updateItemField({ _id: req.user.userId }, {
+        //             $push: {
+        //                 quizzesGiven: {
+        //                     quizId,
+        //                     marks: score,
+        //                     responses,
+        //                     timeEnded,
+        //                     timeStarted,
+        //                 },
+        //             }
+        //         }, User, (err, result) => {
+        //             if (err) {
+        //                 res.status(400).json({
+        //                     message: "Couldnt update",
+        //                 });
+        //             } else {
+        //                 item.updateItemField({ _id: req.body.quizId }, {
+        //                     $push: {
+        //                         usersParticipated: {
+        //                             userId: req.user.userId,
+        //                             marks: score,
+        //                             responses,
+        //                             timeEnded,
+        //                             timeStarted,
+        //                         },
+        //                     },
+        //                 }, Quiz, (err, result7) => {
+        //                     if (err) {
+        //                         res.status(400).json({
+        //                             message: "Unexpected Error",
+        //                         });
+        //                     } else {
+        //                         res.status(200).json({
+        //                             message: "Updated",
+        //                             quizId,
+        //                             marks: score,
+        //                             responses,
+        //                             timeEnded,
+        //                             timeStarted,
+        //                         });
+        //                     }
+        //                 })
+        //             }
+        //         })
+        //     } else {
+        //         console.log("Couldn't find questions in cache");
+        //     }
+        // });
 });
 
 router.delete("/delete", async(req, res, next) => {

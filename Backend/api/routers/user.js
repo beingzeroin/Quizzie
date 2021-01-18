@@ -28,8 +28,12 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 router.get("/:userid", (req, res) => {
     item.getItemById(req.params.userid, User, (err, result) => {
+        if(err)
+            console.log("error",e);
+        else {
         console.log(result);
         res.send(result);
+        }
     })
 })
 router.post("/resendVerificationEmail", verifyURL, async(req, res, next) => {
@@ -396,25 +400,25 @@ router.get("/", checkAuthUser, async(req, res, next) => {
 router.get(
     "/quiz/check", checkAuthUser,
     async(req, res, next) => {
-         populateJson = {
+        populateJson = {
             path: "quizzesGiven",
 
             populate: { path: "quizId", populate: { path: "adminId" } }
         }
-        console.log("id",req.user.userId);
+        console.log("id", req.user.userId);
 
         item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
             if (err) {
-               return  res.status(400).json({
+                return res.status(400).json({
                     err,
                 });
             } else {
-              return   res.status(200).json({
+                return res.status(200).json({
                     result: result.quizzesGiven,
                 });
             }
         })
-       
+
 
     }
 );
@@ -428,7 +432,7 @@ router.get(
 
             populate: { path: "quizId", populate: { path: "adminId" } }
         }
-        console.log("id",req.user.userId);
+        console.log("id", req.user.userId);
 
         item.getItemByIdWithPopulate(req.user.userId, User, populateJson, (err, result) => {
             if (err) {
@@ -444,7 +448,6 @@ router.get(
 
     }
 );
-
 router.get(
     "/studentQuizResult/:quizId", checkAuthUser ,
     async(req, res, next) => {
