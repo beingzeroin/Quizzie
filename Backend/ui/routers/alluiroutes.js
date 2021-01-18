@@ -28,7 +28,7 @@ router.get("/updateProfile", (req, res) => {
     res.render('updateProfile.pug');
 })
 
-router.get("/result", (req, res) => {
+router.get("/result/:quizName/:quizId", (req, res) => {
      res.render('result.pug');
 })
 module.exports = router

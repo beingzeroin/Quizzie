@@ -254,18 +254,21 @@ function openPage(pageName, elmnt, id) {
         $.ajax({
             type: "GET",
             url: "/api/user/quiz/check",
-            success: function(resultData) {
-                console.log(resultData);
-                alert(JSON.stringify(resultData));
+            success: function(resultData) 
+            {  var r = resultData.result;
+               var h="";
+               for( var i=0; i<r.length;i++)
+               { h+=`<a href="/ui/result/${(r[i].quizId).quizName}/${(r[i].quizId)._id}"><button type="button" class="tester">
+                            <div class="bar">
+                             <b class="para"> ${(r[i].quizId).quizName} </b>
+                             <p class="para">Score : ${r[i].marks} </p>
+                           </div>
+                           <a href="/ui/result/${(r[i].quizId).quizName}/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:grey;margin-top:.6em"></i> </a>
+                     </button> </a>`;
+               }
+               document.getElementById("test").innerHTML=h;
             }
-        });
-        var h = "";
-        for (var i = 0; i < a.length; i++) {
-            h += `<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
-                `</b><p class="para">Score : ` + a[i].score +
-                `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
-        }
-        document.getElementById("test").innerHTML = h;
+        }); 
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
