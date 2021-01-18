@@ -1,3 +1,11 @@
+
+$.ajaxSetup({
+    headers: { 'token': localStorage.token }
+  });
+  
+  if (!localStorage.token)
+      location.href = '/'
+  
 function IsPhoneno(phoneno) {
     var regex = /^([7-9][0-9]{9})$/g;
     if (!regex.test(phoneno)) return false;
@@ -5,7 +13,7 @@ function IsPhoneno(phoneno) {
 }
 
 function updatedata(data) {
-    if (Usertype == "User") {
+    if (localStorage.usertype == "User") {
         $.ajax({
             url: "/api/user/updateProfile",
             data: data,
@@ -18,7 +26,7 @@ function updatedata(data) {
                 console.log(err);
             }
         });
-    } else if (Usertype == "Admin") {
+    } else if (localStorage.usertype == "Admin") {
         $.ajax({
             url: "/api/admin/updateProfile",
             data: data,
@@ -87,3 +95,51 @@ function validate() {
         updatedata({ "name": name, "mobileNumber": mobile });
     }
 }
+$(document).ready(function(){
+    if(localStorage.usertype=="Admin")
+    {
+        $.ajax({
+            url: "/api/admin/"+localStorage.userid,
+            method: "GET",
+            success: function(result) {
+                console.log(result);
+                $("#1").val(result.name);
+                try{
+                    $("#2").val(result.mobileNumber);
+                }
+                catch(e)
+                {
+                    $("#2").val('');
+                }
+                
+                
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        }); 
+    }
+    else
+    {
+        $.ajax({
+            url: "/api/user/"+localStorage.userid,
+            method: "GET",
+            success: function(result) {
+                console.log(result);
+                $("#1").val(result.name);
+                try{
+                    $("#2").val(result.mobileNumber);
+                }
+                catch(e)
+                {
+                    $("#2").val('');
+                }
+                
+                
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        }); 
+    }
+});

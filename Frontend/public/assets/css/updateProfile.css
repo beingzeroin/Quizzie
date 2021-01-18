@@ -22,3 +22,6 @@ body, html {
     margin: 0 25%;
     flex-direction: column;
 }
+button{
+  width: auto !important;
+}

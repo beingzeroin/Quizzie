@@ -28,8 +28,12 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 router.get("/:userid", (req, res) => {
     item.getItemById(req.params.userid, User, (err, result) => {
+        if(err)
+            console.log("error",e);
+        else {
         console.log(result);
         res.send(result);
+        }
     })
 })
 router.post("/resendVerificationEmail", verifyURL, async(req, res, next) => {
