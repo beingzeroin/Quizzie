@@ -19,9 +19,6 @@ const itemlib = require("./Backend/api/lib/itemlib");
 ////routers
 
 const app = express();
-var fs = require('fs');
-var async = require('async'),
-    http = require('http');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
