@@ -1,31 +1,23 @@
-doctype html
-html(lang='en')
-    head
-        include includes/head/head-meta
-        title Being Zero
-        include includes/head/head-styles
-        block styles
-            link(rel="stylesheet" href="/assets/css/stats.css")
-    body
-        .container
-            h1.mt-1 Stats
-            hr
-            .charts
-                .row
-                    #pie_chart.d-flex.justify-content-center
-                .row
-                    .col
-                        #bar_chart.d-flex.justify-content-between(height="616px" width="304px")
-                    .col
-                        #line_chart.d-flex.justify-content-between
-        
+extends includes/basePage
+block styles
+    link(rel="stylesheet" href="/assets/css/stats.css")
+block scripts
+    script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+    script(type="text/javascript" src="/assets/js/stats.js")
+block page-content
+    .container
+        h1.mt-1 Stats
+        hr()
+        .charts
+            .row
+                #pie_chart.d-flex.justify-content-center
+            .row
+                .col
+                    #bar_chart.d-flex.justify-content-between(height="616px" width="304px")
+                .col
+                    #line_chart.d-flex.justify-content-between
 
-
-        //- include body/body-copyright
-        include includes/body/body-scripts
-        block scripts
-            script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
-            script(type="text/javascript" src="/assets/js/stats.js")
+       
 
 
         

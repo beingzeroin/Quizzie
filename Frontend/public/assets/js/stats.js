@@ -4,16 +4,6 @@ $.ajaxSetup({
   
   if (!localStorage.token)
       location.href = '/'
-  
-function getRandomColor() {
-var letters = '0123456789ABCDEF'.split('');
-var color = '#';
-for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
-}
-//console.log(color);
-return color;
-} 
 var piedata,minmarks,maxmarks,total,average,linedata;
 google.charts.load('current', {'packages':['corechart']});
 
@@ -35,7 +25,7 @@ function pieChart() {
     legend: { position: "top" },
     //colors:['yellow', 'red', 'blue', 'green', 'violet', 'pink'],
     useRandomColors: true,
-    backgroundcolor:"#ff0ff"
+    backgroundcolor:"#ff0ff",
   };
 
  var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
