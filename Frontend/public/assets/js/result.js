@@ -1,3 +1,8 @@
+$.ajaxSetup({
+  headers: { 'token': localStorage.token }
+});
+if (!localStorage.token) location.href = '/';
+
 function show()
 {  var a = [{ correct : 1,
     chosen  : 2,
@@ -13,33 +18,51 @@ function show()
     option  : 4 }
  ]
 
- var h="";
-
- for(var i=0;i<a.length;i++)
- { h+=`<div class="dropdown">
-          <button class="dropbtn">
-          <div class="bar">
-             <p class="para">a`;
-   if(a[i].correct == a[i].chosen)
-        h+=`<p class='right'>&#10004</p>`;
-   else h+=`<p class='wrong'>&#10006</p>`;
-   h+=` </p> 
-   </div>
-   <i class="fa fa-chevron-down fa-2x" aria hidden="true" style="color:black"></i>
-     <div class="dropdown-content">`;
-       for(var j=0;j<a[i].option;j++)
-       {
-        if(j+1==a[i].correct)
-         h+=`<p class='odot fa-2x' style=" color:green">&#8857</p>`;
-        else if(a[i].chosen==j+1)
-         h+=`<p class='odot fa-2x' style="color:red">&#8857</p>`;
-        else h+=`<p class='odot fa-2x' style="color:grey">&#8857</p>`;
-       }
-    h+=`</div>
-   </button>
-   </div>`;
+ $.ajax({
+  type: "GET",
+  url: "/api/user/studentQuizResult/60045f56f14fe61f28400374",
+  success: function(resultData) 
+  { var r=resultData.result.responses;
+    alert(JSON.stringify(r));
+    var h="";
+ 
+    for(var i=0;i<r.length;i++)
+    { 
+    h+=`<div class="container">
+            <button type="button" id="question" class="btn" onclick="drop(${i})">
+                <p class="para">a</p>`;
+              if(a[i].chosen==a[i].correct)
+    h+=         `<p class='right'>&#10003;</p>`;
+              else
+    h+=         `<p class='wrong'>&#9932</p>`;
+    h+=         `<p class='arrow'>&#9660</p>`;
+    h+=      `</button>`; 
+    h+=  `<div class="sol">`;
+              for(var j=0;j<a[i].option;j++)
+              {
+                if(j+1==a[i].correct)
+                h+=`<p class='odot fa-2x' style="color:green;float:down">&#8857</p>`;
+                else if(a[i].chosen==j+1)
+                 h+=`<p class='odot fa-2x' style="color:red;float:down">&#8857</p>`;
+                else h+=`<p class='odot fa-2x' style="color:black;float:down">&#8857</p>`;
+              }
+    h+=   `</div></div>`;
+    }
+    document.getElementById("questions").innerHTML=h;
+  }
+}); 
 }
-document.getElementById("questions").innerHTML=h;
 
-}
 show();
+function drop(i)
+{ 
+var x = document.getElementsByClassName("sol")[i];
+var y=  document.getElementsByClassName("question")[i];
+var z=  document.getElementsByClassName("arrow")[i];
+
+if (x.style.display == "none")
+   { x.style.display = "block";
+     z.innerHTML = `&#9650`;}
+ else {x.style.display = "none";
+       z.innerHTML = `&#9660`;}
+}

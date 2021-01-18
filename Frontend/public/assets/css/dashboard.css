@@ -89,21 +89,29 @@ li {
 }
 
 ul {
-    position: relative;
-    left: 50%;
-}
+  position: relative;
+  left: 50%;
+ }
+ li {
+  position: relative;
+  left: -50%;
+  list-style: none;
+ } 
+ li img.bz
+ {
+  width:150px;
+  height:120px;
+  margin:2em;
+ }
 
-li {
-    position: relative;
-    left: -50%;
-    list-style: none;
+.bar{float:left;
+  margin-right:60vw;
 }
-
-li img.bz {
-    width: 150px;
-    height: 120px;
-    margin: 2em;
-}
+.test{background:azure;
+    padding-bottom:.5%;
+    width:70vw;
+    margin-bottom:.5em;}
+.para{margin-left:1vw;color:black}
 
 .modal {
     display: none;
@@ -137,21 +145,4 @@ li img.bz {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-}
-
-.bar {
-    float: left;
-    margin-right: 60vw;
-}
-
-.test {
-    background: azure;
-    padding-bottom: .5%;
-    width: 70vw;
-    margin-bottom: .5em;
-}
-
-.para {
-    margin-left: 1vw;
-    color: black
 }
