@@ -2,6 +2,7 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
+
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
@@ -51,7 +52,7 @@ if (localStorage.usertype == "User") {
                 userdata += `
             
                 <div class="row"></div>
-                <h4><label>Phone Number</label> :mobile</h4>`
+                <h4><label>Phone Number</label> :${result.result1.mobileNumber}</h4>`
             }
 
             userdata += `
@@ -230,33 +231,42 @@ function openPage(pageName, elmnt, id) {
     }
     tablinks = document.getElementsByClassName("tabs");
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].style.backgroundColor = "";
-    } 
+        tablinks[i].style.backgroundColor = "";
+    }
 
-    if(pageName=='History')
-    {   var a =  [{ test: "Test1",
-                    score : 1},
-                  { test: "Test1",
-                    score : 2},
-                  { test: "Test3",
-                    score : 3},
-                  { test: "Test4",
-                    score : 4}];
+    if (pageName == 'History') {
+        var a = [{
+                test: "Test1",
+                score: 1
+            },
+            {
+                test: "Test1",
+                score: 2
+            },
+            {
+                test: "Test3",
+                score: 3
+            },
+            {
+                test: "Test4",
+                score: 4
+            }
+        ];
         $.ajax({
             type: "GET",
             url: "/api/user/quiz/check",
-            success: function(resultData) 
-            { console.log(resultData);
-               alert(JSON.stringify(resultData));
+            success: function(resultData) {
+                console.log(resultData);
+                alert(JSON.stringify(resultData));
             }
-        }); 
-        var h="";
-        for( var i=0; i<a.length;i++)
-        { h+=`<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
-          `</b><p class="para">Score : ` + a[i].score +
-          `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
+        });
+        var h = "";
+        for (var i = 0; i < a.length; i++) {
+            h += `<a href="result"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
+                `</b><p class="para">Score : ` + a[i].score +
+                `</p></div><a href="/ui/result"><i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:black;margin-top:.6em"></i></a></div></a>`;
         }
-        document.getElementById("test").innerHTML=h;
+        document.getElementById("test").innerHTML = h;
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
@@ -417,7 +427,21 @@ $("#enrollprivate").click(() => {
 })
 
 function startQuiz(quizid) {
-    location.href = '/ui/quiz/start/' + quizid;
+    $.ajax({
+        url: "/api/quiz/start",
+        data: { quizId: quizid },
+        method: "PATCH",
+        success: function(result) {
+            alert(JSON.stringify(result))
+            var strJSON = encodeURIComponent(JSON.stringify(result));
+
+            location.href = '/ui/quiz/start/' + strJSON;
+
+        },
+        error: function(err) {
+            alert(JSON.stringify(err))
+        }
+    })
 
 
 }

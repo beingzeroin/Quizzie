@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 require('dotenv').config()
 const item = require("../lib/itemlib")
+const axios = require("axios")
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -24,6 +25,13 @@ passport.deserializeUser((id, done) => {
 });
 
 
+const checkToken = async(token) => {
+    try {
+        return await axios.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token}`);
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 
 
@@ -35,6 +43,16 @@ passport.use(new GoogleStrategy({
 }, async(accessToken, refreshToken, profile, done) => {
 
     // check if user already exists in our own db
+    console.log(accessToken, refreshToken, profile);
+    let checkAuth = await checkToken(accessToken);
+    console.log(checkAuth);
+    if (checkAuth.data.error === 'invalid_token' || checkAuth.data.expires_in < 0 || checkAuth.data.issued_to != process.env.clientID) {
+        return res.status(401).json({
+            msg: "Unauthorized Access"
+        })
+    } else
+        console.log("auth done");
+
     item.getSingleItemByQuery({ email: profile.emails[0].value }, User, (err, currentUser) => {
         if (err) {
             console.log(err);

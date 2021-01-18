@@ -23,6 +23,14 @@ var fs = require('fs');
 var async = require('async'),
     http = require('http');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+app.use(cors());
+
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -33,10 +41,6 @@ app.get('/', checksloggedin, (req, res) => {
 });
 
 app.use(express.static(__dirname + '/Frontend/public/'));
-
-
-
-
 
 const apiroutes = require("./Backend/api/routers/allapiroutes")
 const uiroutes = require("./Backend/ui/routers/alluiroutes");
@@ -56,89 +60,31 @@ mongoose
 
 mongoose.Promise = global.Promise;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 console.log(Date.now())
-    // app.use(cookieSession({
-    //     maxAge: 24 * 60 * 60 * 1000,
-    //     keys: [keys.cookieSession]
-    // }));
-
-// const ips = ['172.67.176.16','104.24.123.191','104.24.122.191','10.41.141.207','10.63.249.212','10.69.232.242','108.162.194.81','162.159.38.81','172.64.34.81','172.64.33.140','173.245.59.140','108.162.193.140','162.243.166.170','157.245.130.6']
-// // // Create the server
-// app.use(ipfilter(ips, { mode: 'allow' }))
 
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/ui', uiroutes);
+app.use("/api", apiroutes);
 
-function init() {
-    console.log("init");
-    app.get('/', (req, res) => {
-        console.log("rendering indx");
-        res.render('home')
-    });
-    // ALL SPECIFIC PAGES SHOULD BE CALLED HERE
-    //   app.use('/api', apiRouter);
-    //   app.use('/auth',authRouter);
-    // PLACEHOLDER FOR GETTING ANY PAGE FROM VIEWS
-
-    app.use('/ui', uiroutes);
-    app.use("/api", apiroutes);
-
-
-    // app.get('/:pagename', function(req, res) {
-    //     console.log("redirecting to");
-    //     console.log(req.params.pagename, __dirname);
-    //     // let pos = __dirname
-    //     if (fs.existsSync(__dirname + '/views/' + req.params.pagename + '.pug')) {
-    //         res.render(req.params.pagename, {
-    //             pageTitle: req.params.pagename
-    //         })
-    //     } else {
-    //         res.render('404', {
-    //             pageTitle: 'Page Not Found'
-    //         })
-    //     }
-    // });
-}
-
-async.series([],
-    function(err, results) {
-        if (err) {
-            console.log('Exception initializing database.');
-            throw err;
-        } else {
-            console.log('Database initialization complete.');
-            init();
-        }
-    });
-
-/////Rate Limiter
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 150, // limit each IP to 100 requests per windowMs
-});
-
-//  apply to all requests
-app.use(limiter);
 
 // Allow CORS
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization,auth-token"
-    );
-    if (req.method === "OPTIONS") {
-        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-        return res.status(200).json({});
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "Origin, X-Requested-With, Content-Type, Accept, Authorization,auth-token"
+//     );
+//     if (req.method === "OPTIONS") {
+//         res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+//         return res.status(200).json({});
+//     }
+//     next();
+// });
 
-app.use(cors());
+// app.use(cors());
 
 
 

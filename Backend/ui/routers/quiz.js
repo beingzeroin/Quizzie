@@ -39,7 +39,8 @@ router.get('/updateQuiz/:quizId', checkAuthAdmin, (req, res) => {
     })
 })
 
-router.get("/start/:id", (req, res) => {
-    res.render("startquiz.pug")
+router.get("/start/:data", (req, res) => {
+    let data = decodeURIComponent(req.params.data)
+    res.render("startquiz.pug", { data: data })
 })
 module.exports = router;
