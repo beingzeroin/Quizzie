@@ -446,7 +446,7 @@ router.get(
 );
 
 router.get(
-    "/studentQuizResult/:quizId",
+    "/studentQuizResult/:quizId", checkAuthUser ,
     async(req, res, next) => {
         const studentId = req.user.userId;
         if (studentId.match(/^[0-9a-fA-F]{24}$/)) {
@@ -459,7 +459,7 @@ router.get(
                     }
                 }
                 if (result) {
-                    res.status(200).json({
+                   return res.status(200).json({
                         message: "Retrieved",
                         result: result,
                     });

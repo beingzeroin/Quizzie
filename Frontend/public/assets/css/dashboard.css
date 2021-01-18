@@ -105,10 +105,16 @@ ul {
  }
 
 .bar{float:left;
-  margin-right:60vw;
+  margin-right:45vw;
 }
-.test{background:azure;
-    padding-bottom:.5%;
+
+.tester{ border:none !important;
+         background: rgb(255, 255, 255);
+         margin-bottom:1%;
+         margin-left:3%;
+         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1)
+        }
+.test{padding-bottom:.5%;
     width:70vw;
     margin-bottom:.5em;}
 .para{margin-left:1vw;color:black}

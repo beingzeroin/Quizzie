@@ -41,7 +41,7 @@ router.get("/updateProfile", checkAuth, (req, res) => {
 
 })
 
-router.get("/result", (req, res) => {
+router.get("/result/:quizName/:quizId", (req, res) => {
      res.render('result.pug');
 })
 module.exports = router
