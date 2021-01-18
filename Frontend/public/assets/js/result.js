@@ -18,10 +18,16 @@ function show()
     option  : 4 }
  ]
 
- var h="";
+ $.ajax({
+  type: "GET",
+  url: "/api/user/studentQuizResult/60045f56f14fe61f28400374",
+  success: function(resultData) 
+  { var r=resultData.result.responses;
+    alert(JSON.stringify(r));
+    var h="";
  
- for(var i=0;i<a.length;i++)
- { 
+    for(var i=0;i<r.length;i++)
+    { 
     h+=`<div class="container">
             <button type="button" id="question" class="btn" onclick="drop(${i})">
                 <p class="para">a</p>`;
@@ -41,13 +47,13 @@ function show()
                 else h+=`<p class='odot fa-2x' style="color:black;float:down">&#8857</p>`;
               }
     h+=   `</div></div>`;
- }
-document.getElementById("questions").innerHTML=h;
-
+    }
+    document.getElementById("questions").innerHTML=h;
+  }
+}); 
 }
+
 show();
-
-
 function drop(i)
 { 
 var x = document.getElementsByClassName("sol")[i];

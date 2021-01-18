@@ -244,10 +244,10 @@ function openPage(pageName, elmnt, id) {
                     score : 4}];
         $.ajax({
             type: "GET",
-            url: "/api/user/quizzesGiven",
+            url: "/api/user/quiz/check",
             success: function(resultData) 
-            {
-               alert(resultData);
+            { console.log(resultData);
+               alert(JSON.stringify(resultData));
             }
         }); 
         var h="";
