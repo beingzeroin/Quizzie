@@ -57,6 +57,10 @@ div.line2{ width:80vw;
         margin-left:1em;
         font-size:110%;
         float:left;}
+.warn {margin-top:.1em;
+        margin-left:1em;
+        font-size:110%;
+        float:left;}
 .arrow { color:grey;
          margin-left:98%;
          margin-top:.4%;

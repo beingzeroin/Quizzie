@@ -33,7 +33,9 @@ function show()
                 <p class="para">${r[i].description}</p>`;
               if(r[i].selected==r[i].correctAnswer)
     h+=         `<p class='right'>&#10003;</p>`;
-              else
+              else if(r[i].selected==null)
+    h+=         `<p class='warn'>&#9888</p>`;
+              else 
     h+=         `<p class='wrong'>&#9932</p>`;
     h+=         `<p class='arrow'>&#9660</p>`;
     h+=      `</button>`; 
