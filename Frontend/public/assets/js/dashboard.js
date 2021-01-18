@@ -2,6 +2,7 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
+
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
@@ -51,7 +52,7 @@ if (localStorage.usertype == "User") {
                 userdata += `
             
                 <div class="row"></div>
-                <h4><label>Phone Number</label> :mobile</h4>`
+                <h4><label>Phone Number</label> :${result.result1.mobileNumber}</h4>`
             }
 
             userdata += `
@@ -251,6 +252,7 @@ function openPage(pageName, elmnt, id) {
                 score: 4
             }
         ];
+
         var h = "";
         for (var i = 0; i < a.length; i++) {
             h += `<a href="results"><div class="test" ><div class="bar"><b class="para">` + a[i].test +
@@ -419,7 +421,21 @@ $("#enrollprivate").click(() => {
 })
 
 function startQuiz(quizid) {
-    location.href = '/ui/quiz/start/' + quizid;
+    $.ajax({
+        url: "/api/quiz/start",
+        data: { quizId: quizid },
+        method: "PATCH",
+        success: function(result) {
+            alert(JSON.stringify(result))
+            var strJSON = encodeURIComponent(JSON.stringify(result));
+
+            location.href = '/ui/quiz/start/' + strJSON;
+
+        },
+        error: function(err) {
+            alert(JSON.stringify(err))
+        }
+    })
 
 
 }

@@ -51,28 +51,19 @@ router.delete("/:questionId", async(req, res, next) => {
 
 router.get("/all/:quizId", async(req, res, next) => {
     item.getItemByQuery({ quizId: req.params.quizId }, Question, (err, result) => {
-            if (err) {
-                res.status(400).json({
-                    message: "Some Error",
-                });
-            } else {
-                res.status(200).json({
-                    result,
-                });
-            }
-        })
-        // await Question.find({ quizId: req.params.quizId })
-        //     .then(async(result) => {
-        //         res.status(200).json({
-        //             result,
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({
-        //             message: "Some Error",
-        //         });
-        //     });
+        if (err) {
+            res.status(400).json({
+                message: "Some Error",
+            });
+        } else {
+            res.status(200).json({
+                result,
+            });
+        }
+    })
+
 });
+
 
 router.post("/add", async(req, res, next) => {
     item.getItemById(req.body.quizId, Quiz, (err, result1) => {
@@ -111,15 +102,15 @@ router.post("/add", async(req, res, next) => {
                 //     }
                 // });
                 // console.log(flag)
-               
-                    let data=req.body;
-                    console.log(data);
-                    data.options=JSON.parse(data.options);
-                    //console.log(d);
-             
-               
+
+                let data = req.body;
+                console.log(data);
+                data.options = JSON.parse(data.options);
+                //console.log(d);
+
+
                 const ques = {
-                     _id: new mongoose.Types.ObjectId(),
+                    _id: new mongoose.Types.ObjectId(),
                     quizId: req.body.quizId,
                     description: req.body.description,
                     options: data.options,
@@ -234,9 +225,9 @@ router.patch(
         const updateOps = {};
         var flag = 0;
         console.log(req.body);
-        updateOps.description=req.body.description
-        updateOps.options=JSON.parse(req.body.options)
-        updateOps.correctAnswer=req.body.correctAnswer
+        updateOps.description = req.body.description
+        updateOps.options = JSON.parse(req.body.options)
+        updateOps.correctAnswer = req.body.correctAnswer
         item.updateItemField({ _id: req.params.questionId }, { $set: updateOps }, Question, (err, result) => {
                 if (result) {
                     res.status(200).json({

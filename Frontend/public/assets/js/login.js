@@ -54,8 +54,7 @@ function googlelogin() {
     $.ajax({
         type: "GET",
         url: "/api/auth/google",
-        crossDomain: true,
-        "headers": {
+        headers: {
             "accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },

@@ -1,13 +1,14 @@
 block styles
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css")
-
+script.
+    let result = '!{data}';
 block page-content
     div.container
-        #heading(style="text-align:center")
+        .mb-3#heading(style="text-align:center")
         p(style="text-align:center;color:red") Time Remaining
-        #timedisplay(style="text-align:center")
-        div#display
+        .mb-3#timedisplay(style="text-align:center;margin-top:-1.5% !important;color:red")
+        div.mt-5#display
 block scripts
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
