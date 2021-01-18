@@ -1,6 +1,13 @@
+$.ajaxSetup({
+  headers: { 'token': localStorage.token }
+});
+
+if (!localStorage.token)
+    location.href = '/'
+
 var date = new Date();
-var currentDate = date.toISOString().slice(0,10);
-var currentTime = date.getHours() + ':' + date.getMinutes()+":"+date.getSeconds();
+var currentDate = date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0' +date.getDate()).slice(-2);
+var currentTime = date.getHours() + ':' + ('0'+date.getMinutes()).slice(-2)+":"+('0'+date.getSeconds()).slice(-2);
 $('#date').val(currentDate);
 $('#time').val(currentTime);
 
@@ -15,6 +22,7 @@ function senddata(data)
     },
     error: function(err) {
       console.log(err);
+      alert("Please Enter Valid Quiz Details!")
       location.href="/ui/quiz/createQuiz"  //change this url ....
     }
   });

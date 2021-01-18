@@ -13,7 +13,7 @@ let userquiz = `<button class="btn btn-success" type="button" onclick="privateQu
         </div>
     </div>
 </div>`
-let createquiz = `<button class="btn btn-danger" type="button" style="margin-top:-10%"><i class="fa fa-plus" aria-hidden="true"> </i> CREATE A QUIZ</button>`
+let createquiz = `<a href="/ui/quiz/createQuiz"><button class="btn btn-danger" type="button" style="margin-top:-10%"><i class="fa fa-plus" aria-hidden="true"> </i> CREATE A QUIZ</button></a>`
 let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizzes</h3>
 <hr style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;" />
 <div class="enrolled-list root1">
@@ -150,7 +150,6 @@ if (localStorage.usertype == "Admin") {
             <h4><label>Email</label> : ${result.result1.email}</h4>`
             if (result.result1.mobileNumber) {
                 userdata += `
-            
                 <div class="row"></div>
                 <h4><label>Phone Number</label> : ${result.result1.mobileNumber} </h4>`
             }

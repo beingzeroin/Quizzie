@@ -1,4 +1,12 @@
 var questionId;
+
+$.ajaxSetup({
+  headers: { 'token': localStorage.token }
+});
+
+if (!localStorage.token)
+    location.href = '/'
+
 function senddata(data)
 {
   $.ajax({
@@ -10,7 +18,7 @@ function senddata(data)
     },
     error: function(err) {
       console.log(err);
-      location.href="/ui/quiz/editQuiz/"  //change this url ....
+      alert("Please Enter Valid Question")//change this url ....
     }
   });
 }
@@ -86,7 +94,7 @@ $( document ).ready(function() {
 
 function deletequiz()
 {
-    let quizId=location.href.split('/').slice(-1)[0]  
+     quizId=location.href.split('/').slice(-1)[0]  
     $.ajax({
         url: "/api/quiz/delete",
         method: "DELETE",
@@ -182,3 +190,36 @@ function updatedata()
       }
     });
 }
+
+quizId=location.href.split('/').slice(-1)[0]  
+  $.ajax({
+    url: "/api/quiz/"+quizId,
+    method: "GET",
+    success: function(result) {
+        console.log(result.result);
+        quizdetails=result.result;
+        $("#editbutton").attr("href", "/ui/quiz/updateQuiz/"+quizdetails._id);
+        $("#quizName").html(quizdetails.quizName)
+        $("#date").html(new Date(Number(quizdetails.scheduledFor)).toDateString())
+        $("#time").html(new Date(Number(quizdetails.scheduledFor)).toLocaleTimeString())
+        $("#duaration").html(quizdetails.quizDuration+"  minutes");
+        $("#type").html(quizdetails.quizType);
+        if(quizdetails.quizType.toLowerCase()=="private")
+        {
+          $("#quizcode").html(
+            `<div class="col">
+            <h6 class="label" >Quiz Code: </h6>
+            </div>
+            <div class="col">
+            <span class="quiz-detail-text">${quizdetails.quizCode}</span>
+            </div>
+            `
+          );
+        }
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+  quizId=location.href.split('/').slice(-1)[0]  
+  $("#stats").attr("href", "/ui/quiz/stats/"+quizId);
