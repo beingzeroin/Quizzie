@@ -334,7 +334,7 @@ router.patch(
                     message: "Some error",
                 });
             } else {
-                if (result1.adminId !=req.user.userId) {
+                if (result1.adminId != req.user.userId) {
                     return res.status(401).json({
                         message: "This is not your quiz",
                     });
@@ -342,9 +342,9 @@ router.patch(
                 const id = req.params.quizId;
                 const updateOps = {};
                 var flag = 0;
-                updateOps.quizName=req.body.quizName
-                updateOps.scheduledFor=req.body.scheduledFor
-                updateOps.quizDuration=req.body.quizDuration
+                updateOps.quizName = req.body.quizName
+                updateOps.scheduledFor = req.body.scheduledFor
+                updateOps.quizDuration = req.body.quizDuration
 
                 // for (const ops of req.body.updateOps) {
                 //     updateOps[ops.propName] = ops.value;
@@ -745,6 +745,49 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
 
 });
 
+router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
+
+    item.getItemById(req.params.quizId, Quiz, async(err, result0) => {
+        if (err) {
+            return res.status(400).json({
+                message: err.toString(),
+            });
+        } else {
+            item.getItemByQueryWithSelect({ quizId: req.params.quizId }, Question, "-__v", async(err, result) => {
+                if (err && !result) {
+                    return res.status(400).json({
+                        message: err.toString(),
+                    });
+                } else {
+                    var quizId = req.params.quizId;
+
+                    var data = [];
+                    for (i = 0; i < result.length; i++) {
+                        object = {
+                            quizId: result[i].quizId,
+                            description: result[i].description,
+                            options: result[i].options,
+                            questionId: result[i]._id,
+                        };
+                        data.push(object);
+                    }
+                    return res.status(200).json({
+                        message: "Quiz started for " + req.user.name,
+                        data,
+                        duration: result0.quizDuration,
+                        scheduledFor: result0.scheduledFor,
+                        quizRestart: result0.quizRestart,
+                        quizStatus: result0.quizStatus,
+                    });
+
+
+
+                }
+            })
+        }
+    })
+
+});
 router.get("/:quizId", async(req, res, next) => {
     item.getItemByIdWithPopulate(req.params.quizId, Quiz, "adminId", (err, result) => {
         if (err) {
@@ -1217,5 +1260,27 @@ router.patch("/close", async(req, res, next) => {
     })
 
 });
+router.get("/checkSubmission/:quizid", checkAuthUser, async(req, res, next) => {
+    item.getItemById(req.user.userId, User, async(err, result) => {
+        if (err) {
+            return res.status(400).json({
+                message: "error",
+            });
+        }
+        console.log(result.quizzesGiven)
+        let quizzesgiven = result.quizzesGiven;
+        for (let i = 0; i < quizzesgiven.length; i++) {
+            if (quizzesgiven[i].quizId == req.params.quizid) {
+                return res.status(400).json({
+                    message: "already submited!"
+                })
+            }
+        }
+        return res.status(200).json({
+            message: "not submited"
+        })
+    })
+})
+
 
 module.exports = router;

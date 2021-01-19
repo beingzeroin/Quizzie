@@ -38,14 +38,22 @@ router.get(
         const x = req.user;
         var token = encodeURIComponent(req.user.token);
         var name = encodeURIComponent(req.user.name);
-
+        let data = {
+            token: req.user.token,
+            userId: req.user._id,
+            username: req.user.name,
+            usertype: req.user.userType
+        }
+        data = JSON.stringify(data)
+        data = encodeURIComponent(data)
 
         // console.log(req.header['auth-token'])
-        res.status(200).json({
-            token: req.user.token,
-            userId: req.user.userId,
-            usertype: req.user.usertype
-        })
+        // res.status(200).json({
+        //     token: req.user.token,
+        //     userId: req.user.userId,
+        //     usertype: req.user.usertype
+        // })
+        res.redirect("/ui/save?data=" + data)
     }
 );
 

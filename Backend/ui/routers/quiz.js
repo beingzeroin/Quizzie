@@ -18,7 +18,7 @@ const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 const Quiz = require("../../api/models/quiz")
 
 router.get('/editQuiz/:quizid', (req, res) => {
-        res.render('editQuiz.pug')
+    res.render('editQuiz.pug')
 })
 
 router.get('/createQuiz', (req, res) => {
@@ -29,9 +29,9 @@ router.get('/updateQuiz/:quizId', (req, res) => {
     res.render('updateQuiz.pug');
 })
 
-router.get("/start/:data", (req, res) => {
-    let data = decodeURIComponent(req.params.data)
-    res.render("startquiz.pug", { data: data })
+router.get("/start", (req, res) => {
+    let data = (req.query.quizid)
+    res.render("startquiz.pug", { quizid: data })
 })
 
 router.get("/stats/:quizId", (req, res) => {
