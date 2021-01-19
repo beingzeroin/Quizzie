@@ -103,6 +103,10 @@ $.ajax({
         }
         heading.innerHTML = `<h2 style="color:#2980b9" class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
+        $('input[type=radio]').change(function() {
+            ansdata[currentquestion].selectedOption = this.value;
+        });
+
 
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
 
@@ -235,10 +239,6 @@ function prev() {
     $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
 
 }
-
-$('input[type=radio]').change(function() {
-    ansdata[currentquestion].selectedOption = this.value;
-});
 
 
 
