@@ -38,33 +38,40 @@ div.line2{ width:80vw;
 
 #question{  border:none; 
             width:95%;
-            height:3em;
+            max-height:25vw;
+            min-height:30px !important;
             text-align:left;
             display: block;
-            margin-bottom:.1em;
             margin-left:2%;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            overflow-x: none;
-          }
+            word-wrap: break-word;
+            white-space: initial; }
 #question:hover{background-color:azure !important;}
 #question:focus {outline:none !important;}
-.para{color:black;font-size:2vw;float:left; margin-top:-.2em;}
+.para{color:black;
+      font-size:2vw;
+      float:left;
+      margin-top:-.2em;
+      max-width:80%;
+}
 .right {color:green; 
         margin-left:1em;
+        margin-right:1em;
         font-size:130%;
         float:left;}
 .wrong {color:red !important;
         margin-top:.3em;
         margin-left:1em;
+        margin-right:1em;
         font-size:110%;
         float:left;}
 .warn {margin-top:.1em;
         margin-left:1em;
+        margin-right:1em;
         font-size:110%;
         float:left;}
 .arrow { color:grey;
          margin-left:98%;
-         margin-top:.4%;
          font-size:100%;}
 .odot{margin-bottom:.05em; font-size:140% !important; margin-left:2%;}
 .sol{ display:none;
