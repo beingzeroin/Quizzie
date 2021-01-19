@@ -58,7 +58,7 @@ function show() {
                         h += `<div style="float:down">`;
                         if ((r[i].options)[j].text == r[i].correctAnswer)
                             h += `<p class='odot fa-2x' style="color:green;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
-                        else if (r[i].selected == j + 1)
+                        else if (r[i].selected == (r[i].options)[j].text)
                             h += `<p class='odot fa-2x' style="color:red;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
                         else h += `<p class='odot fa-2x' style="color:grey;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
                         h += `</div>`;
