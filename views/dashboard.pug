@@ -1,6 +1,4 @@
 extends includes/basePage
-block scripts
-    script(src="/assets/js/dashboard.js")
 block styles
     link(rel="stylesheet" href="/assets/css/dashboard.css")
 block page-content
@@ -28,11 +26,14 @@ block page-content
                         #History.tabcontent
                             div#test
                         #YourQuizzes.tabcontent
-                            h3 Your Quizzes                           
+                            h3 Your Quizzes     
+                            div#displayyourquizzes                      
                         #Profile.tabcontent
                             .details
                             #userdata
 
                             a(href='/ui/updateProfile')
                                 button.btn.btn-primary(type='button') Update Profile
+block scripts
+    script(src="/assets/js/dashboard.js")
 

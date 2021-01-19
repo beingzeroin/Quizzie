@@ -1,0 +1,10 @@
+script.
+    let users = '!{data}'
+    users=JSON.parse(users)
+    localStorage.token = users.token;
+    localStorage.userid = users.userId
+    localStorage.username = users.username
+    localStorage.usertype = users.usertype
+    window.location.href='/ui/dashboard'
+
+    

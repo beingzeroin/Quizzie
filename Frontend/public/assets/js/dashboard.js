@@ -9,7 +9,7 @@ let userquiz = `<button class="btn btn-success" type="button" onclick="privateQu
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
             <p style="text-align:center">Enter the code of quiz you want to join</p>
-            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success" id="enrollprivate" type="button">JOIN QUIZ</button>
+            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
 </div>`
@@ -139,10 +139,34 @@ if (localStorage.usertype == "User") {
 }
 
 if (localStorage.usertype == "Admin") {
+    let code1 = ``
     $.ajax({
         url: "/api/admin/",
         method: "GET",
         success: function(result) {
+            let yourQuizzes = result.result1.quizzes;
+            for (let i = 0; i < yourQuizzes.length; i++) {
+                code1 += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
+                <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-8 nopadding">
+                        <p ><b>${yourQuizzes[i].quizId.quizName}</b></p>
+                        <span style="font-size: small;">By :You</span>
+                        </div>
+                        <div class="col nopadding">
+                        `
+
+                code1 += `<button type="button" class="btn btn-light" style="float:right;background-color:white;border: none;" onClick=editquizpage('${yourQuizzes[i].quizId._id}')><i class="fa fa-cog" aria-hidden="true"></i>
+                </button>`
+
+                code1 += `</div>
+                    </div>
+              
+                </div>
+          </div>`
+            }
+            document.getElementById("displayyourquizzes").innerHTML = code1
             document.getElementsByClassName('yourquizzes')[0].style.display = "block";
             document.getElementById("userQuiz").innerHTML = createquiz
             let userdata = `<h4><label> name </label> : ${result.result1.name}<div class="row"></div>
@@ -254,21 +278,21 @@ function openPage(pageName, elmnt, id) {
         $.ajax({
             type: "GET",
             url: "/api/user/quiz/check",
-            success: function(resultData) 
-            {  var r = resultData.result;
-               var h="";
-               for( var i=0; i<r.length;i++)
-               { h+=`<a href="/ui/result/${(r[i].quizId)._id}"><button type="button" class="tester">
+            success: function(resultData) {
+                var r = resultData.result;
+                var h = "";
+                for (var i = 0; i < r.length; i++) {
+                    h += `<a href="/ui/result/${(r[i].quizId)._id}"><button type="button" class="tester">
                             <div class="bar">
                              <b class="para"> ${(r[i].quizId).quizName} </b>
                              <p class="para">Score : ${r[i].marks} </p>
                            </div>
                            <a href="/ui/result/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:grey;margin-top:.6em"></i> </a>
                      </button> </a>`;
-               }
-               document.getElementById("test").innerHTML=h;
+                }
+                document.getElementById("test").innerHTML = h;
             }
-        }); 
+        });
     }
     document.getElementById(pageName).style.display = "block";
     elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
@@ -410,38 +434,18 @@ function startQuizPopup(quizid, name) {
     }
 }
 
-$("#enrollprivate").click(() => {
-    let code = document.getElementById("code").value
-
-    $.ajax({
-        url: "/api/quiz/enrollPrivate",
-        data: { quizCode: code },
-        method: "PATCH",
-        success: function(result) {
-            location.reload()
-        },
-        error: function(error) {
-            alert(JSON.stringify((error.responseText)))
-            location.reload()
-
-        }
-    })
-})
-
 function startQuiz(quizid) {
     $.ajax({
         url: "/api/quiz/start",
         data: { quizId: quizid },
         method: "PATCH",
         success: function(result) {
-            alert(JSON.stringify(result))
             var strJSON = encodeURIComponent(JSON.stringify(result));
 
             location.href = '/ui/quiz/start/' + strJSON;
-
         },
         error: function(err) {
-            alert(JSON.stringify(err))
+            alert(err.responseJSON.message)
         }
     })
 
@@ -470,4 +474,27 @@ function unenroll(quizid) {
         }
     })
 
+}
+
+function enrollprivate() {
+    let code = document.getElementById("code").value
+        // alert('code')
+
+    $.ajax({
+        url: "/api/quiz/enrollPrivate",
+        data: { quizCode: code },
+        method: "PATCH",
+        success: function(result) {
+            location.reload()
+        },
+        error: function(error) {
+            alert(error.responseJSON.message)
+            location.reload()
+
+        }
+    })
+}
+
+function editquizpage(quizid) {
+    window.location.href = '/ui/quiz/editQuiz/' + quizid
 }

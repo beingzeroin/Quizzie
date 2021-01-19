@@ -28,11 +28,11 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 router.get("/:adminid", (req, res) => {
     item.getItemById(req.params.adminid, Admin, (err, result) => {
-        if(err)
-            console.log("error",e);
+        if (err)
+            console.log("error", e);
         else {
-        console.log(result);
-        res.send(result);
+            console.log(result);
+            res.send(result);
         }
     })
 })
