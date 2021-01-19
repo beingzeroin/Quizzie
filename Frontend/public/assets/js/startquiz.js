@@ -229,31 +229,31 @@ $('input[type=radio]').change(function() {
 $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
 
 function submitans() {
-
     $.ajax({
-        url: "/api/quiz/check",
-        method: "POST",
-        data: {
-            quizId: questions[0].quizId,
-            questions: JSON.stringify(ansdata),
-            timeStarted: result.scheduledFor,
-            timeEnded: Date.now(),
-        },
+        url: "/api/quiz/checkSubmission/" + questions[0].quizId,
+        method: "GET",
         success: function(result) {
             $.ajax({
-                url: "/api/quiz/checkSubmission/" + questions[0].quizId,
-                method: "GET",
-                success: function(result) {
-                    window.location.href = "/ui/result/" + questions[0].quizId
-
+                url: "/api/quiz/check",
+                method: "POST",
+                data: {
+                    quizId: questions[0].quizId,
+                    questions: JSON.stringify(ansdata),
+                    timeStarted: result.scheduledFor,
+                    timeEnded: Date.now(),
                 },
-                error: function(err) {
-                    alert(err.responseJSON.message)
+                success: function(result) {
                     window.location.href = "/ui/result/" + questions[0].quizId
                 }
             })
+
+        },
+        error: function(err) {
+            alert(err.responseJSON.message)
+            window.location.href = "/ui/result/" + questions[0].quizId
         }
     })
+
 }
 
 function submitpopup() {

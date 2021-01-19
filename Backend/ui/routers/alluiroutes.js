@@ -27,22 +27,16 @@ router.use('/quiz', QUIZ)
 router.get("/updateProfile", (req, res) => {
     res.render('updateProfile.pug');
 })
-<<<<<<< HEAD
+
 router.get("/save", (req, res) => {
     let data = decodeURIComponent(req.query.data)
     res.render('save.pug', { data: data })
 })
-router.get("/result/:quizName/:quizId", (req, res) => {
-    res.render('result.pug');
-})
-=======
-
 router.get("/result/:quizId", (req, res) => {
-     res.render('result.pug');
+    res.render('result.pug');
 })
 router.get("/feedbackform", (req, res) => {
     res.render('feedbackform.pug');
 })
 module.exports = router
->>>>>>> 6d98cc068bee4b790d44e6f9b3951faef54a9600
 module.exports = router
