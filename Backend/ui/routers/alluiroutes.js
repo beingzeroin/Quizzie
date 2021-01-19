@@ -38,5 +38,9 @@ router.get("/result/:quizId", (req, res) => {
 router.get("/feedbackform", (req, res) => {
     res.render('feedbackform.pug');
 })
+router.get("/feedback/:quizId", (req, res) => {
+    res.render('feedbacks.pug');
+})
+
 module.exports = router
 module.exports = router

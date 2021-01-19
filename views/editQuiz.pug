@@ -3,6 +3,7 @@ block scripts
     script(src="/assets/js/editQuiz.js")
 block styles
     link(rel="stylesheet" href="/assets/css/editQuiz.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 block page-content
     .container.editQuiz
         .login-form
@@ -10,6 +11,9 @@ block page-content
             hr(style="background-color:blue;width:100%;height:1px;")
             .row.edit-btn-bar.d-flex.justify-content-between
                 .col
+                    button.btn.feed(style="background-color:green;color:white;float:right;margin-left:3%;margin-bottom:3%;" onclick="feedback()" ) 
+                        i.fa.fa-comments-o(style="font-size:19px;margin-right:5%")
+                        | FeedBack
                     button.btn(style="background-color:#F42F0C;color:white;float:right;margin-left:3%;margin-bottom:3%;"  data-toggle='modal' data-target='#Modal' ) 
                         i.fas.fa-trash(style="margin-right:5%")
                         | Delete Quiz
