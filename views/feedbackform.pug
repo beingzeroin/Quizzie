@@ -1,0 +1,20 @@
+<!DOCTYPE html> 
+html(lang="en") 
+	head 
+		meta(charset="UTF-8") 
+		meta(name="viewport", content="width=device-width, initial-scale=1.0") 
+		title Quizzie| Being Zero 
+		link(rel="stylesheet", href="/assets/css/feedbackform.css") 
+	body 
+		.form 
+			h2(style='color:dodgerblue') Feedback Form 
+			if(msg) 
+				small=msg  
+			form(action="/feedback_form",method="POST") 
+				label(for="name" style='font-size:110%') Enter Your Name 
+				input#name(type="text", name="name") 
+				label(for="email" style='font-size:110%') Enter Your Email 
+				input#email(type="email", name="email") 
+				label(for="feedback" style='font-size:110%') Enter Your Feedback 
+				textarea#feedback(name="feedback", cols="30", rows="5") 
+				button.btn(type="submit" ) Submit 

@@ -258,12 +258,12 @@ function openPage(pageName, elmnt, id) {
             {  var r = resultData.result;
                var h="";
                for( var i=0; i<r.length;i++)
-               { h+=`<a href="/ui/result/${(r[i].quizId).quizName}/${(r[i].quizId)._id}"><button type="button" class="tester">
+               { h+=`<a href="/ui/result/${(r[i].quizId)._id}"><button type="button" class="tester">
                             <div class="bar">
                              <b class="para"> ${(r[i].quizId).quizName} </b>
                              <p class="para">Score : ${r[i].marks} </p>
                            </div>
-                           <a href="/ui/result/${(r[i].quizId).quizName}/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:grey;margin-top:.6em"></i> </a>
+                           <a href="/ui/result/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:grey;margin-top:.6em"></i> </a>
                      </button> </a>`;
                }
                document.getElementById("test").innerHTML=h;
