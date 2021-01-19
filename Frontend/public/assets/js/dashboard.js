@@ -443,10 +443,9 @@ function startQuiz(quizid) {
             var strJSON = encodeURIComponent(JSON.stringify(result));
 
             location.href = '/ui/quiz/start/' + strJSON;
-            alert(JSON.stringify(err))
         },
         error: function(err) {
-            alert(JSON.stringify(err))
+            alert(err.responseJSON.message)
         }
     })
 
@@ -489,7 +488,7 @@ function enrollprivate() {
             location.reload()
         },
         error: function(error) {
-            alert(JSON.stringify((error.responseText)))
+            alert(error.responseJSON.message)
             location.reload()
 
         }

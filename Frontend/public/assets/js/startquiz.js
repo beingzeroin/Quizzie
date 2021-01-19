@@ -3,7 +3,6 @@ $.ajaxSetup({
 });
 let currentquestion = 0;
 let questions;
-alert(result)
 result = JSON.parse(result)
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
