@@ -112,7 +112,7 @@ block page-content
                                     .container
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2.mb-3#questionName(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
+                                            input.form-control.col-12.ml-2.mb-3#questionName(type="textarea" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
                                         hr
                                         .row.d-flex(style="display:inline;")
                                             .col
@@ -131,7 +131,7 @@ block page-content
                                         hr
                                         .row.form-group.d-flex.justify-content-center
                                             .col-5
-                                                select.form-control#selectedop(name="")
+                                                select.form-control#selected(name="")
                                                     option#op1(value="option1") option1
                                                     option#op2(value="option2") option2
                                                     option#op3(value="option3") option3
@@ -143,10 +143,19 @@ block page-content
                     
                     
                     .row
-                        button.btn.btn-sm.ml-auto.mb-5(style="background-color:#802BD4;color:white;float:right")
+                        button.btn.btn-sm.ml-auto.mb-4(style="background-color:#802BD4;color:white;float:right")
                             a#stats(style="text-decoration:none;color:white")
                                 i.far.fa-chart-bar(style="margin-right:5%")
                                 |VIEW STATS
+                    .row.mb-5
+                        select.form-control.ml-auto#selectop(name="" onchange="sort()")
+                                option#op1(value="none") None
+                                option#op2(value="recent") Recent
+                                option#op3(value="score") Score
+                                option#op4(value="name") Name
+                    .row.mb-5
+                        #results.mt-3
+
 
                   
 
