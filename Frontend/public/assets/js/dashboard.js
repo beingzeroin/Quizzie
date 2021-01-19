@@ -440,9 +440,9 @@ function startQuiz(quizid) {
         data: { quizId: quizid },
         method: "PATCH",
         success: function(result) {
-            var strJSON = encodeURIComponent(JSON.stringify(result));
+            // var strJSON = encodeURIComponent(JSON.stringify(result));
 
-            location.href = '/ui/quiz/start/' + strJSON;
+            location.href = '/ui/quiz/start?quizid=' + quizid;
         },
         error: function(err) {
             alert(err.responseJSON.message)

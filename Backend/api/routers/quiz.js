@@ -745,6 +745,49 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
 
 });
 
+router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
+
+    item.getItemById(req.params.quizId, Quiz, async(err, result0) => {
+        if (err) {
+            return res.status(400).json({
+                message: err.toString(),
+            });
+        } else {
+            item.getItemByQueryWithSelect({ quizId: req.params.quizId }, Question, "-__v", async(err, result) => {
+                if (err && !result) {
+                    return res.status(400).json({
+                        message: err.toString(),
+                    });
+                } else {
+                    var quizId = req.params.quizId;
+
+                    var data = [];
+                    for (i = 0; i < result.length; i++) {
+                        object = {
+                            quizId: result[i].quizId,
+                            description: result[i].description,
+                            options: result[i].options,
+                            questionId: result[i]._id,
+                        };
+                        data.push(object);
+                    }
+                    return res.status(200).json({
+                        message: "Quiz started for " + req.user.name,
+                        data,
+                        duration: result0.quizDuration,
+                        scheduledFor: result0.scheduledFor,
+                        quizRestart: result0.quizRestart,
+                        quizStatus: result0.quizStatus,
+                    });
+
+
+
+                }
+            })
+        }
+    })
+
+});
 router.get("/:quizId", async(req, res, next) => {
     item.getItemByIdWithPopulate(req.params.quizId, Quiz, "adminId", (err, result) => {
         if (err) {
