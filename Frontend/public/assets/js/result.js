@@ -17,13 +17,18 @@ function show()
     chosen  : 4,
     option  : 4 }]
  var quizId=location.href.split('/').slice(-1)[0];
- var quizName=location.href.split('/').slice(-2)[0];
  $.ajax({
   type: "GET",
   url: "/api/user/studentQuizResult/"+quizId,
   success: function(resultData) 
   { var r=resultData.result.responses; 
-    document.getElementsByClassName("name")[0].innerHTML=`Quiz: ${quizName}`;
+    $.ajax({
+      type: "GET",
+      url: "/api/quiz/"+quizId,
+      success: function(res) 
+      { var quizName=res.result.quizName;
+        document.getElementsByClassName("name")[0].innerHTML=`Quiz: ${quizName}`; }//success
+    });//inner ajax
     document.getElementsByClassName("score")[0].innerHTML=`Score: ${(resultData.result).marks } out of ${r.length}`;
     var h="";
     for(var i=0;i<r.length;i++)
