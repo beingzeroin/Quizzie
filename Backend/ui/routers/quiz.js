@@ -30,8 +30,8 @@ router.get('/updateQuiz/:quizId', (req, res) => {
 })
 
 router.get("/start", (req, res) => {
-    let data = decodeURIComponent(req.query.data)
-    res.render("startquiz.pug", { data: data })
+    let data = (req.query.quizid)
+    res.render("startquiz.pug", { quizid: data })
 })
 
 router.get("/stats/:quizId", (req, res) => {
