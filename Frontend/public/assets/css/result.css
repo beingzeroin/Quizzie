@@ -44,6 +44,7 @@ div.line2{ width:80vw;
             margin-bottom:.1em;
             margin-left:2%;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-x: none;
           }
 #question:hover{background-color:azure !important;}
 #question:focus {outline:none !important;}

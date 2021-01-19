@@ -47,7 +47,7 @@ function show()
     h+=  `<div class="sol">`;
               for(var j=0;j<(r[i].options).length;j++)
               { h+= `<div style="float:down">`;
-                if(j+1==r[i].correctAnswer)
+                if((r[i].options[j]).text==r[i].correctAnswer)
                 h+=`<p class='odot fa-2x' style="color:green;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
                 else if(r[i].selected==j+1)
                  h+=`<p class='odot fa-2x' style="color:red;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
