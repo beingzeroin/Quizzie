@@ -28,8 +28,12 @@ router.get("/updateProfile", (req, res) => {
     res.render('updateProfile.pug');
 })
 
+router.get("/save", (req, res) => {
+    let data = decodeURIComponent(req.query.data)
+    res.render('save.pug', { data: data })
+})
 router.get("/result/:quizId", (req, res) => {
-     res.render('result.pug');
+    res.render('result.pug');
 })
 router.get("/feedbackform", (req, res) => {
     res.render('feedbackform.pug');

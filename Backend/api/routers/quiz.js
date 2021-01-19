@@ -334,7 +334,7 @@ router.patch(
                     message: "Some error",
                 });
             } else {
-                if (result1.adminId !=req.user.userId) {
+                if (result1.adminId != req.user.userId) {
                     return res.status(401).json({
                         message: "This is not your quiz",
                     });
@@ -342,9 +342,9 @@ router.patch(
                 const id = req.params.quizId;
                 const updateOps = {};
                 var flag = 0;
-                updateOps.quizName=req.body.quizName
-                updateOps.scheduledFor=req.body.scheduledFor
-                updateOps.quizDuration=req.body.quizDuration
+                updateOps.quizName = req.body.quizName
+                updateOps.scheduledFor = req.body.scheduledFor
+                updateOps.quizDuration = req.body.quizDuration
 
                 // for (const ops of req.body.updateOps) {
                 //     updateOps[ops.propName] = ops.value;
@@ -1217,5 +1217,27 @@ router.patch("/close", async(req, res, next) => {
     })
 
 });
+router.get("/checkSubmission/:quizid", checkAuthUser, async(req, res, next) => {
+    item.getItemById(req.user.userId, User, async(err, result) => {
+        if (err) {
+            return res.status(400).json({
+                message: "error",
+            });
+        }
+        console.log(result.quizzesGiven)
+        let quizzesgiven = result.quizzesGiven;
+        for (let i = 0; i < quizzesgiven.length; i++) {
+            if (quizzesgiven[i].quizId == req.params.quizid) {
+                return res.status(400).json({
+                    message: "already submited!"
+                })
+            }
+        }
+        return res.status(200).json({
+            message: "not submited"
+        })
+    })
+})
+
 
 module.exports = router;

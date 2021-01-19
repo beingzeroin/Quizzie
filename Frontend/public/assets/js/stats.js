@@ -62,7 +62,7 @@ function LineChart() {
   data.addColumn('number', 'Time (in minutes)');
     for(let i=0;i<linedata.length;i++)
     {
-        data.addRow([i.toString(),linedata[i]])
+        data.addRow([linedata[i][0],linedata[i][1]])
     }
  var options = {
   title: 'Time taken (in minutes)',
@@ -83,33 +83,37 @@ function LineChart() {
 
 var quizId=location.href.split('/').slice(-1)[0]  
   $.ajax({
-    url: "/api/quiz/"+quizId,
+    url: "/api/admin/allStudentsQuizResult/"+quizId,
     method: "GET",
-    success: function(result) {
-        console.log(result.result);
-        quizdetails=result.result;
+    success: function(quizdetails) {
+        console.log(quizdetails);
+        quizdetails=quizdetails.userResults;
+        if(quizdetails.length==0)
+        alert("No Responses for Your Quiz");
+        else{
         piedata={}
         minmarks=Infinity
         maxmarks=-Infinity
-        linedata=[]
+        linedata=[[]]
         total =0
-        for(let i=0;i<quizdetails["usersParticipated"].length;i++)
+        for(let i=0;i<quizdetails.length;i++)
         {
-            if(quizdetails.usersParticipated[i].marks in piedata)
-                piedata[quizdetails.usersParticipated[i].marks]+=1;
+            if(quizdetails[i].marks in piedata)
+                piedata[quizdetails[i].marks]+=1;
             else
-                piedata[quizdetails.usersParticipated[i].marks]=1;
-            minmarks=Math.min(minmarks,quizdetails.usersParticipated[i].marks)
-            maxmarks=Math.max(maxmarks,quizdetails.usersParticipated[i].marks)
-            total+=quizdetails.usersParticipated[i].marks
-            //console.log((quizdetails.usersParticipated[i].timeEnded-quizdetails.usersParticipated[i].timeStarted))
-            linedata.push((quizdetails.usersParticipated[i].timeEnded-quizdetails.usersParticipated[i].timeStarted)/(1000*60));
+                piedata[quizdetails[i].marks]=1;
+            minmarks=Math.min(minmarks,quizdetails[i].marks)
+            maxmarks=Math.max(maxmarks,quizdetails[i].marks)
+            total+=quizdetails[i].marks
+            console.log(quizdetails[i].userId["name"])
+            linedata.push([quizdetails[i].userId["name"],(quizdetails[i].timeEnded-quizdetails[i].timeStarted)/(1000*60)]);
         }
-        average=total/(quizdetails["usersParticipated"].length);
+        average=total/(quizdetails.length);
         google.charts.setOnLoadCallback(pieChart);
         google.charts.setOnLoadCallback(barChart);
         google.charts.setOnLoadCallback(LineChart);
         console.log(piedata,maxmarks,minmarks,total,linedata); 
+      }
     },
     error: function(err) {
       console.log(err);

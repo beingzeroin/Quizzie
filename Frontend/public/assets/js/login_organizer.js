@@ -47,7 +47,7 @@ function login() {
                 }
             }, //sucess
             error: function(resultData) {
-                    alert(JSON.parse(JSON.stringify(resultData.responseText)));
+                    alert(resultData.responseJSON.message);
                 } //error
         });
     }

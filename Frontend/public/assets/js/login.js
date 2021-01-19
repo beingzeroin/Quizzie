@@ -45,26 +45,9 @@ function login() {
                 }
             }, //sucess
             error: function(resultData) {
-                    alert(JSON.parse(JSON.stringify(resultData.responseText)));
+                    alert(resultData.responseJSON.message);
                 } //error
         });
     }
 
 } //End of login function
-function googlelogin() {
-    $.ajax({
-        type: "GET",
-        url: "/api/auth/google",
-        headers: {
-            "accept": "application/json",
-            "Access-Control-Allow-Origin": "*"
-        },
-        success: function(resultData) {
-            localStorage.token = resultData.token;
-            localStorage.userid = resultData.userDetails.userId
-            localStorage.username = resultData.userDetails.name
-            localStorage.usertype = resultData.userDetails.userType
-            window.location.href = '/ui/dashboard';
-        }
-    })
-}
