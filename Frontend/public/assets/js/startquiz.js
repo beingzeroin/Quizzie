@@ -3,6 +3,7 @@ $.ajaxSetup({
 });
 let currentquestion = 0;
 let questions;
+alert(result)
 result = JSON.parse(result)
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
@@ -64,7 +65,8 @@ code += `<p class="question">${questions[currentquestion].description}</p>
             <input type="radio" class="form-check-input mb-5" id="radio4" name="ans" value="${questions[currentquestion].options[3].text}">${questions[currentquestion].options[3].text}
           </label>
         </div>
-        <hr></hr>
+        <div class='mt-4 mb-4'style="background-color:black;height:4px;"></div>
+
         <div class="row">
     <div class="col">
     </div>
@@ -74,7 +76,7 @@ code += `<p class="question">${questions[currentquestion].description}</p>
     <div class="col">
     `
 if (currentquestion == (questions.length - 1)) {
-    code += `<button type="button" class="btn btn-danger" onClick=submitpopup()>submit</button>
+    code += `<button type="button" class="btn btn-danger button" onClick=submitpopup()>submit</button>
     </div>
     <div class="col">
     </div>
@@ -88,9 +90,11 @@ if (currentquestion == (questions.length - 1)) {
     </div>
     </div></div></div>  `
     buttons.innerHTML = code
-    heading.innerHTML = `<h2 style="color:#2980b9" class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
 }
+heading.innerHTML = `<h2 style="color:#2980b9" class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
+
+
 
 
 
@@ -118,7 +122,7 @@ function next() {
         <input type="radio" class="form-check-input mb-5" id="radio4" name="ans" value="${questions[currentquestion].options[3].text}">${questions[currentquestion].options[3].text}
       </label>
     </div>
-    <hr></hr>
+    <div class='mt-4 mb-4'style="background-color:black;height:4px;"></div>
     <div class="row">
        <div class="col">
         <div class="row">
@@ -179,7 +183,8 @@ function prev() {
         <input type="radio" class="form-check-input mb-5" id="radio4" name="ans" value="${questions[currentquestion].options[3].text}">${questions[currentquestion].options[3].text}
       </label>
     </div>
-    <hr></hr>
+    <div class='mt-4 mb-4'style="background-color:black;height:4px;"></div>
+
     `
 
     if (currentquestion != 0) {
@@ -224,6 +229,7 @@ $('input[type=radio]').change(function() {
 $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
 
 function submitans() {
+
     $.ajax({
         url: "/api/quiz/check",
         method: "POST",
@@ -234,7 +240,18 @@ function submitans() {
             timeEnded: Date.now(),
         },
         success: function(result) {
-            window.location.href = "/ui/results/" + questions[0].quizId
+            $.ajax({
+                url: "/api/quiz/checkSubmission/" + questions[0].quizId,
+                method: "GET",
+                success: function(result) {
+                    window.location.href = "/ui/result/" + questions[0].quizId
+
+                },
+                error: function(err) {
+                    alert(err.responseJSON.message)
+                    window.location.href = "/ui/result/" + questions[0].quizId
+                }
+            })
         }
     })
 }

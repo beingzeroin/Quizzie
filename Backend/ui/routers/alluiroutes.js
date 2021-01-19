@@ -31,7 +31,7 @@ router.get("/save", (req, res) => {
     let data = decodeURIComponent(req.query.data)
     res.render('save.pug', { data: data })
 })
-router.get("/result", (req, res) => {
+router.get("/result/:quizName/:quizId", (req, res) => {
     res.render('result.pug');
 })
 module.exports = router
