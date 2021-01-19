@@ -9,7 +9,7 @@ let userquiz = `<button class="btn btn-success" type="button" onclick="privateQu
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
             <p style="text-align:center">Enter the code of quiz you want to join</p>
-            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success" id="enrollprivate" type="button">JOIN QUIZ</button>
+            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
 </div>`
@@ -407,24 +407,6 @@ function startQuizPopup(quizid, name) {
     }
 }
 
-$("#enrollprivate").click(() => {
-    let code = document.getElementById("code").value
-
-    $.ajax({
-        url: "/api/quiz/enrollPrivate",
-        data: { quizCode: code },
-        method: "PATCH",
-        success: function(result) {
-            location.reload()
-        },
-        error: function(error) {
-            alert(JSON.stringify((error.responseText)))
-            location.reload()
-
-        }
-    })
-})
-
 function startQuiz(quizid) {
     $.ajax({
         url: "/api/quiz/start",
@@ -466,4 +448,23 @@ function unenroll(quizid) {
         }
     })
 
+}
+
+function enrollprivate() {
+    let code = document.getElementById("code").value
+        // alert('code')
+
+    $.ajax({
+        url: "/api/quiz/enrollPrivate",
+        data: { quizCode: code },
+        method: "PATCH",
+        success: function(result) {
+            location.reload()
+        },
+        error: function(error) {
+            alert(JSON.stringify((error.responseText)))
+            location.reload()
+
+        }
+    })
 }
