@@ -442,7 +442,7 @@ function startQuiz(quizid) {
         success: function(result) {
             var strJSON = encodeURIComponent(JSON.stringify(result));
 
-            location.href = '/ui/quiz/start/' + strJSON;
+            location.href = '/ui/quiz/start?data=' + strJSON;
         },
         error: function(err) {
             alert(err.responseJSON.message)
