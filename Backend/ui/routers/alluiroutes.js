@@ -35,7 +35,7 @@ router.get("/save", (req, res) => {
 router.get("/result/:quizId", (req, res) => {
     res.render('result.pug');
 })
-router.get("/feedbackform", (req, res) => {
+router.get("/feedbackform/:quizId", (req, res) => {
     res.render('feedbackform.pug');
 })
 router.get("/feedback/:quizId", (req, res) => {

@@ -57,7 +57,7 @@ block page-content
                         h6.label Type :
                     .col
                         span.quiz-detail-text#type 
-                    .row#quizcode
+                .row#quizcode
             .quiz-Questions.mt-5
                 .row
                     h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center !important;") Questions
@@ -152,10 +152,14 @@ block page-content
                                 i.far.fa-chart-bar(style="margin-right:5%")
                                 |VIEW STATS
                     .row.mb-5
-                        select.form-control.ml-auto#selectop(name="" onchange="sort()")
+                        .col-9
+                            .input-group.mb-3
+                                    input.form-control#search(type='text' placeholder='Search with name or marks' onkeyup="filter()" aria-label='search')
+                        .col(style="margin-left:-10%;min-width:150px")
+                            select.form-control.ml-auto#selectop(name="" onchange="sort()")
                                 option#op1(value="none") None
                                 option#op2(value="recent") Recent
-                                option#op3(value="score") Score
+                                option#op3(value="score") Marks
                                 option#op4(value="name") Name
                     .row.mb-5
                         #results.mt-3
