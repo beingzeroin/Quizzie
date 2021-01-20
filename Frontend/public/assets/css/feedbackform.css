@@ -21,21 +21,16 @@ body {
 	padding: 1rem; 
 	box-shadow: 0px 0px 6px 0px #808080b3; 
 	border-radius: 10px; 
+	width:30%;
 } 
-
-.form form { 
-	display: flex; 
-	flex-direction: column; 
-	justify-content: center; 
-} 
-
-.form form input, .form form textarea { 
+#feedback { 
     border: 1.3px solid gray; 
     border-color:dodgerblue;
 	border-radius: 5px; 
 	padding: 5px 10px; 
 	font-size: 20px; 
-    outline: none;
+	outline: none;
+	width:80%;
 } 
 
 .form form label { 
@@ -52,12 +47,11 @@ body {
 	cursor: pointer; 
 } 
 
-button.btn
+button.submit
 {background:dodgerblue;
  border:none;
  width:50%;
  height:5%;
  color:white;
  font-size:110%;
- margin-left:25%;
 }

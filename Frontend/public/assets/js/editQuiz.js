@@ -321,3 +321,8 @@ quizId=location.href.split('/').slice(-1)[0]
     
   }
 
+  function feedback()
+  {  var quizId=location.href.split('/').slice(-1)[0];
+     window.location.href = "/ui/feedback/" + quizId;
+  }
+
