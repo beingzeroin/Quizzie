@@ -20,8 +20,8 @@ function show() {
                 }); //inner ajax
 
                 var h = "";
-                for (var i = 0; i < r.length; i++) 
-                {   h += `<div class="container">
+                for (var i = 0; i < r.length; i++) {
+                    h += `<div class="container">
                           <button type="button" id="feed" class="btn">
                             Username : ${r[i].userName} </br>
                             Userid   : ${r[i].userId}   </br>

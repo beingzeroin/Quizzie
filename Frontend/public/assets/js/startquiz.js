@@ -266,7 +266,7 @@ function submitans() {
     $.ajax({
         url: "/api/quiz/checkSubmission/" + questions[0].quizId,
         method: "GET",
-        success: function(result) {
+        success: function(result1) {
             $.ajax({
                 url: "/api/quiz/check",
                 method: "POST",
@@ -280,6 +280,7 @@ function submitans() {
                     window.location.href = "/ui/result/" + questions[0].quizId
                 }
             })
+
 
         },
         error: function(err) {

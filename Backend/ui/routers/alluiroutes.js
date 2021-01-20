@@ -43,4 +43,3 @@ router.get("/feedback/:quizId", (req, res) => {
 })
 
 module.exports = router
-module.exports = router
