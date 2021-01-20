@@ -10,11 +10,12 @@ $('#rating-form').on('change','[name="rating"]',function(){
 
 function submit() 
 {  var feed=document.getElementById("feedback").value;
+   var quizId = location.href.split('/').slice(-1)[0]; 
    $.ajax({
     type: "POST",
     url: "/api/feedback/submit",
     data: {
-        quizId      : "6006953c6f602e22b05f037c",
+        quizId      : quizId,
         userId      : localStorage.userid,
         userName    : localStorage.username,
         description : feed,
