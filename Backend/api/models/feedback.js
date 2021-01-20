@@ -9,7 +9,7 @@ const feedbackSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     quizId: { type: mongoose.Schema.Types.ObjectID, ref: "Quiz" },
     userId: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
-    name: { type: String, required: true },
+    userName: { type: String, required: true },
     description: {
         type: String,
         required: true,

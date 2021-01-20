@@ -24,7 +24,13 @@ const Feedback = require("../models/feedback")
 const router = express.Router();
 
 router.post("/submit", async(req, res) => {
-    item.createitem(req.body, Feedback, (err, data) => {
+    feedbackdata={ _id: new mongoose.Types.ObjectId(),
+        quizId      : req.body.quizId,
+        userId      : req.body.userId,
+        userName    : req.body.userName,
+        description:req.body.description,
+        }
+    item.createitem(feedbackdata, Feedback, (err, data) => {
         if (err) {
             res.status(400).json({
                 error: err,
@@ -37,7 +43,7 @@ router.post("/submit", async(req, res) => {
 })
 
 router.get('/:quizid', async(req, res) => {
-    item.getItemByQuery({ quizId: req.params.quizid }, Feedback, (cb, result) => {
+    item.getItemByQuery({ quizId: req.params.quizid }, Feedback, (err, result) => {
         if (err) {
             res.status(400).json({
                 error: err,
@@ -47,3 +53,5 @@ router.get('/:quizid', async(req, res) => {
         }
     })
 })
+
+module.exports = router;

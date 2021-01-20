@@ -11,7 +11,7 @@ div.main {
     padding-bottom: 8% !important;
 }
 
-div#questions {
+div#Feedback {
     padding-bottom: 5vw;
 }
 
@@ -29,8 +29,7 @@ b.res {
     margin-bottom: .3em;
 }
 
-b.name,
-b.score {
+b.name{
     color: dodgerblue;
     margin-left: 3em;
     margin-right: .5em;
@@ -54,7 +53,7 @@ div.line2 {
     margin-bottom: 2em;
 }
 
-#question {
+#feed {
     border: none;
     width: 95%;
     min-height: 30px !important;
@@ -65,64 +64,7 @@ div.line2 {
     word-wrap: break-word;
     white-space: initial;
 }
-
-#question:hover {
-    background-color: azure !important;
-}
-
-#question:focus {
+#feed:focus {
     outline: none !important;
 }
 
-.para {
-    color: black;
-    font-size: 2vw;
-    float: left;
-    margin-top: -.2em;
-    max-width: 80%;
-}
-
-.right {
-    color: green;
-    margin-left: 1em;
-    margin-right: 1em;
-    font-size: 130%;
-    float: left;
-}
-
-.wrong {
-    color: red !important;
-    margin-top: .3em;
-    margin-left: 1em;
-    margin-right: 1em;
-    font-size: 110%;
-    float: left;
-}
-
-.warn {
-    margin-top: .1em;
-    margin-left: 1em;
-    margin-right: 1em;
-    font-size: 110%;
-    float: left;
-}
-
-.arrow {
-    color: grey;
-    margin-left: 98%;
-    font-size: 100%;
-}
-
-.odot {
-    margin-bottom: .05em;
-    font-size: 140% !important;
-    margin-left: 2%;
-}
-
-.sol {
-    display: none;
-    margin-bottom: 1em;
-    margin-left: 2%;
-    width: 95% !important;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-}
