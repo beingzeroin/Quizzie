@@ -36,7 +36,14 @@ body, html {
 input.form-control#search
 {
     text-align: center !important;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
 } 
+input.form-control:focus,input.form-control:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 span.quiz-detail-text
 {
     font-size: 20px;
@@ -57,7 +64,8 @@ button:focus,button:active {
 {
     width:100% !important;
     background-color: white !important;
-   
+    max-width:80%;
+    font-size: 2em;
 }
 
 select

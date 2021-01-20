@@ -18,8 +18,8 @@ function pieChart() {
        data.addRow([key.toString(),piedata[key]]);
    }
   var options = {
-    width: 360,
-    height: 300,
+    width:$(window).width()*0.8,
+    height:$(window).height()*0.8,
     fontSize: 20,
     title: 'Marks Obtained',
     legend: { position: "top" },
@@ -45,10 +45,10 @@ function barChart() {
   var options = {
     title: 'Highest / Average/ Lowest',
     legend: { position: "none" },
-    width: 360,
-    height: 304,
+    width: $(window).width()/2,
+    height: $(window).height()/2,
     fontSize: 20,
-    'chartArea': {'left':'15%'}
+    // 'chartArea': {'left':'15%'}
   }
 
   var chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
@@ -67,11 +67,11 @@ function LineChart() {
  var options = {
   title: 'Time taken (in minutes)',
   curveType: 'function',
-  pointSize: 5,
+  pointSize: 2,
   hAxis:{titleTextStyle: {color: '#333'}},
     legend: { position: "none" },
-    width: 360,
-    height: 304,
+    width: $(window).width()/2,
+    height: $(window).height()/2,
     fontSize: 20,
 
 };
@@ -105,7 +105,7 @@ var quizId=location.href.split('/').slice(-1)[0]
             minmarks=Math.min(minmarks,quizdetails[i].marks)
             maxmarks=Math.max(maxmarks,quizdetails[i].marks)
             total+=quizdetails[i].marks
-            console.log(quizdetails[i].userId["name"])
+            console.log((quizdetails[i].timeEnded),quizdetails[i].timeStarted)
             linedata.push([quizdetails[i].userId["name"],(quizdetails[i].timeEnded-quizdetails[i].timeStarted)/(1000*60)]);
         }
         average=total/(quizdetails.length);
@@ -120,3 +120,8 @@ var quizId=location.href.split('/').slice(-1)[0]
       alert("Please check Your Quiz Id")
     }
   });
+  // $(window).resize(function() {
+  //   google.charts.setOnLoadCallback(pieChart);
+  //   google.charts.setOnLoadCallback(barChart);
+  //   google.charts.setOnLoadCallback(LineChart);
+  // });

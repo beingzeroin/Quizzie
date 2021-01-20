@@ -44,6 +44,8 @@ hr
 #pie_chart
 {
     justify-content:center;
+    /* height: 150%;
+    width: 300%; */
 }
 @media only screen and (max-width: 600px) {
     body {
@@ -57,5 +59,10 @@ hr
     font-size:1% !important;
     margin-left:-5% !important;
     margin-bottom: 10% !important;
+    }
+    #piechart
+    {
+        width:50%;
+        height: 50%;
     }
   }
