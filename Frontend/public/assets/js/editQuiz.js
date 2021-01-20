@@ -1,4 +1,4 @@
-var questionId,QuizDetails;
+var questionId,QuizDetails,results;
 
 $.ajaxSetup({
   headers: { 'token': localStorage.token }
@@ -61,9 +61,7 @@ function fetchdata()
                 <div class="accordion-item" style="width:100%;" >
                 <h2 class="accordion-header" id="heading${i+1}">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}">
-                      <button type="button"  onclick="deletequestion('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </button>
-                      <button type="button" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </button>
-                      ${result.result[i].description}  
+                <button type="button"  onclick="deletequestion('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </button><button type="button" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </button>${result.result[i].description}  
                 </button>
               </h2>
     <div id="collapse${(i+1)}" class="accordion-collapse collapse" aria-labelledby="heading${(i+1)}" data-bs-parent="#parent">
@@ -268,23 +266,58 @@ quizId=location.href.split('/').slice(-1)[0]
   function sort()
   {
     console.log( $("#selectop").val());
-    let displayarray=sortByFunc( $("#selectop").val(),results);
-    console.log(displayarray);
-    code=``;
+    results=sortByFunc( $("#selectop").val(),results);
+    console.log(results);
+    if(results.length==0)
+    $("#results").html("<h3>No responses Yet !</h3>");
+    else{
+      code=``;
     code+=`<div class="card ml-2" style="width:85%;">
     <ul class="list-group list-group-flush">`
-    for(let i=0;i<displayarray.length;i++)
+    for(let i=0;i<results.length;i++)
     {
       code+=`<li class="list-group-item"> 
-      <a href="/ui/results/${displayarray[i]._id}" style="text-decoration:none;color:black !important;">
-      <span>${displayarray[i].userId.name}</span>
-      <p>Marks:${displayarray[i].marks}</p>
+      <a href="/ui/result/${results[i]._id}" style="text-decoration:none;color:black !important;">
+      <span>${results[i].userId.name}</span>
+      <p>Marks:${results[i].marks}</p>
       </a>
       </li>`
     }
     code+='</ul> </div>';
     //console.log(code);
     $("#results").html(code);
+    }
+  }
+  function filter()
+  {
+    //console.log();
+    let searchwith=$("#search").val();
+    if(results.length!=0){
+      let newRes = results.filter(
+        (response) =>
+          response.userId.name
+            .toLowerCase()
+            .search(searchwith.trim().toLowerCase()) !== -1 ||
+          String(response.marks) ===
+            searchwith.trim().toLowerCase()
+      );
+      code=``;
+      code+=`<div class="card ml-2" style="width:85%;">
+      <ul class="list-group list-group-flush">`
+      for(let i=0;i<newRes.length;i++)
+      {
+        code+=`<li class="list-group-item"> 
+        <a href="/ui/result/${newRes[i]._id}" style="text-decoration:none;color:black !important;">
+        <span>${newRes[i].userId.name}</span>
+        <p>Marks:${newRes[i].marks}</p>
+        </a>
+        </li>`
+      }
+      code+='</ul> </div>';
+      //console.log(code);
+      $("#results").html(code);
 
+    }
+    
   }
 
