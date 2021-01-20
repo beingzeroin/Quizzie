@@ -1,15 +1,15 @@
-<!DOCTYPE html> 
-html(lang="en") 
-	head 
+extends includes/basePage
+block scripts  
 		meta(charset="UTF-8") 
 		meta(name="viewport", content="width=device-width, initial-scale=1.0") 
-		title Quizzie| Being Zero 
-		link(rel="stylesheet", href="/assets/css/feedbackform.css")
-		 
+		title Quizzie| Being Zero
+block styles 
+	link(rel="stylesheet", href="/assets/css/feedbackform.css")
+block page-content		 
 	body 
 		.form 
 			h2(style='color:dodgerblue') Feedback Form 
-			textarea#feedback(name="feedback", cols="30", rows="5") 
+			textarea#feedback(name="feedback", cols="30", rows="5")
 			button.submit(type="submit" onclick='submit()') Submit 
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
 		script(src="/assets/js/feedback.js")
