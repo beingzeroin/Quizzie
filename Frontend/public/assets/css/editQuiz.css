@@ -33,7 +33,7 @@ body, html {
     margin-right: 2% !important;
     font-weight: bold !important;
 }
-input.form-control
+input.form-control#search
 {
     text-align: center !important;
 } 
