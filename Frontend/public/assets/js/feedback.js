@@ -2,10 +2,14 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 if (!localStorage.token) location.href = '/';
+var c=0;
+$('#rating-form').on('change','[name="rating"]',function(){
+    c=$('[name="rating"]:checked').val();
+    console.log(c);
+    });
 
 function submit() 
-{   
-   var feed=document.getElementById("feedback").value;
+{  var feed=document.getElementById("feedback").value;
    $.ajax({
     type: "POST",
     url: "/api/feedback/submit",
@@ -13,7 +17,8 @@ function submit()
         quizId      : "6006953c6f602e22b05f037c",
         userId      : localStorage.userid,
         userName    : localStorage.username,
-        description : feed
+        description : feed,
+        rating      : c
     },
     success: function(resultData) { 
              if(resultData.message=="created")
@@ -22,11 +27,3 @@ function submit()
              }//sucess
   })
 }
-
-function getStyle(x, styleProp) {
-    if (x.currentStyle)
-      var y = x.currentStyle[styleProp];
-    else if (window.getComputedStyle)
-      var y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp);
-    return y;
-  }
