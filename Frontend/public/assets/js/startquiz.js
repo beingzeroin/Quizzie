@@ -277,7 +277,7 @@ function submitans() {
                     timeEnded: Date.now(),
                 },
                 success: function(result) {
-                    window.location.href = "/ui/result/" + questions[0].quizId
+                    window.location.href = "/ui/feedbackform/" + questions[0].quizId
                 }
             })
 
