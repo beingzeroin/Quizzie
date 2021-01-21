@@ -1,6 +1,4 @@
 extends includes/basePage
-block scripts
-    script(src="/assets/js/editQuiz.js")
 block styles
     link(rel="stylesheet" href="/assets/css/editQuiz.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
@@ -163,6 +161,11 @@ block page-content
                                 option#op4(value="name") Name
                     .row.mb-5
                         #results.mt-3
+                    #show_paginator.mt-5.d-flex.justify-content-center
+block scripts
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')
+    script(src="/assets/js/editQuiz.js")
+
 
 
                   
