@@ -25,7 +25,8 @@ function show() {
                           <button type="button" id="feed" class="btn">
                             Username : ${r[i].userName} </br>
                             Userid   : ${r[i].userId}   </br>
-                            FeedBack : ${r[i].description}
+                            FeedBack : ${r[i].description} </br>
+                            Rating   : ${r[i].rating}
                            </button>
                            </div>`;
                 }

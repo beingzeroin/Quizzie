@@ -103,20 +103,14 @@ ul {
   height:120px;
   margin:2em;
  }
-
-.bar{float:left;
-  margin-right:45vw;
-}
-
 .tester{ border:none !important;
          background: rgb(255, 255, 255);
          margin-bottom:1%;
          margin-left:3%;
-         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1)
+         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+         min-width:64vw;
         }
-.test{padding-bottom:.5%;
-    width:70vw;
-    margin-bottom:.5em;}
+
 .para{margin-left:1vw;color:black}
 
 .modal {
@@ -155,13 +149,15 @@ ul {
 
 .bar {
     float: left;
-    margin-right: 60vw;
+    margin-right:81%;
+    vertical-align:center !important;
 }
 
 .test {
     background: azure;
     padding-bottom: .5%;
-    width: 70vw;
+    max-width: 70vw;
+    width:70vw;
     margin-bottom: .5em;
 }
 
@@ -173,4 +169,9 @@ ul {
 {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
+}
+
+#icon{color:grey;
+    margin-top:.6em;
+    vertical-align:center !important;
 }
