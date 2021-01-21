@@ -18,10 +18,10 @@ function show() {
                             document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
                         } //success
                 }); //inner ajax
-
+                let feedbacks = [];
                 var h = "";
                 for (var i = 0; i < r.length; i++) {
-                    h += `<div class="container">
+                    h = `<div class="container">
                           <button type="button" id="feed" class="btn">
                             Username : ${r[i].userName} </br>
                             Userid   : ${r[i].userId}   </br>
@@ -29,8 +29,24 @@ function show() {
                             Rating   : ${r[i].rating}
                            </button>
                            </div>`;
+                    feedbacks.push(h);
                 }
-                document.getElementById("Feedback").innerHTML = h;
+                let len = parseInt((feedbacks.length + 9) / 10);
+                $('#show_paginator').twbsPagination({
+                    totalPages: len,
+                    visiblePages: 5,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function(event, page) {
+                        let index = (page - 1) * 10;
+                        let ans = ``;
+                        for (let i = index; i < index + 10 && i < feedbacks.length; i++) {
+                            ans += feedbacks[i];
+                        }
+                        document.getElementById("Feedback").innerHTML = ans;
+                    }
+                });
+
             } //sucess
     });
 }

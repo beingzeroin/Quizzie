@@ -33,7 +33,17 @@ $.ajax({
         let timer = Number(result.scheduledFor) + Number(result.duration) * 60 * 1000;
         if (timer - Date.now() < 0) {
             alert("quiz time elapsed");
-            window.location.href = "/ui/dashboard"
+
+            $.ajax({
+                url: "/api/quiz/finish",
+                method: "PATCH",
+                data: { quizId: quizid },
+                success: function(result1) {
+                    window.location.href = "/ui/dashboard"
+                }
+            })
+
+
         }
 
 
