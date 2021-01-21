@@ -34,9 +34,12 @@ let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizze
         </div>
     </div>
 </div>`
+
+
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype == "User") {
+
     $.ajax({
         url: "/api/user/",
         method: "GET",
@@ -103,13 +106,14 @@ if (localStorage.usertype == "User") {
                 document.getElementById("UpcomingQuizzes").innerHTML = `<p>
         Sorry! No public quizzes available  at the moment</p> `
             } else {
+                let publicQuizzes = []
                 let code = ``;
                 // alert(JSON.stringify(data.result.find(item => item.quizName == "MCQ")))
                 for (let i = 0; i < publicquizzes.length; i++) {
                     if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
-                        code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
+                        code = `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
             <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
             <div class="card-body ">
                 <div class="row">
@@ -127,10 +131,25 @@ if (localStorage.usertype == "User") {
           
             </div>
       </div>`
-
+                        publicQuizzes.push(code);
                     }
                 }
-                document.getElementById("UpcomingQuizzes").innerHTML = code
+                let len = parseInt((publicQuizzes.length + 8) / 9);
+                $('#show_paginator').twbsPagination({
+                    totalPages: len,
+                    visiblePages: 5,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function(event, page) {
+                        let index = (page - 1) * 9;
+                        let ans = ``;
+                        for (let i = index; i < index + 9 && i < publicQuizzes.length; i++) {
+                            ans += publicQuizzes[i];
+                        }
+                        document.getElementById("UpcomingQuizzes").innerHTML = ans
+                    }
+                });
+
 
             }
 

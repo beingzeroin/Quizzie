@@ -19,6 +19,7 @@ const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
 const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 const verifyURL = require("../middleware/verifyURL");
+const { update } = require("../models/user");
 
 // const REDIS_PORT = process.env.REDISTOGO_URL || 6379 || process.env.REDIS_URL;
 
@@ -345,6 +346,7 @@ router.patch(
                 updateOps.quizName = req.body.quizName
                 updateOps.scheduledFor = req.body.scheduledFor
                 updateOps.quizDuration = req.body.quizDuration
+                updateOps.quizStatus = 0
 
                 // for (const ops of req.body.updateOps) {
                 //     updateOps[ops.propName] = ops.value;
@@ -803,7 +805,7 @@ router.get("/:quizId", async(req, res, next) => {
 
 });
 
-router.patch("/finish", async(req, res) => {
+router.patch("/finish", checkAuthUser, async(req, res) => {
     // if (!req.body.captcha) {
     //     return res.status(400).json({
     //         message: "No recaptcha token",
