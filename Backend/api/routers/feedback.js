@@ -28,7 +28,8 @@ router.post("/submit", async(req, res) => {
         quizId      : req.body.quizId,
         userId      : req.body.userId,
         userName    : req.body.userName,
-        description:req.body.description,
+        description : req.body.description,
+        rating      : req.body.rating,
         }
     item.createitem(feedbackdata, Feedback, (err, data) => {
         if (err) {
