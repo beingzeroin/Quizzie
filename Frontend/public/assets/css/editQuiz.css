@@ -1,24 +1,26 @@
-* 
-{box-sizing: border-box}
-
-body, html {
-  margin: 0;
-  font-family: Arial;
-  background-color:#f8f9fa;
-  max-width: 100%;
-  overflow-x: hidden;
+* {
+    box-sizing: border-box
 }
 
-.container.editQuiz
-{
+body,
+html {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f8f9fa;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.container.editQuiz {
     justify-content: center;
     background-color: white;
     height: 100%;
     margin-left: 9%;
     margin-right: 9%;
-    width:85%;
+    width: 85%;
     margin-top: 1% !important;
 }
+
 .login-form {
     min-height: 100%;
     background-color: #fff;
@@ -26,53 +28,65 @@ body, html {
     flex-direction: column;
     font-weight: bold;
 }
-.label
-{
+
+.note-editable {
+    line-height: 0.2;
+}
+
+.label {
     color: #2179ED;
     font-size: 20px;
     margin-right: 2% !important;
     font-weight: bold !important;
 }
-input.form-control#search
-{
+
+input.form-control#search {
     text-align: center !important;
     background: transparent;
     border: none;
     border-bottom: 1px solid #000000;
-} 
-input.form-control:focus,input.form-control:active {
+}
+
+input.form-control:focus,
+input.form-control:active {
     outline: none !important;
     box-shadow: none !important;
-  }
-span.quiz-detail-text
-{
+}
+
+span.quiz-detail-text {
     font-size: 20px;
     display: inline !important;
 }
-span.options
-{
- margin-left: 40%;
+
+span.options {
+    margin-left: 40%;
 }
-button{
+
+button {
     width: auto !important;
 }
-button:focus,button:active {
-  outline: none !important;
-  box-shadow: none !important;
+
+button:focus,
+button:active {
+    outline: none !important;
+    box-shadow: none !important;
 }
-.accordion-button
-{
-    width:100% !important;
+
+.accordion-button {
+    width: 100% !important;
     background-color: white !important;
-    max-width:80%;
+    max-width: 80%;
     font-size: 2em;
 }
 
-select
-{
+select {
     width: 35% !important;
 }
 
-li.list-group-item{
+li.list-group-item {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+p {
+    margin: 0
 }

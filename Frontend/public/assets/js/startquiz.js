@@ -9,6 +9,7 @@ let ansdata = []
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
 let time = document.getElementById("timedisplay")
+let que = document.getElementById("que")
 $(document).ready(function() {
     window.history.forward();
 
@@ -30,6 +31,11 @@ $.ajax({
 
 
         questions = result.data;
+        let quenumbers = ``
+        for (let i = 0; i < questions.length; i++) {
+            quenumbers += `<li onClick=quedisplay('${i}')>${i+1}</li>`
+        }
+        que.innerHTML = quenumbers
         let code = ``
         for (let i = 0; i < questions.length; i++) {
 
@@ -71,8 +77,8 @@ $.ajax({
                 submitans();
             }
         }, 1);
-        code += `<p class="question">${questions[currentquestion].description}</p>
-        <div class="form-check">
+        code += `<h4 >${questions[currentquestion].description}</h4>
+<div class="form-check mt-4">
           <label class="form-check-label" for="radio1">
             <input type="radio" class="form-check-input mb-5" id="radio1" name="ans" value="${questions[currentquestion].options[0].text}" >${questions[currentquestion].options[0].text}
           </label>
@@ -124,17 +130,30 @@ $.ajax({
         heading.innerHTML = `<h2 style="color:#2980b9" class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
         $('input[type=radio]').change(function() {
+
             ansdata[currentquestion].selectedOption = this.value;
+            // alert($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+
+            // console.log($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+            if ($(`li:nth-child(${currentquestion+1})`).hasClass('review')) {
+
+            } else {
+                $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+            }
+            $(`li:nth-child(${currentquestion+1})`).addClass("answered");
+
+
+
         });
 
 
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState == 'hidden' && !tabswitch) {
-                submitans();
-                tabswitch = 1;
-            }
-        });
+        // document.addEventListener('visibilitychange', function() {
+        //     if (document.visibilityState == 'hidden' && !tabswitch) {
+        //         submitans();
+        //         tabswitch = 1;
+        //     }
+        // });
 
     }
 })
@@ -142,8 +161,8 @@ $.ajax({
 function next() {
     currentquestion += 1;
     code = ``;
-    code += `<p class="question">${questions[currentquestion].description}</p>
-<div class="form-check">
+    code += `<h4 >${questions[currentquestion].description}</h4>
+    <div class="form-check mt-4">
 <label class="form-check-label" for="radio1">
 <input type="radio" class="form-check-input mb-5" id="radio1" name="ans" value="${questions[currentquestion].options[0].text}" >${questions[currentquestion].options[0].text}
 </label>
@@ -192,7 +211,17 @@ function next() {
 
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
     $('input[type=radio]').change(function() {
+
         ansdata[currentquestion].selectedOption = this.value;
+        // alert($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+
+        // console.log($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+        if ($(`li:nth-child(${currentquestion+1})`).hasClass('review')) {
+
+        } else {
+            $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+        }
+        $(`li:nth-child(${currentquestion+1})`).addClass("answered");
 
 
     });
@@ -203,8 +232,8 @@ function next() {
 function prev() {
     currentquestion -= 1;
     code = ` `;
-    code += `<p class="question">${questions[currentquestion].description}</p>
-<div class="form-check">
+    code += `<h4 >${questions[currentquestion].description}</h4>
+    <div class="form-check mt-4">
 <label class="form-check-label" for="radio1">
 <input type="radio" class="form-check-input mb-5" id="radio1" name="ans" value="${questions[currentquestion].options[0].text}" >${questions[currentquestion].options[0].text}
 </label>
@@ -257,7 +286,17 @@ function prev() {
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
     $('input[type=radio]').change(function() {
+
         ansdata[currentquestion].selectedOption = this.value;
+        // alert($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+
+        // console.log($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+        if ($(`li:nth-child(${currentquestion+1})`).hasClass('review')) {
+
+        } else {
+            $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+        }
+        $(`li:nth-child(${currentquestion+1})`).addClass("answered");
 
 
     });
@@ -266,6 +305,85 @@ function prev() {
 }
 
 
+
+function quedisplay(i) {
+    currentquestion = parseInt(i);
+    code = ``;
+    code += `<h4 >${questions[currentquestion].description}</h4>
+<div class="form-check mt-4">
+<label class="form-check-label" for="radio1">
+<input type="radio" class="form-check-input mb-5" id="radio1" name="ans" value="${questions[currentquestion].options[0].text}" >${questions[currentquestion].options[0].text}
+</label>
+</div>
+<div class="form-check">
+<label class="form-check-label" for="radio2">
+<input type="radio" class="form-check-input mb-5" id="radio2" name="ans" value="${questions[currentquestion].options[1].text}">${questions[currentquestion].options[1].text}
+</label>
+</div>
+<div class="form-check">
+<label class="form-check-label" for="radio3">
+<input type="radio" class="form-check-input mb-5" id="radio3" name="ans" value="${questions[currentquestion].options[2].text}">${questions[currentquestion].options[2].text}
+</label>
+</div>
+<div class="form-check">
+<label class="form-check-label" for="radio4">
+<input type="radio" class="form-check-input mb-5" id="radio4" name="ans" value="${questions[currentquestion].options[3].text}">${questions[currentquestion].options[3].text}
+</label>
+</div>
+<div class='mt-4 mb-4'style="background-color:black;height:4px;"></div>
+<div class="row">
+<div class="col">
+<div class="row">
+<div class="col">
+
+
+`
+    if (currentquestion != 0) {
+        code +=
+            `<button type="button" class="btn btn-primary button" onClick=prev()>previous</button>
+</div>  <div class="col"></div> </div>  </div> `
+    } else {
+        code +=
+            `
+</div>  <div class="col"></div> </div>  </div> `
+    }
+    if (currentquestion == (questions.length - 1)) {
+        code += `    <div class="col">
+<div class="row">
+<div class="col">
+<button type="button" class="btn btn-danger button" onClick=submitpopup()>submit</button>
+</div><div class="col"></div> </div>  </div></div>`
+
+    } else {
+        code += `  <div class="col">
+<div class="row">
+<div class="col"><button type="button" class="btn btn-danger button" onClick=next('1')>next</button>
+</div><div class="col"></div> </div>  </div></div>`
+
+    }
+    buttons.innerHTML = code
+
+    heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
+    $('input[type=radio]').change(function() {
+
+        ansdata[currentquestion].selectedOption = this.value;
+        // alert($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+
+        // console.log($(`li:nth-child(${currentquestion+1})`).hasClass('review'))
+        if ($(`li:nth-child(${currentquestion+1})`).hasClass('review')) {
+
+        } else {
+            $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+        }
+        $(`li:nth-child(${currentquestion+1})`).addClass("answered");
+
+
+
+
+    });
+    $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
+
+}
 
 function submitpopup() {
     let modal = document.getElementById("submitpopup");
@@ -314,4 +432,16 @@ function submitans() {
         }
     })
 
+}
+
+function review() {
+    $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(255, 184, 0)');
+    $(`li:nth-child(${currentquestion+1})`).toggleClass('review');
+    if ($(`li:nth-child(${currentquestion+1})`).hasClass('review') == false) {
+        if ($(`li:nth-child(${currentquestion+1})`).hasClass('answered')) {
+            $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+        } else {
+            $(`li:nth-child(${currentquestion+1})`).css("background-color", '');
+        }
+    }
 }

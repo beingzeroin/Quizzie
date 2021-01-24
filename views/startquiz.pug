@@ -11,6 +11,7 @@ block scripts
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
 block page-content
+    
     #submitpopup.modal
         .modal-dialog.modal-dialog-centered
             .modal-content  
@@ -29,6 +30,38 @@ block page-content
     //-         .timer#timedisplay(style="margin:0%;text-align:center")
     div#spacing
         .quiz-page.container
+            .wpProQuiz_reviewDiv.mt-2.mb-4(style='')
+                .wpProQuiz_reviewQuestion
+                    ol(style='margin-top: 0px !important')
+                    #que
+                    div(style='display: none; top: 0px;')
+                .wpProQuiz_reviewLegend
+                    ol
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")     Answered           
+                        br(style="display:none")            
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color: #FFB800;')
+                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")  Review  
+                        br(style="display:none")                         
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color:white;border-style: groove;')
+                        span.wpProQuiz_reviewText(style="  font-size: 20px;")  Not Answered   
+                        
+                div(style='clear: both;')
+                input(type='button', value='mark as review', name='review', onclick='review()')
+
+ 
+                //- .wpProQuiz_reviewLegend
+                //-     ol
+                //-     li
+                //-         span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                //-         span.wpProQuiz_reviewText Answered
+                //-     li
+                      
+                        
+
             .row    
                 .col
                     #display

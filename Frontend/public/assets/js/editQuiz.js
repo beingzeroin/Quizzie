@@ -1,4 +1,34 @@
 var questionId, QuizDetails, results;
+$("#question").summernote({
+    height: 150, // set editor height
+    minHeight: null, // set minimum height of editor
+    maxHeight: 150, // set maximum height of editor
+    focus: true,
+    toolbar: [
+        // [groupName, [list of button]]
+        ['fontsize', ['fontsize']],
+        ['style', ['bold', 'italic', 'clear']],
+        ['insert', ['link', 'picture', 'table']],
+        ['para', ['ul', 'ol']],
+        ['adv', ['codeview']]
+    ]
+})
+
+$("#questionName").summernote({
+        height: 150, // set editor height
+        minHeight: null, // set minimum height of editor
+        maxHeight: 150, // set maximum height of editor
+        focus: true,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['fontsize', ['fontsize']],
+            ['style', ['bold', 'italic', 'clear']],
+            ['insert', ['link', 'picture', 'table']],
+            ['para', ['ul', 'ol']],
+            ['adv', ['codeview']]
+        ]
+    })
+    // $('.note-editable').css('font-size', '18px');
 
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
@@ -30,29 +60,44 @@ function getdata() {
     const val4 = $("#val4").val()
     if (question == '') {
         $("#question").addClass("is-invalid");
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
         $("#Question").html('This cannot be empty');
     } else if (val1 == '') {
-        $('#question').removeClass('is-invalid')
+        $("#Question").html('');
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
         $("#val1").addClass("is-invalid");
         $("#op1").html('This cannot be empty')
     } else if (val2 == '') {
-        $('#question').removeClass('is-invalid')
+        $("#Question").html('');
         $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
         $("#val2").addClass("is-invalid");
         $("#op2").html('This cannot be empty')
     } else if (val3 == '') {
-        $('#question').removeClass('is-invalid')
+        $("#Question").html('');
         $('#val1').removeClass('is-invalid')
         $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
 
         $("#val3").addClass("is-invalid");
         $("#op3").html('This cannot be empty')
     } else if (val4 == '') {
-        $('#question').removeClass('is-invalid')
+        $("#Question").html('');
         $('#val1').removeClass('is-invalid')
         $('#val2').removeClass('is-invalid')
         $('#val3').removeClass('is-invalid')
-
+        $('#val4').removeClass('is-invalid')
 
         $("#val4").addClass("is-invalid");
         $("#op4").html('This cannot be empty')
@@ -166,8 +211,9 @@ function editquestion(index) {
     option3 = QuizDetails[index].options[2].text
     option4 = QuizDetails[index].options[3].text
     correctAnswer = QuizDetails[index].correctAnswer
-    console.log(correctAnswer, option1, option2, option3, option4);
-    $("#questionName").val(QuizDetails[index].description);
+        // alert(QuizDetails[index].description);
+    $('#questionName').summernote('code', QuizDetails[index].description);
+    // $("#questionName").val(QuizDetails[index].description);
     $("#o1").val(option1);
     $("#o2").val(option2);
     $("#o3").val(option3);
@@ -189,31 +235,74 @@ function updatedata() {
     const val3 = $("#o3").val()
     const val4 = $("#o4").val()
     const selected = $("#selected").val()
-    var answer = '';
-    if (selected === 'option1')
-        answer = val1;
-    else if (selected === 'option2')
-        answer = val2
-    else if (selected === 'option3')
-        answer = val3
-    else
-        answer = val4
-    data = { 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
-    console.log(data);
-    data.options = JSON.stringify(data.options);
-    console.log(data);
-    $.ajax({
-        url: "/api/question/update/" + questionId,
-        method: "PATCH",
-        data: data,
-        success: function(result) {
-            location.reload();
-        },
-        error: function(err) {
-            console.log("Error", err);
-            location.reload(); //change this url ....
-        }
-    });
+    if (question == '<p><br></p>') {
+        $("#questionName").addClass("is-invalid");
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#QuestionName").html('This cannot be empty');
+    } else if (val1 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o1").addClass("is-invalid");
+        $("#O1").html('This cannot be empty')
+    } else if (val2 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o2").addClass("is-invalid");
+        $("#O2").html('This cannot be empty')
+    } else if (val3 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o3").addClass("is-invalid");
+        $("#O3").html('This cannot be empty')
+    } else if (val4 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+
+
+        $("#o4").addClass("is-invalid");
+        $("#O4").html('This cannot be empty')
+    } else {
+        var answer = '';
+        if (selected === 'option1')
+            answer = val1;
+        else if (selected === 'option2')
+            answer = val2
+        else if (selected === 'option3')
+            answer = val3
+        else
+            answer = val4
+        data = { 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
+        console.log(data);
+        data.options = JSON.stringify(data.options);
+        console.log(data);
+        $.ajax({
+            url: "/api/question/update/" + questionId,
+            method: "PATCH",
+            data: data,
+            success: function(result) {
+                location.reload();
+            },
+            error: function(err) {
+                console.log("Error", err);
+                location.reload(); //change this url ....
+            }
+        });
+    }
 }
 
 quizId = location.href.split('/').slice(-1)[0]

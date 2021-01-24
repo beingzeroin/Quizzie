@@ -167,3 +167,160 @@ input[type='radio'] {
     border: 1px solid #888;
     width: 80%;
 }
+
+.wpProQuiz_addToplistMessage {
+    border: 1px solid #a0a0a0!important;
+    background-color: #fcffb3!important;
+    margin-bottom: 5px!important;
+    border-radius: 5px!important;
+    padding: 5px!important;
+    font-weight: 700!important;
+    color: #696969!important
+}
+
+.wpProQuiz_resultTable {
+    margin: 15px auto!important;
+    width: 25pc!important;
+    border: 1px solid #c4c4c4!important;
+    padding: 15px!important;
+    font-weight: 700!important
+}
+
+.wpProQuiz_resultTable table {
+    width: 100%!important;
+    border-collapse: collapse!important;
+    margin: 0!important;
+    border: 0!important;
+    text-align: left!important
+}
+
+.wpProQuiz_resultTable table td {
+    text-align: left!important
+}
+
+.wpProQuiz_resultTable .alt {
+    background: inherit!important
+}
+
+.wpProQuiz_resultName {
+    width: 75pt!important;
+    border-right: 1px solid #868686!important;
+    padding: 10px 0!important;
+    border-bottom: 0!important;
+    border-top: 0!important;
+    border-left: 0!important
+}
+
+.wpProQuiz_resultValue {
+    padding: 0!important;
+    border: 0!important
+}
+
+.wpProQuiz_box,
+.wpProQuiz_reviewQuestion {
+    border: 1px solid #c3d1a3;
+    background-color: #f8f8f8
+}
+
+.wpProQuiz_resultValue div {
+    color: #000!important;
+    text-align: right!important;
+    box-shadow: 1px 1px 3px 1px #c4c4c4!important;
+    display: inline-block!important;
+    height: 18px!important;
+    zoom: 1!important;
+    *display: inline!important;
+    margin-right: 3px!important;
+    vertical-align: middle!important
+}
+
+.wpProQuiz_addBox label {
+    display: inline!important
+}
+
+.wpProQuiz_addBox input[type=text] {
+    margin: 0!important
+}
+
+.wpProQuiz_reviewQuestion {
+    max-height: 46pt;
+    overflow: auto
+}
+
+.wpProQuiz_checkPage h3 {
+    margin: 10px 0
+}
+
+.wpProQuiz_checkPage ol,
+.wpProQuiz_reviewQuestion ol {
+    list-style-type: none!important;
+    margin: 0!important;
+    padding: 1px 2pt 0 1px!important;
+    zoom: 1!important;
+    position: relative!important;
+    border: 0!important
+}
+
+.wpProQuiz_reviewQuestion ol:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.wpProQuiz_reviewQuestionTarget {
+    font-weight: 100;
+    border-color: #7db1d3!important;
+    box-shadow: 0 0 2px 1px #c4c4c4
+}
+
+.wpProQuiz_checkPage li,
+.wpProQuiz_reviewQuestion li {
+    float: left!important;
+    margin: 0 1px 1px 0!important;
+    border: 1px solid #cfcfcf;
+    padding: 3px 0!important;
+    width: 40px!important;
+    text-align: center!important;
+    background-color: #fff;
+    cursor: pointer!important;
+    list-style-type: none!important;
+    background-image: none!important;
+    font-size: 23px!important
+}
+
+.wpProQuiz_reviewLegend {
+    padding: 5px!important;
+    margin-bottom: 8px!important
+}
+
+.wpProQuiz_reviewLegend li,
+.wpProQuiz_reviewLegend ol {
+    list-style-type: none!important;
+    margin: 0!important;
+    border: 0!important
+}
+
+.wpProQuiz_reviewLegend ol {
+    padding: 0!important
+}
+
+.wpProQuiz_reviewLegend li {
+    float: left!important;
+    padding-right: 5px!important;
+    background-image: none!important
+}
+
+.wpProQuiz_reviewColor {
+    height: 10px!important;
+    width: 10px!important;
+    display: inline-block!important;
+    margin-right: 2px!important
+}
+
+
+/* 
+h4>p {
+    margin: 0
+} */

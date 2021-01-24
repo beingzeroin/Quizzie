@@ -14,7 +14,7 @@ let userquiz = `<button class="btn btn-success" type="button" onclick="privateQu
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
-            <p style="text-align:center">Enter Fprivate code of quiz you want to join</p>
+            <p style="text-align:center">Enter private code of quiz you want to join</p>
             <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>

@@ -1,7 +1,10 @@
 extends includes/basePage
 block styles
-    link(rel="stylesheet" href="/assets/css/editQuiz.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css', rel='stylesheet')
+    link(rel="stylesheet" href="/assets/css/editQuiz.css")
+
+
 block page-content
     .container.editQuiz
         .login-form
@@ -70,9 +73,11 @@ block page-content
                                         h5#showquestions.Title.modal-title.text-center New Question
                                         hr
                                         .row.form-group.mb-3.d-flex.justify-content-center
-                                            label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2#question(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;")
-                                            .invalid-feedback#Question 
+                                            label.form-label.mt-3(style="text-align:center") Enter Question
+                                            div(style="  font-weight: normal;")
+                                                textarea.col-12#question
+                                            //- input.form-control.col-12.ml-2#question(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;")
+                                            small#Question(style="color:red;font-weight: bold;") 
                                         .row.d-flex(style="display:inline;")
                                             .col
                                                 span.options.mt-3 Option 1
@@ -119,22 +124,33 @@ block page-content
                                     .container
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2.mb-3#questionName(type="textarea" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
+                                            div(style="  font-weight: normal;")
+                                                textarea.col-12#questionName
+                                            small#QuestionName(style="color:red;font-weight: bold;") 
+
                                         hr
                                         .row.d-flex(style="display:inline;")
                                             .col
                                                 span.options Option 1
                                                 input.form-control.mb-3.col-12#o1(type="text" name='option1' placeholder="Option 1")
+                                                .invalid-feedback#O1
+
                                             .col
                                                 span.options Option 2
                                                 input.form-control.mb-3.col-12#o2(type="text" name='option2' placeholder="Option 2" )
+                                                .invalid-feedback#O2
+
                                         .row.d-flex(style="display:inline;")
                                             .col
                                                 span.options Option 3
                                                 input.form-control.mb-3.col-12#o3(type="text" name='option3' placeholder="Option 3" )
+                                                .invalid-feedback#O3
+
                                             .col
                                                 span.options Option 4
                                                 input.form-control.mb-3.col-12#o4(type="text" name='option4' placeholder="Option 4")
+                                                .invalid-feedback#O4
+
                                         hr
                                         .row.form-group.d-flex.justify-content-center
                                             .col-5
@@ -168,6 +184,7 @@ block page-content
                         #results.mt-3
                     #show_paginator.mt-5.d-flex.justify-content-center
 block scripts
+    script(src='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')
     script(src="/assets/js/editQuiz.js")
 
