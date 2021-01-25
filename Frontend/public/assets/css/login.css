@@ -1,72 +1,166 @@
-body{background:whitesmoke !important;}
-div.main{margin-left:20vw;
-  margin-top:-2vw;
-  margin-right:20vw;
-  padding-top:1%;
-  background:white;
+body {
+    background: whitesmoke !important;
 }
 
-p.head{color: dodgerblue;
-     font-size: 3.7vw;
-     margin-top:5%;
-     margin-bottom: .5em;
+div.main {
+    margin-left: 20vw;
+    margin-top: -2vw;
+    margin-right: 20vw;
+    padding-top: 1%;
+    background: white;
 }
 
-input.field,input.name,input.email,input.password,input.phone{ font-size:100%;
-             margin-left:13vw;
-             width: 30vw;
-             height:3vw;
+p.head {
+    color: dodgerblue;
+    font-size: 3.7vw;
+    margin-top: 5%;
+    margin-bottom: .5em;
 }
-p#namealert,p#emailalert,
-p#passwordalert,p#phonealert{     padding-bottom:1%;
-                                  margin-left:8vw;;
-                                  font-size:70%;
-                                  color:red; }
 
-button.btn{ color:white; 
-            margin-bottom:2vw;
-            margin-left:25vw; 
-            background:dodgerblue;
+input.field,
+input.name,
+input.email,
+input.password,
+input.phone {
+    font-size: 100%;
+    margin-left: 13vw;
+    width: 30vw;
+    height: 3vw;
 }
-div.google{margin-left:20vw; padding-bottom:3%;}
 
-p.signup{ font-size:100%;
-          margin-left:16vw;}
+p#namealert,
+p#emailalert,
+p#passwordalert,
+p#phonealert {
+    padding-bottom: 1%;
+    margin-left: 13vw;
+    ;
+    font-size: 70%;
+    color: red;
+}
+
+button.btn {
+    color: white;
+    margin-bottom: 2vw;
+    margin-left: 25vw;
+    background: dodgerblue;
+}
+
+div.google {
+    margin-left: 20vw;
+    padding-bottom: 3%;
+}
+
+p.signup {
+    font-size: 100%;
+    margin-left: 16vw;
+}
 
 .google-btn {
-  width: 184px;
-  height: 42px;
-  background-color: #4285f4;
-  border-radius: 2px;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+    width: 184px;
+    height: 42px;
+    background-color: #4285f4;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
 }
+
 .google-btn .google-icon-wrapper {
-  position: absolute;
-  margin-top: 1px;
-  margin-left: 1px;
-  width: 40px;
-  height: 40px;
-  border-radius: 2px;
-  background-color: #fff;
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #fff;
 }
+
 .google-btn .google-icon {
-  position: absolute;
-  margin-top: 11px;
-  margin-left: 11px;
-  width: 18px;
-  height: 18px;
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
 }
+
 .google-btn .btn-text {
-  float: right;
-  margin: 11px 11px 0 0;
-  color: #fff;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-  font-family: "Roboto";
+    float: right;
+    margin: 11px 11px 0 0;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
 }
+
 .google-btn:hover {
-  box-shadow: 0 0 6px #4285f4;
+    box-shadow: 0 0 6px #4285f4;
 }
+
 .google-btn:active {
-  background: #1669F2;
+    background: #1669F2;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #FF0015;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 16px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }

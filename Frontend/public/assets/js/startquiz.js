@@ -148,12 +148,12 @@ $.ajax({
 
 
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
-        // document.addEventListener('visibilitychange', function() {
-        //     if (document.visibilityState == 'hidden' && !tabswitch) {
-        //         submitans();
-        //         tabswitch = 1;
-        //     }
-        // });
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState == 'hidden' && !tabswitch) {
+                submitans();
+                tabswitch = 1;
+            }
+        });
 
     }
 })

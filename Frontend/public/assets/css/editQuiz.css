@@ -29,9 +29,10 @@ html {
     font-weight: bold;
 }
 
-.note-editable {
+
+/* .note-editable {
     line-height: 0.2;
-}
+} */
 
 .label {
     color: #2179ED;

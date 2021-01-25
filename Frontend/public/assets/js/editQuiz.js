@@ -6,6 +6,7 @@ $("#question").summernote({
     focus: true,
     toolbar: [
         // [groupName, [list of button]]
+        ['style', ['style']],
         ['fontsize', ['fontsize']],
         ['style', ['bold', 'italic', 'clear']],
         ['insert', ['link', 'picture', 'table']],
@@ -21,6 +22,7 @@ $("#questionName").summernote({
         focus: true,
         toolbar: [
             // [groupName, [list of button]]
+            ['style', ['style']],
             ['fontsize', ['fontsize']],
             ['style', ['bold', 'italic', 'clear']],
             ['insert', ['link', 'picture', 'table']],
