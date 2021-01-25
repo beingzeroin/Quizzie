@@ -2,13 +2,6 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
-$(document).ready(function() {
-    window.history.forward();
-
-    function noBack() {
-        window.history.forward();
-    }
-});
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
@@ -45,6 +38,14 @@ let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizze
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype == "User") {
+
+    $(document).ready(function() {
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+    });
 
     $.ajax({
         url: "/api/user/",
