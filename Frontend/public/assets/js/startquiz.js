@@ -1,6 +1,7 @@
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
+let tabswitch = 0;
 let result, questions;
 let currentquestion = 0;
 let ansdata = []
@@ -8,13 +9,22 @@ let ansdata = []
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
 let time = document.getElementById("timedisplay")
+$(document).ready(function() {
+    window.history.forward();
+
+    function noBack() {
+        window.history.forward();
+    }
+});
 
 $.ajax({
     url: "/api/quiz/data/" + quizid,
     method: "GET",
     success: function(result1) {
+
         result = result1
         console.log(result)
+
 
 
 
@@ -111,7 +121,7 @@ $.ajax({
             buttons.innerHTML = code
 
         }
-        heading.innerHTML = `<h2 style="color:#2980b9" class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
+        heading.innerHTML = `<h2 style="color:#2980b9" class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
         $('input[type=radio]').change(function() {
             ansdata[currentquestion].selectedOption = this.value;
@@ -119,7 +129,12 @@ $.ajax({
 
 
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
-
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState == 'hidden' && !tabswitch) {
+                submitans();
+                tabswitch = 1;
+            }
+        });
 
     }
 })
@@ -175,7 +190,7 @@ function next() {
     }
     buttons.innerHTML = code
 
-    heading.innerHTML = `<h2 style="color:#2980b9"class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
+    heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
     $('input[type=radio]').change(function() {
         ansdata[currentquestion].selectedOption = this.value;
 
@@ -239,7 +254,7 @@ function prev() {
 </div><div class="col"></div> </div>  </div></div>`
     }
     buttons.innerHTML = code
-    heading.innerHTML = `<h2 style="color:#2980b9"class="mt-5"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
+    heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
 
     $('input[type=radio]').change(function() {
         ansdata[currentquestion].selectedOption = this.value;

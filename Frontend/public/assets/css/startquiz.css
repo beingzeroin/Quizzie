@@ -1,4 +1,6 @@
-body {
+body {}
+
+#spacing {
     margin-left: 15%;
     margin-right: 15%;
 }
@@ -57,7 +59,7 @@ input[type='radio'] {
     display: flex !important;
     justify-content: center !important;
     padding: 0px !important;
-    margin-bottom: 5% !important;
+    margin-bottom: 1% !important;
     color: #ff0000 !important;
     width: 100%;
 }

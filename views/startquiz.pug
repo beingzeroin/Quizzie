@@ -13,20 +13,25 @@ block scripts
 block page-content
     #submitpopup.modal
         .modal-dialog.modal-dialog-centered
-            .modal-content
+            .modal-content  
                 div#displaysubmitpopup
-    .quiz-page.container
-        .row
-            .col(style="text-align:center")
-                #heading
-        .row
-            .col
-                p(style="margin:0%;text-align:center;color:red") Time Remaining
-                .timer.mb-4#timedisplay(style="margin:0%;text-align:center")
-        .row    
-            .col
-                #display
-
+    nav.navbar.sticky-top.mb-3(style="background-color:white !important;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);text-align: center;")
+    
+        span.navbar-brand.mb-0.h1(style="margin-left:3%;")
+            div#heading(style="text-align:center")
+        .nav-item.nav-link.ml-auto(style={"font-size":'110%','font-family':'Arial, Helvetica, sans-serif'} )
+            .timer#timedisplay(style="margin:0%;text-align:center")
+       
+    //- nav.navbar.sticky-top.mb-3.d-flex.justify-content-center(style="background-color:white !important;")
+    //-         div#heading(style="text-align:center")
+    //-         .row
+    //-         p(style="margin:0%;text-align:center;color:red;width:100%") Time Remaining
+    //-         .timer#timedisplay(style="margin:0%;text-align:center")
+    div#spacing
+        .quiz-page.container
+            .row    
+                .col
+                    #display
 block scripts
         script(src="/assets/js/startquiz.js")
 

@@ -28,21 +28,51 @@ function getdata() {
     const val2 = $("#val2").val()
     const val3 = $("#val3").val()
     const val4 = $("#val4").val()
-    const selected = $("#selectedoption").val()
-    var answer = '';
-    if (selected === 'option1')
-        answer = val1;
-    else if (selected === 'option2')
-        answer = val2
-    else if (selected === 'option3')
-        answer = val3
-    else
-        answer = val4
-    quizId = location.href.split('/').slice(-1)[0]
-    data = { "quizId": quizId, 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
-        //console.log(data);
-    data.options = JSON.stringify(data.options);
-    senddata(data);
+    if (question == '') {
+        $("#question").addClass("is-invalid");
+        $("#Question").html('This cannot be empty');
+    } else if (val1 == '') {
+        $('#question').removeClass('is-invalid')
+        $("#val1").addClass("is-invalid");
+        $("#op1").html('This cannot be empty')
+    } else if (val2 == '') {
+        $('#question').removeClass('is-invalid')
+        $('#val1').removeClass('is-invalid')
+        $("#val2").addClass("is-invalid");
+        $("#op2").html('This cannot be empty')
+    } else if (val3 == '') {
+        $('#question').removeClass('is-invalid')
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+
+        $("#val3").addClass("is-invalid");
+        $("#op3").html('This cannot be empty')
+    } else if (val4 == '') {
+        $('#question').removeClass('is-invalid')
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+
+
+        $("#val4").addClass("is-invalid");
+        $("#op4").html('This cannot be empty')
+    } else {
+        const selected = $("#selectedoption").val()
+        var answer = '';
+        if (selected === 'option1')
+            answer = val1;
+        else if (selected === 'option2')
+            answer = val2
+        else if (selected === 'option3')
+            answer = val3
+        else
+            answer = val4
+        quizId = location.href.split('/').slice(-1)[0]
+        data = { "quizId": quizId, 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
+            //console.log(data);
+        data.options = JSON.stringify(data.options);
+        senddata(data);
+    }
 
 }
 

@@ -71,24 +71,29 @@ block page-content
                                         hr
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2.mb-3#question(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
+                                            input.form-control.col-12.ml-2#question(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;")
+                                            .invalid-feedback#Question 
                                         .row.d-flex(style="display:inline;")
                                             .col
-                                                span.options Option 1
-                                                input.form-control.mb-3.col-12#val1(type="text" name='option1' placeholder="Option 1")
+                                                span.options.mt-3 Option 1
+                                                input.form-control.col-12#val1(type="text" name='option1' placeholder="Option 1")
+                                                .invalid-feedback#op1
                                             .col
-                                                span.options Option 2
-                                                input.form-control.mb-3.col-12#val2(type="text" name='option2' placeholder="Option 2" )
+                                                span.options.mt-3 Option 2
+                                                input.form-control.col-12#val2(type="text" name='option2' placeholder="Option 2" )
+                                                .invalid-feedback#op2
                                         .row.d-flex(style="display:inline;")
                                             .col
-                                                span.options Option 3
-                                                input.form-control.mb-3.col-12#val3(type="text" name='option3' placeholder="Option 3" )
+                                                span.options.mt-3 Option 3
+                                                input.form-control.col-12#val3(type="text" name='option3' placeholder="Option 3" )
+                                                .invalid-feedback#op3
                                             .col
-                                                span.options Option 4
-                                                input.form-control.mb-3.col-12#val4(type="text" name='option4' placeholder="Option 4")
+                                                span.options.mt-3 Option 4
+                                                input.form-control.col-12#val4(type="text" name='option4' placeholder="Option 4")
+                                                .invalid-feedback#op4
                                         .row.form-group.d-flex.justify-content-center
                                             .col-5
-                                                select.form-control#selectedoption(name="")
+                                                select.mt-3.form-control#selectedoption(name="")
                                                     option#op1(value="option1") option 1
                                                     option#op2(value="option2") option 2
                                                     option#op3(value="option3") option 3

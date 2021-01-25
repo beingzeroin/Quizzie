@@ -2,13 +2,19 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
+$(document).ready(function() {
+    window.history.forward();
 
+    function noBack() {
+        window.history.forward();
+    }
+});
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
-            <p style="text-align:center">Enter the code of quiz you want to join</p>
+            <p style="text-align:center">Enter Fprivate code of quiz you want to join</p>
             <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
@@ -44,6 +50,7 @@ if (localStorage.usertype == "User") {
         url: "/api/user/",
         method: "GET",
         success: function(result) {
+
             document.getElementsByClassName('history')[0].style.display = "block";
             document.getElementById("userQuiz").innerHTML = userquiz
             document.getElementById("enrolledquiz").innerHTML = enrolledQuizzes
@@ -464,8 +471,13 @@ function startQuiz(quizid) {
 
             location.href = '/ui/quiz/start?quizid=' + quizid;
         },
-        error: function(err) {
-            alert(err.responseJSON.message)
+        error: function(error) {
+            // alert(err.responseJSON.message)
+            //quizstart
+            var x = document.getElementById("snackbar");
+            x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+            x.className = "show";
+            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
         }
     })
 
@@ -508,8 +520,16 @@ function enrollprivate() {
             location.reload()
         },
         error: function(error) {
-            alert(error.responseJSON.message)
-            location.reload()
+            var x = document.getElementById("snackbar");
+            if (error.responseJSON.message === "Invalid Code")
+                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> this quiz code doesnot exists!`
+            else
+                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+            x.className = "show";
+            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+            document.getElementById("code").value = ''
+                // alert(error.responseJSON.message)
+                ////invalid code
 
         }
     })
