@@ -28,11 +28,11 @@ sgMail.setApiKey(process.env.SendgridAPIKey);
 
 router.get("/:userid", (req, res) => {
     item.getItemById(req.params.userid, User, (err, result) => {
-        if(err)
-            console.log("error",e);
+        if (err)
+            console.log("error", e);
         else {
-        console.log(result);
-        res.send(result);
+            console.log(result);
+            res.send(result);
         }
     })
 })
@@ -449,7 +449,7 @@ router.get(
     }
 );
 router.get(
-    "/studentQuizResult/:quizId", checkAuthUser ,
+    "/studentQuizResult/:quizId", checkAuthUser,
     async(req, res, next) => {
         const studentId = req.user.userId;
         if (studentId.match(/^[0-9a-fA-F]{24}$/)) {
@@ -462,7 +462,7 @@ router.get(
                     }
                 }
                 if (result) {
-                   return res.status(200).json({
+                    return res.status(200).json({
                         message: "Retrieved",
                         result: result,
                     });

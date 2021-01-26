@@ -35,7 +35,10 @@ const QuizSchema = new mongoose.Schema({
     reminderSent: {
         type: Boolean,
         default: false,
-    }
+    },
+    isDeleted: { type: Boolean, default: false },
+    topicName: { type: String }
+
 });
 
 module.exports = mongoose.model("Quiz", QuizSchema);
