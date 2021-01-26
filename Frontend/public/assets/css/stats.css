@@ -54,15 +54,20 @@ hr
     }
     #bar_chart,#linechart
     {
-    width:20% !important;
-    height:10% !important;
+    width:30% !important;
+    height:20% !important;
     font-size:1% !important;
     margin-left:-5% !important;
     margin-bottom: 10% !important;
     }
     #piechart
     {
-        width:50%;
+        width:80%;
         height: 50%;
     }
+  }
+  #save-pdf
+  {
+      width:auto !important;
+      margin-left:80%;
   }

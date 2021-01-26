@@ -78,6 +78,11 @@ button:active {
     background-color: white !important;
     max-width: 80%;
     font-size: 2em;
+    padding-left:-10% !important;
+    word-wrap: break-word;
+    white-space: initial;
+    overflow-y: hidden !important; 
+    position: relative;
 }
 
 select {
@@ -86,6 +91,9 @@ select {
 
 li.list-group-item {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+::-webkit-scrollbar {
+    display: none;
 }
 
 p {

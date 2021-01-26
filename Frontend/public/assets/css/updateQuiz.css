@@ -6,6 +6,9 @@ body, html {
   margin: 0;
   font-family: Arial;
   background-color:#f8f9fa;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: "Montserrat",sans-serif!important;
   
 }
 .container.updateQuiz
@@ -14,21 +17,130 @@ body, html {
     background-color: white;
     height: 100%;
     margin-left: 25%;
-    width: 50%;
+    margin-right: 25%;
+    width:50%;
 }
 .login-form {
     min-height: 100%;
-    background-color: #fff;
-     margin: 0 5%; 
+    margin: 0 5%; 
     flex-direction: column;
 }
 span.quiz{
     font-size:15px !important;
 }
-button{
+button#submit{
     width: auto !important;
+    color: #2980b9!important;
+    border: 2px solid #2980b9!important;
+    font-family: "Montserrat",sans-serif!important;
+    font-weight: 700!important;
+    letter-spacing: 3px!important;
+    width: 25%!important;
 }
 select
 {
     width: 30% !important;
 }
+h6
+{
+    display: block;
+    margin-block-start: 2.33em;
+    margin-block-end: 2.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.timer
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3% !important;
+}
+  
+@media screen and (max-width: 860px){
+body {
+  margin: 0% !important;
+  padding: 0% !important;
+  overflow-x: hidden !important;
+  font-family: "Montserrat",sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f8f9fa;
+  color: #000;
+  height: 120%;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+.container.updateQuiz
+{
+  margin:0% !important;
+  height: 100%;
+  width: 100%;
+}
+button.btn#submit {
+    font-size: .7rem!important;
+    width: 30%!important;
+}
+}
+@media screen and (max-width: 520px){
+button.btn#submit {
+    font-size: .7rem!important;
+    width: 40%!important;
+}
+.timer-input
+{
+  width: 300px !important;
+}
+body
+{
+  width: 100%!important;
+}
+.container.updateQuiz
+{
+    justify-content: center;
+    background-color: white;
+    height: 100%;
+    width:100%;
+}
+}
+
+.timer-span {
+    position: absolute;
+    display: flex;
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-top-right-radius: 2px;
+    transform: translate(-30%, -48px) rotate(135deg);
+    background-color: rgb(80, 80, 252);
+    width: 35px;
+    height: 35px;
+  }
+  .timer-input {
+    padding: 0;
+    margin: auto;
+    width: 400px !important;
+  }
+  .timer-text {
+    position: absolute;
+    transform: rotate(-135deg);
+  }
+  .timer {
+    position: relative;
+    padding-top: 60px;
+  }
+  @media (max-width:900px)
+  {
+    .timer-input
+    {
+      width:320px !important;
+    }
+  }
+  @media (max-width:360px)
+  {
+    body{
+      height: 135% !important;
+    }
+  }

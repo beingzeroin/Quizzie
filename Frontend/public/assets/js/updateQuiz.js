@@ -43,13 +43,50 @@ var quizId=location.href.split('/').slice(-1)[0]
         quizdetails=result.result;
         $("#quizName").val(quizdetails.quizName)
         $("#date").val((new Date(Number(quizdetails.scheduledFor)).getFullYear() + '-' +('0' + (new Date(Number(quizdetails.scheduledFor)).getMonth()+1)).slice(-2)+ '-' +  ('0' + new Date(Number(quizdetails.scheduledFor)).getDate()).slice(-2) ))
-        $("#time").val((new Date(Number(quizdetails.scheduledFor)).getHours()+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2)+ ':'+new Date(Number(quizdetails.scheduledFor)).getSeconds()))
-        $("#range").val(quizdetails.quizDuration);
+        $("#time").val(('0' + (new Date(Number(quizdetails.scheduledFor)).getHours())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getSeconds())).slice(-2))
+         $("#range").val(quizdetails.quizDuration);
+        const timer = document.querySelector(".timer-span");
+        const timerText = document.querySelector(".timer-text");
+        const input = document.querySelector("input.timer-input");
+  //console.log(input.value);
+        const inputRect = input.getBoundingClientRect();
+        const timerRect = timer.getBoundingClientRect();
+        const m = (0.9664 * (inputRect.right - inputRect.left)) / 60;
+        input.style.paddingLeft = m * 5 + "px";
+        timer.style.left =
+        inputRect.left +
+        quizdetails.quizDuration * m +
+    (quizdetails.quizDuration == 5 ? 0.14 * m : 0) -
+    document.querySelector(".timer").getBoundingClientRect().left +
+    "px";
+  timerText.textContent = quizdetails.quizDuration  ;
     },
     error: function(err) {
       console.log(err);
       alert("Please check Your Quiz Id")
     }
   });
+
+  
+const onInput = () => {
+  const timer = document.querySelector(".timer-span");
+  const timerText = document.querySelector(".timer-text");
+  const input = document.querySelector("input.timer-input");
+  //console.log(input.value);
+  const inputRect = input.getBoundingClientRect();
+  const timerRect = timer.getBoundingClientRect();
+  const m = (0.9664 * (inputRect.right - inputRect.left)) / 60;
+  input.style.paddingLeft = m * 5 + "px";
+  timer.style.left =
+    inputRect.left +
+    input.value * m +
+    (input.value == 5 ? 0.14 * m : 0) -
+    document.querySelector(".timer").getBoundingClientRect().left +
+    "px";
+  timerText.textContent = input.value;
+  //console.log(timerRect.x, inputRect.left + input.value * m, m);
+};
+onInput();
+
 
 
