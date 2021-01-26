@@ -1,0 +1,27 @@
+extends includes/basePage
+
+block styles
+    link(rel="stylesheet" href="/assets/css/ownerDashboard.css")
+
+block page-content
+        .container.dashboard-page
+                    h1.dash-head Dashboard
+                    .row.tabs
+                        button.btn.col-4#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
+                        button.btn.col-4.Users#1(type="button"  onclick="openPage('Users', this,1)" ) Users
+                        button.btn.col-4#2(type="button" onclick="openPage('Admin', this,2)") Admin
+                    .row 
+                        #Quizzes.tabcontent
+                            #allquizzes
+                                
+                        #Users.tabcontent
+                        #Admin.tabcontent
+                            
+                    #snackbar Some text some message..
+ 
+block scripts
+    script(src='https://kit.fontawesome.com/a076d05399.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')
+    script(src='https://code.iconify.design/1/1.0.7/iconify.min.js')
+    script(src="/assets/js/ownerDashboard.js")
+

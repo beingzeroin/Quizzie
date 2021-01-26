@@ -19,6 +19,7 @@ const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthOwner = require("../middleware/checkAuthOwner");
 const verifyURL = require("../middleware/verifyURL");
+const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 
 const router = express.Router();
 
@@ -171,7 +172,8 @@ router.post("/login", async(req, res, next) => {
 });
 
 router.get("/allQuizzes", async(req, res, next) => {
-    item.getItemByQueryWithPopulate({}, Quiz, "adminId", (err, result) => {
+
+    item.getItemByQueryWithPopulate({ isDeleted: false }, Quiz, "adminId", (err, result) => {
         if (err) {
             res.status(400).json({
                 error: err,

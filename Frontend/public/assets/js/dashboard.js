@@ -157,7 +157,7 @@ if (localStorage.usertype == "User") {
                             ans += publicQuizzes[i];
                         }
                         document.getElementById("UpcomingQuizzes").innerHTML = ans
-                    
+
                     }
                 });
             }
@@ -165,6 +165,7 @@ if (localStorage.usertype == "User") {
         }
     })
 }
+
 function secondsToHms(d) {
     d = Number(d);
     var h = Math.floor(d / 3600);
@@ -174,25 +175,25 @@ function secondsToHms(d) {
     var hDisplay = h > 0 ? h + (h == 1 ? "hr, " : "hrs, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? "min, " : "mins, ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? "sec" : "secs") : "";
-    return hDisplay + mDisplay + sDisplay; 
+    return hDisplay + mDisplay + sDisplay;
 }
-setInterval(timer,1000);
-function timer()
-{   
-    $.ajax({
-        url: "/api/quiz/all",
-        method: "GET",
-        success: function(data) {
-            // alert(data.message);
-            let result = data.result;
-    for(var i=0;i<result.length;i++)
-    {   
-        var sec= Math.round(new Date()/1000);
-        var quiztime=Number(result[i].scheduledFor)/1000;
-        var dtitle=secondsToHms(sec-quiztime);
-        document.getElementsByClassName("chip")[i].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
-    }
-   }})//success
+setInterval(timer, 1000);
+
+function timer() {
+    // $.ajax({
+    //         url: "/api/quiz/all",
+    //         method: "GET",
+    //         success: function(data) {
+    //             // alert(data.message);
+    //             let result = data.result;
+    //             for (var i = 0; i < result.length; i++) {
+    //                 var sec = Math.round(new Date() / 1000);
+    //                 var quiztime = Number(result[i].scheduledFor) / 1000;
+    //                 var dtitle = secondsToHms(-sec + quiztime);
+    //                 document.getElementsByClassName("chip")[i].innerHTML = `<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+    //             }
+    //         }
+    //     }) //success
 }
 
 if (localStorage.usertype == "Admin") {

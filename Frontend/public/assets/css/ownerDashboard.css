@@ -1,0 +1,293 @@
+* {
+    box-sizing: border-box
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+    background-color: #f8f9fa;
+}
+
+.container.dashboard-page {
+    background-color: white;
+    border: rgb(19, 8, 8);
+    /* height: 100% !important; */
+}
+
+#quizname {
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    padding: 0% !important;
+    margin: 0% !important;
+}
+
+#author {
+    font-size: 0.875rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0% !important;
+    margin: 0% !important;
+}
+
+button.btn:focus,
+.btn:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-page {
+        background-color: #f8f9fa !important;
+        padding-top: 5% !important;
+    }
+    .tab-bar {
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.12) !important;
+    }
+}
+
+
+/* Style tab links */
+
+.tablink {
+    background-color: #f8f9fa;
+    color: black;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+}
+
+
+/* Style the tab content (and add height:100% for full page content) */
+
+.tabcontent {
+    color: rgb(17, 17, 17);
+    display: none;
+    padding: 100px 20px;
+    /* margin-left: 6%; */
+    width: 100%;
+    min-height: 100%;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.row label {
+    color: rgb(6, 184, 255);
+}
+
+.dashboard-page {
+    display: flex !important;
+    flex-direction: column !important;
+    /* justify-content: center !important;
+align-items: center !important; */
+    padding-top: 2% !important;
+}
+
+.dash-head {
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: bolder !important;
+    letter-spacing: 2px !important;
+    padding-bottom: 2% !important;
+    text-align: center;
+}
+
+ul,
+li {
+    float: left;
+}
+
+ul {
+    position: relative;
+    left: 50%;
+}
+
+li {
+    position: relative;
+    left: -50%;
+    list-style: none;
+}
+
+li img.bz {
+    width: 150px;
+    height: 120px;
+    margin: 2em;
+}
+
+.tester {
+    border: none !important;
+    background: rgb(255, 255, 255);
+    margin-bottom: 1%;
+    margin-left: 3%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 64vw;
+}
+
+.para {
+    margin-left: 1vw;
+    color: black
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.bar {
+    float: left;
+    margin-right: 81%;
+    vertical-align: center !important;
+}
+
+.test {
+    background: azure;
+    padding-bottom: .5%;
+    max-width: 70vw;
+    width: 70vw;
+    margin-bottom: .5em;
+}
+
+.para {
+    margin-left: 1vw;
+    color: black
+}
+
+.row.tabs {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+
+#icon {
+    color: grey;
+    margin-top: .6em;
+    vertical-align: center !important;
+}
+
+.btntick {
+    background-color: #7ff7ad;
+    border-radius: 25px;
+    margin-top: 10px;
+    font-size: 95%;
+    font-weight: bold;
+    outline: none !important;
+}
+
+.chip {
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 5px;
+    height: 28px;
+    font-size: 95%;
+    color: #f53c7d;
+    line-height: 5px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #FF0015;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 16px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
