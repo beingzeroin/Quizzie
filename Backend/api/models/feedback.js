@@ -17,7 +17,9 @@ const feedbackSchema = new mongoose.Schema({
     rating: {
         type: Number,
         required: true
-    }
+    },
+    isDeleted: { type: Boolean, default: false }
+
 });
 
 module.exports = mongoose.model("Feedback", feedbackSchema);

@@ -448,13 +448,13 @@ router.patch("/updateProfile", checkAuthAdmin, (req, res) => {
 });
 
 ///all quizzess created by the admin
-router.get("/created", async(req, res, next) => {
+router.get("/created", checkAuthAdmin, async(req, res, next) => {
     const populateJson = {
         path: "usersEnrolled",
 
         populate: { path: "userId" }
     }
-    item.getItemByQueryWithPopulate({ adminId: req.user.userId }, Quiz, populateJson, (err, result) => {
+    item.getItemByQueryWithPopulate({ adminId: req.user.userId, isDeleted: false }, Quiz, populateJson, (err, result) => {
         if (err) {
             res.status(400).json({
                 message: err.toString(),
@@ -477,12 +477,13 @@ router.get(
 
             populate: { path: "userId" },
         }
-        item.getItemByIdWithPopulate(req.params.quizId, Quiz, populateJson, (err, result1) => {
-                if (err) {
+        item.getItemByQueryWithPopulate({ _id: req.params.quizId, isDeleted: false }, Quiz, populateJson, (err, result1) => {
+                if (err || result1.length <= 0) {
                     res.status(400).json({
                         message: err.toString(),
                     });
                 } else {
+                    result1 = result1[0];
                     res.status(200).json({
                         result1,
                     });
@@ -509,8 +510,7 @@ router.get(
 );
 
 router.patch(
-    "/changePassword",
-    async(req, res, next) => {
+    "/changePassword", checkAuthAdmin, async(req, res, next) => {
         item.getItemById(req.user.userId, Admin, (err, result) => {
             if (err) {
                 res.status(400).json({
@@ -593,16 +593,17 @@ router.get(
             path: "usersParticipated",
             populate: { path: "userId", select: { name: 1 } }
         }
-        item.getItemByIdWithPopulate(req.params.quizId, Quiz, populateJson, (err, users) => {
+        item.getItemByQueryWithPopulate({ _id: req.params.quizId, isDeleted: false }, Quiz, populateJson, (err, users) => {
                 if (err) {
                     res.status(400).json({
                         message: err.toString(),
                     });
-                } else if (!users) {
+                } else if (users.length <= 0) {
                     res.status(400).json({
                         message: "Some error occurred",
                     });
                 } else {
+                    users = users[0];
                     const userResults = users.usersParticipated;
                     res.status(200).json({
                         userResults,

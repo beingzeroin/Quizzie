@@ -31,6 +31,7 @@ const adminSchema = mongoose.Schema({
     verificationKey: { type: String },
     verificationKeyExpires: { type: Number },
     isEmailVerified: { type: Boolean, default: false },
+    isDeleted: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Admin", adminSchema);
