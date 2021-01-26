@@ -1,9 +1,12 @@
 extends includes/basePage
 block scripts
+    script(src="/assets/js/xlsx.min.js")
+    script(src="/assets/js/filesaver.js")
     script(src="/assets/js/editQuiz.js")
 block styles
-    link(rel="stylesheet" href="/assets/css/editQuiz.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(rel="stylesheet" href="/assets/css/editQuiz.css")
+
 block page-content
     .container.editQuiz
         .login-form
@@ -21,6 +24,8 @@ block page-content
                         button.btn(style="background-color:#2179ED;color:white;float:right;")
                             i.fas.fa-pen(style="margin-right:5%")
                             |Edit Details
+            .row
+                //input#save-pdf(type="button" value="Save as PDF" disable)
                 #Modal.modal.fade(tabindex='-1' aria-labelledby='ModalLabel' aria-hidden='true')
                     .modal-dialog.modal-dialog-centered.modal-sm(style="max-width:40%;vertical-align: middle;")
                         .modal-content
@@ -73,7 +78,8 @@ block page-content
                                         hr
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2.mb-3#question(type="text" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
+                                            textarea.form-control.col-12.ml-2.mb-3#question(rows="5" name="quizText"  placeholder="Enter Quiz Text" style="text-align:center;") 
+                                                pre  
                                         .row.d-flex(style="display:inline;")
                                             .col
                                                 span.options Option 1
@@ -89,18 +95,26 @@ block page-content
                                                 span.options Option 4
                                                 input.form-control.mb-3.col-12#val4(type="text" name='option4' placeholder="Option 4")
                                         .row.form-group.d-flex.justify-content-center
-                                            .col-5
                                                 select.form-control#selectedoption(name="")
                                                     option#op1(value="option1") option 1
                                                     option#op2(value="option2") option 2
                                                     option#op3(value="option3") option 3
                                                     option#op4(value="option4") option 4
                                         hr 
-                                        .row
+                                        .row.d-flex.justify-content-center
                                             button.btn.btn-success.btn-sm.ml-auto.mr-auto(style="float:right" onclick="getdata()") ADD A QUESTION
                 .row.mt-3
                     .col-md-12
                         #submissions
+                        #delModal.modal.fade(tabindex='-1' aria-labelledby='ModalLabel' aria-hidden='true')
+                            .modal-dialog.modal-dialog-centered.modal-sm(style="max-width:40%;vertical-align: middle;")
+                                .modal-content
+                                    .modal-body
+                                        .row
+                                            p(style="text-align:center")  Are you sure you want to delete this Question ?
+                                        .row.d-flex.justify-content-center.mb-1.mt-1
+                                            button.btn(style='margin-right:15%;background-color:#F64E0F;color:white' type='button' onclick="deletequestion()") Yes
+                                            button.btn.btn-primary(type='button' data-dismiss="modal") No
             .students-list.mt-5
                 .row
                     h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center;") Submissions
@@ -116,7 +130,7 @@ block page-content
                                     .container
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question 
-                                            input.form-control.col-12.ml-2.mb-3#questionName(type="textarea" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
+                                            textarea.form-control.col-12.ml-2.mb-3#questionName(rows="5" name="quizText" placeholder="Enter Quiz Text" style="text-align:center;") 
                                         hr
                                         .row.d-flex(style="display:inline;")
                                             .col
@@ -134,23 +148,24 @@ block page-content
                                                 input.form-control.mb-3.col-12#o4(type="text" name='option4' placeholder="Option 4")
                                         hr
                                         .row.form-group.d-flex.justify-content-center
-                                            .col-5
                                                 select.form-control#selected(name="")
                                                     option#op1(value="option1") option1
                                                     option#op2(value="option2") option2
                                                     option#op3(value="option3") option3
                                                     option#op4(value="option4") option4
-                                        hr 
                                         .row
-                                            button.btn.btn-success.btn-sm.ml-auto.mr-auto(style="float:right" onclick="updatedata()") UPDATE QUESTION
-                
-                    
-                    
+                                            button.btn.btn-success.btn-sm.ml-auto.mr-auto( onclick="updatedata()") UPDATE QUESTION
                     .row
-                        button.btn.btn-sm.ml-auto.mb-4(style="background-color:#802BD4;color:white;float:right")
-                            a#stats(style="text-decoration:none;color:white")
-                                i.far.fa-chart-bar(style="margin-right:5%")
-                                |VIEW STATS
+                        .col
+                            button.btn.btn-sm.mb-4(style="background-color:#802BD4;color:white;float:right")
+                                a#stats(style="text-decoration:none;color:white")
+                                    i.far.fa-chart-bar(style="margin-right:5%")
+                                    |VIEW STATS
+                            button.btn.mr-3#download(style="background-color: DodgerBlue;color:white;float:right;margin-left:3%;margin-bottom:3%;") 
+                                i.fa.fa-download(style="margin-right:5%")
+                                | QuizResults
+                    .row
+                        label(style="margin-left:88%") SortBy
                     .row.mb-5
                         .col-9
                             .input-group.mb-3

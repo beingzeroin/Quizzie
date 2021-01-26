@@ -1,7 +1,11 @@
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
   });
-  
+  var doc = new jsPDF();
+  var btnSave = document.getElementById('save-pdf');
+   btnSave.addEventListener('click', function () {
+    doc.save('chart.pdf');
+  }, false);
   if (!localStorage.token)
       location.href = '/'
 var piedata,minmarks,maxmarks,total,average,linedata;
@@ -28,8 +32,9 @@ function pieChart() {
     backgroundcolor:"#ff0ff",
   };
 
- var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
-  chart.draw(data, options);
+ var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
+  chart1.draw(data, options);
+  doc.addImage(chart1.getImageURI(), -50, 0);
   //chart.draw(data);
 }
 
@@ -51,8 +56,9 @@ function barChart() {
     // 'chartArea': {'left':'15%'}
   }
 
-  var chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
-  chart.draw(data, options);
+  var chart2 = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+  chart2.draw(data, options);
+  doc.addImage(chart2.getImageURI(), 0, 130);
   //chart.draw(data);
 }
 function LineChart() {
@@ -78,6 +84,7 @@ function LineChart() {
 
   var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
   chart.draw(data, options);
+  doc.addImage(chart.getImageURI(), 0, 210);
   //chart.draw(data);
 }
 

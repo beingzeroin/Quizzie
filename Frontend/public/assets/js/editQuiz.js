@@ -1,9 +1,10 @@
-var questionId,QuizDetails,results;
+
+
+var questionId,QuizDetails,results,deletequestionId;
 
 $.ajaxSetup({
   headers: { 'token': localStorage.token }
 });
-
 if (!localStorage.token)
     location.href = '/'
 
@@ -60,15 +61,19 @@ function fetchdata()
                 code+=`
                 <div class="accordion-item" style="width:100%;" >
                 <h2 class="accordion-header" id="heading${i+1}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}">
-                <button type="button"  onclick="deletequestion('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </button><button type="button" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </button>${result.result[i].description}  
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;">
+                <span class="mr-3"  data-toggle='modal' data-target="#delModal" onclick="assignquestionfordelete('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </span><span class="mr-3" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </span>${result.result[i].description}  
                 </button>
               </h2>
     <div id="collapse${(i+1)}" class="accordion-collapse collapse" aria-labelledby="heading${(i+1)}" data-bs-parent="#parent">
       <div class="accordion-body">`;
       for(let j=0;j<4;j++)
       {   
-        code+=`<p style="color:black;float:down"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
+
+        if ((result.result[i].options)[j].text ==result.result[i].correctAnswer)
+        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
+        else
+        code+=`<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
       `
       }  
     code+=    
@@ -109,11 +114,16 @@ function deletequiz()
       });
 }
 
-function deletequestion(id)
+function assignquestionfordelete(questionid)
 {
-  console.log(id);
+  deletequestionId=questionid;
+  console.log(deletequestionId);
+}
+function deletequestion()
+{
+  console.log(deletequestionId);
   $.ajax({
-    url: "/api/question/"+id,
+    url: "/api/question/"+deletequestionId,
     method: "DELETE",
     success: function(result) {
         if(result.message=="Deleted")
@@ -193,7 +203,10 @@ function updatedata()
       }
     });
 }
-
+function fitToColumn(arrayOfArray) {
+  // get maximum character of each column
+  return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
+}
 quizId=location.href.split('/').slice(-1)[0]  
   $.ajax({
     url: "/api/quiz/"+quizId,
@@ -233,6 +246,7 @@ quizId=location.href.split('/').slice(-1)[0]
         console.log(quizdetails);
         results=quizdetails.userResults;
         sort();
+        fill();
     },
     error: function(err) {
       console.log(err);
@@ -278,13 +292,12 @@ quizId=location.href.split('/').slice(-1)[0]
     {
       code+=`<li class="list-group-item"> 
       <a href="/ui/result/${results[i]._id}" style="text-decoration:none;color:black !important;">
-      <span>${results[i].userId.name}</span>
+      <span>${results[i].userId["name"]}</span>
       <p>Marks:${results[i].marks}</p>
       </a>
       </li>`
     }
     code+='</ul> </div>';
-    //console.log(code);
     $("#results").html(code);
     }
   }
@@ -326,3 +339,49 @@ quizId=location.href.split('/').slice(-1)[0]
      window.location.href = "/ui/feedback/" + quizId;
   }
 
+  function fill()
+  {
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
+    };
+    wb.SheetNames.push("Results Sheet");
+    var ws_data = [['S.No' , 'Name','Marks']];
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
+    };
+    wb.SheetNames.push("Results Sheet");
+    var ws_data = [['S.No' , 'Name','Marks']];
+    for(let i=0;i<results.length;i++)
+    {
+      ws_data.push([i+1,results[i].userId["name"],results[i].marks]);
+    }
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    ws['!cols']=fitToColumn(ws_data)
+    wb.Sheets["Results Sheet"] = ws;
+    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+    function s2ab(s) {
+  
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+            
+    }
+    $("#download").click(function(){
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+});
+  }
+ 
+  
+ 
+  
+  
+  
+ 
+ 
