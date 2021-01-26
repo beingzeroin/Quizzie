@@ -44,8 +44,11 @@ function login() {
                     window.location.href = '/ui/dashboard';
                 }
             }, //sucess
-            error: function(resultData) {
-                    alert(resultData.responseJSON.message);
+            error: function(error) {
+                    var x = document.getElementById("snackbar");
+                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
+                    x.className = "show";
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
                 } //error
         });
     }

@@ -2,19 +2,12 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
-$(document).ready(function() {
-    window.history.forward();
-
-    function noBack() {
-        window.history.forward();
-    }
-});
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
-            <p style="text-align:center">Enter Fprivate code of quiz you want to join</p>
+            <p style="text-align:center">Enter private code of quiz you want to join</p>
             <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
@@ -45,6 +38,14 @@ let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizze
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype == "User") {
+
+    $(document).ready(function() {
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+    });
 
     $.ajax({
         url: "/api/user/",
