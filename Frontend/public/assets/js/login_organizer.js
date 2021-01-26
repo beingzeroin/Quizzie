@@ -18,6 +18,7 @@ function login() {
     // alert(emailid+phoneno+password+name);
     var c = 2;
     if (emailid == "") {
+        // $(".email")[0].addClass("is-invalid")
         document.getElementById("emailalert").innerHTML = `Please Enter the email!`;
         c--;
     } else document.getElementById("emailalert").innerHTML = ``;
@@ -37,7 +38,7 @@ function login() {
                 password: password
             },
             success: function(resultData) {
-                alert(resultData);
+                // alert(resultData);
                 if (resultData.message == "Auth successful") {
                     localStorage.token = resultData.token;
                     localStorage.userid = resultData.userDetails.userId
@@ -46,8 +47,12 @@ function login() {
                     window.location.href = '/ui/dashboard';
                 }
             }, //sucess
-            error: function(resultData) {
-                    alert(resultData.responseJSON.message);
+            error: function(error) {
+                    var x = document.getElementById("snackbar");
+                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
+                    x.className = "show";
+                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    // alert(resultData.responseJSON.message);
                 } //error
         });
     }

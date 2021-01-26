@@ -34,7 +34,7 @@ function pieChart() {
 
  var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
   chart1.draw(data, options);
-  doc.addImage(chart1.getImageURI(), -50, 0);
+  doc.addImage(chart1.getImageURI(), -40, 0);
   //chart.draw(data);
 }
 

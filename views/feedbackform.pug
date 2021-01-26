@@ -5,11 +5,26 @@ block scripts
 		title Quizzie| Being Zero
 block styles 
 	link(rel="stylesheet", href="/assets/css/feedbackform.css")
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 block page-content		 
 	body 
 		.form 
 			h2(style='color:dodgerblue') Feedback Form 
 			textarea#feedback(name="feedback", cols="30", rows="5")
-			button.submit(type="submit" onclick='submit()') Submit 
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
-		script(src="/assets/js/feedback.js")
+			form#rating-form
+				span.rating-star
+					input(type='radio' name='rating' value='5')
+					span.star
+					input(type='radio' name='rating' value='4')
+					span.star
+					input(type='radio' name='rating' value='3')
+					span.star
+					input(type='radio' name='rating' value='2')
+					span.star
+					input(type='radio' name='rating' value='1')
+					span.star 
+			button.submit(type="submit" onclick='submit()') Submit
+		#snackbar Some text some message.. 
+block scripts  
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+	script(src="/assets/js/feedback.js")

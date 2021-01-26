@@ -11,22 +11,60 @@ block scripts
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
 block page-content
+    
     #submitpopup.modal
         .modal-dialog.modal-dialog-centered
-            .modal-content
+            .modal-content  
                 div#displaysubmitpopup
-    .quiz-page.container
-        .row
-            .col(style="text-align:center")
-                #heading
-        .row
-            .col
-                p(style="margin:0%;text-align:center;color:red") Time Remaining
-                .timer.mb-4#timedisplay(style="margin:0%;text-align:center")
-        .row    
-            .col
-                #display
+    nav.navbar.sticky-top.mb-3(style="background-color:white !important;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);text-align: center;")
+    
+        span.navbar-brand.mb-0.h1(style="margin-left:3%;")
+            div#heading(style="text-align:center")
+        .nav-item.nav-link.ml-auto(style={"font-size":'110%','font-family':'Arial, Helvetica, sans-serif'} )
+            .timer#timedisplay(style="margin:0%;text-align:center")
+       
+    //- nav.navbar.sticky-top.mb-3.d-flex.justify-content-center(style="background-color:white !important;")
+    //-         div#heading(style="text-align:center")
+    //-         .row
+    //-         p(style="margin:0%;text-align:center;color:red;width:100%") Time Remaining
+    //-         .timer#timedisplay(style="margin:0%;text-align:center")
+    div#spacing
+        .quiz-page.container
+            .wpProQuiz_reviewDiv.mt-2.mb-4(style='')
+                .wpProQuiz_reviewQuestion
+                    ol(style='margin-top: 0px !important')
+                    #que
+                    div(style='display: none; top: 0px;')
+                .wpProQuiz_reviewLegend
+                    ol
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")     Answered           
+                        br(style="display:none")            
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color: #FFB800;')
+                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")  Review  
+                        br(style="display:none")                         
+                        li
+                        span.wpProQuiz_reviewColor(style='background-color:white;border-style: groove;')
+                        span.wpProQuiz_reviewText(style="  font-size: 20px;")  Not Answered   
+                        
+                div(style='clear: both;')
+                input(type='button', value='mark as review', name='review', onclick='review()')
 
+ 
+                //- .wpProQuiz_reviewLegend
+                //-     ol
+                //-     li
+                //-         span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                //-         span.wpProQuiz_reviewText Answered
+                //-     li
+                      
+                        
+
+            .row    
+                .col
+                    #display
 block scripts
         script(src="/assets/js/startquiz.js")
 

@@ -1,6 +1,6 @@
 extends includes/basePage
 block scripts
-    script(src="/assets/js/feed.js")
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -19,3 +19,7 @@ block page-content
             b.res Responses
             div.line2
             div#Feedback
+            #show_paginator.mt-5.d-flex.justify-content-center
+block scripts
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')
+    script(src="/assets/js/feed.js")

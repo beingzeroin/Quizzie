@@ -2,13 +2,12 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 
-
 let userquiz = `<button class="btn btn-success" type="button" onclick="privateQuiz()" style="margin-top:-10%"> <i class="fa fa-check" aria-hidden="true"></i> JOIN A QUIZ</button>
 <div class="modal" id="privateQuiz">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
-            <p style="text-align:center">Enter the code of quiz you want to join</p>
+            <p style="text-align:center">Enter private code of quiz you want to join</p>
             <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
@@ -34,13 +33,25 @@ let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizze
         </div>
     </div>
 </div>`
+
+
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype == "User") {
+
+    $(document).ready(function() {
+        window.history.forward();
+
+        function noBack() {
+            window.history.forward();
+        }
+    });
+
     $.ajax({
         url: "/api/user/",
         method: "GET",
         success: function(result) {
+
             document.getElementsByClassName('history')[0].style.display = "block";
             document.getElementById("userQuiz").innerHTML = userquiz
             document.getElementById("enrolledquiz").innerHTML = enrolledQuizzes
@@ -103,13 +114,14 @@ if (localStorage.usertype == "User") {
                 document.getElementById("UpcomingQuizzes").innerHTML = `<p>
         Sorry! No public quizzes available  at the moment</p> `
             } else {
+                let publicQuizzes = []
                 let code = ``;
                 // alert(JSON.stringify(data.result.find(item => item.quizName == "MCQ")))
                 for (let i = 0; i < publicquizzes.length; i++) {
                     if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
-                        code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
+                        code = `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
             <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
             <div class="card-body ">
                 <div class="row">
@@ -127,10 +139,25 @@ if (localStorage.usertype == "User") {
           
             </div>
       </div>`
-
+                        publicQuizzes.push(code);
                     }
                 }
-                document.getElementById("UpcomingQuizzes").innerHTML = code
+                let len = parseInt((publicQuizzes.length + 8) / 9);
+                $('#show_paginator').twbsPagination({
+                    totalPages: len,
+                    visiblePages: 5,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function(event, page) {
+                        let index = (page - 1) * 9;
+                        let ans = ``;
+                        for (let i = index; i < index + 9 && i < publicQuizzes.length; i++) {
+                            ans += publicQuizzes[i];
+                        }
+                        document.getElementById("UpcomingQuizzes").innerHTML = ans
+                    }
+                });
+
 
             }
 
@@ -282,12 +309,13 @@ function openPage(pageName, elmnt, id) {
                 var r = resultData.result;
                 var h = "";
                 for (var i = 0; i < r.length; i++) {
-                    h += `<a href="/ui/result/${(r[i].quizId)._id}"><button type="button" class="tester">
-                            <div class="bar">
-                             <b class="para"> ${(r[i].quizId).quizName} </b>
+                    h += `<a href="/ui/result/${(r[i].quizId)._id}">
+                     <button type="button" class="tester">
+                            <div class="bar" style="width:15%">
+                             <b class="para" style="font-size:100%"> ${(r[i].quizId).quizName} </b>
                              <p class="para">Score : ${r[i].marks} </p>
-                           </div>
-                           <a href="/ui/result/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="color:grey;margin-top:.6em"></i> </a>
+                            </div>
+                           <a href="/ui/result/${(r[i].quizId)._id}"> <i class="fa fa-chevron-right fa-2x" id="icon" aria-hidden="true"></i> </a>
                      </button> </a>`;
                 }
                 document.getElementById("test").innerHTML = h;
@@ -444,8 +472,13 @@ function startQuiz(quizid) {
 
             location.href = '/ui/quiz/start?quizid=' + quizid;
         },
-        error: function(err) {
-            alert(err.responseJSON.message)
+        error: function(error) {
+            // alert(err.responseJSON.message)
+            //quizstart
+            var x = document.getElementById("snackbar");
+            x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+            x.className = "show";
+            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
         }
     })
 
@@ -488,8 +521,16 @@ function enrollprivate() {
             location.reload()
         },
         error: function(error) {
-            alert(error.responseJSON.message)
-            location.reload()
+            var x = document.getElementById("snackbar");
+            if (error.responseJSON.message === "Invalid Code")
+                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> this quiz code doesnot exists!`
+            else
+                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+            x.className = "show";
+            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+            document.getElementById("code").value = ''
+                // alert(error.responseJSON.message)
+                ////invalid code
 
         }
     })

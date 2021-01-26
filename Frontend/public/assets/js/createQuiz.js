@@ -1,5 +1,5 @@
 $.ajaxSetup({
-  headers: { 'token': localStorage.token }
+    headers: { 'token': localStorage.token }
 });
 
 if (!localStorage.token)
@@ -29,15 +29,14 @@ function senddata(data)
 
 
 
-function showdata()
-{
-    var date=$("#date").val();
-    var time=$("#time").val();
-    var quizType=$("#quizType").val();
-    var quizName=$("#quizName").val();
-    var quizDuration=$("#range").val();
-    var milliseconds=new Date(date+" "+time);
-    var data={'quizName':quizName,'scheduledFor':milliseconds.getTime(),'quizDuration':quizDuration,'quizType':quizType}
+function showdata() {
+    var date = $("#date").val();
+    var time = $("#time").val();
+    var quizType = $("#quizType").val();
+    var quizName = $("#quizName").val();
+    var quizDuration = $(".timer-input").val();
+    var milliseconds = new Date(date + " " + time);
+    var data = { 'quizName': quizName, 'scheduledFor': milliseconds.getTime(), 'quizDuration': quizDuration, 'quizType': quizType }
     console.log(data);
     senddata(data);
 }

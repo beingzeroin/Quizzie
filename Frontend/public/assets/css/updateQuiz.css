@@ -57,7 +57,7 @@ h6
   margin-bottom: 3% !important;
 }
   
-@media screen and (max-width: 854px){
+@media screen and (max-width: 860px){
 body {
   margin: 0% !important;
   padding: 0% !important;
@@ -77,9 +77,13 @@ body {
   height: 100%;
   width: 100%;
 }
+button.btn#submit {
+    font-size: .7rem!important;
+    width: 30%!important;
+}
 }
 @media screen and (max-width: 520px){
-button#submit {
+button.btn#submit {
     font-size: .7rem!important;
     width: 40%!important;
 }
