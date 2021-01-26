@@ -116,16 +116,18 @@ if (localStorage.usertype == "User") {
                         code = `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
             <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
             <div class="card-body ">
+            <div class="chip">
+                                    <i class='far fa-clock' style='font-size:20px'></i> Remaining
+                                </div>
                 <div class="row">
                     <div class="col-8 nopadding">
                     <p ><b>${publicquizzes[i].quizName}</b></p>
-                    <span style="font-size: small;">By :${publicquizzes[i].adminId.name}</span>
+                    <span style="font-size:small;">By :${publicquizzes[i].adminId.name}</span>
                     </div>
                     <div class="col nopadding">
                     `
 
-                        code += `<button type="button" class="btn btn-light" style="float:right;background-color:white;border: none;" onClick="enrollQuizpopup('${(publicquizzes[i]._id)}','${publicquizzes[i].quizName}')"><i class="fas fa-check"></i></button>`
-
+                        code += `<button type="button" class="btntick"style="float:right;border: none;" onClick="enrollQuizpopup('${(publicquizzes[i]._id)}','${publicquizzes[i].quizName}')">Enroll</button>`
                         code += `</div>
                 </div>
           
@@ -147,14 +149,42 @@ if (localStorage.usertype == "User") {
                             ans += publicQuizzes[i];
                         }
                         document.getElementById("UpcomingQuizzes").innerHTML = ans
+                    
                     }
                 });
-
-
             }
 
         }
     })
+}
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? "hr, " : "hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? "min, " : "mins, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? "sec" : "secs") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}
+setInterval(timer,1000);
+function timer()
+{   
+    $.ajax({
+        url: "/api/quiz/all",
+        method: "GET",
+        success: function(data) {
+            // alert(data.message);
+            let result = data.result;
+    for(var i=0;i<result.length;i++)
+    {   
+        var sec= Math.round(new Date()/1000);
+        var quiztime=Number(result[i].scheduledFor)/1000;
+        var dtitle=secondsToHms(sec-quiztime);
+        document.getElementsByClassName("chip")[i].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+    }
+   }})//success
 }
 
 if (localStorage.usertype == "Admin") {

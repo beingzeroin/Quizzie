@@ -1,37 +1,64 @@
 body{background:whitesmoke !important;}
-div.main{margin-left:20vw;
+div.main{margin-left:25vw;
   margin-top:-2vw;
-  margin-right:20vw;
-  padding-top:1%;
+  margin-right:25vw;
+  padding-top: 2%;
+  padding-bottom: 7%;
   background:white;
+  align-items: center;}
+@media screen and (max-width:800px)
+{div.main {
+  margin-left:0;
+  margin-right:0;
+  padding-top:10%;
+  padding-bottom:43%;}
+  input{width:50vw!important;
+        min-height:5vw !important;}
+  p.head{ font-size: 6vw !important;}
+  p#namealert,p#emailalert,
+  p#passwordalert,p#phonealert{ margin-left:24vw !important;}
 }
 
-p.head{color: dodgerblue;
-     font-size: 3.7vw;
-     margin-top:5%;
-     margin-bottom: .5em;
+p.head{color:#2980B9;
+     font-size: 3.4vw;
+     font-family: "Montserrat",sans-serif!important;
+     font-weight: 700!important;
+     display: table; margin:30px auto;
 }
 
-input.field,input.name,input.email,input.password,input.phone{ font-size:100%;
-             margin-left:13vw;
-             width: 30vw;
-             height:3vw;
+input{       font-size:100%;
+             display: table; margin:0 auto;
+             width: 34vw;
+             min-height:3vw;
 }
 p#namealert,p#emailalert,
 p#passwordalert,p#phonealert{     padding-bottom:1%;
-                                  margin-left:8vw;;
+                                  margin-left:7.8vw;;
                                   font-size:70%;
                                   color:red; }
 
-button.btn{ color:white; 
-            margin-bottom:2vw;
-            margin-left:25vw; 
-            background:dodgerblue;
+button.btn{ 
+  display: table; margin:2vw auto;
+  min-width:15%; 
+  height:15px;
+  min-height:15px !important;
+  padding-bottom:4%;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius:5px;
+  font-size:1.6vw;
+  font-weight:bold;
+  color:#2980B9;
+  background-color:white;
+  border: 2px solid #2980B9;
+  outline:none !important;
 }
-div.google{margin-left:20vw; padding-bottom:3%;}
+.btn:hover{background-color:#2980B9;
+  color:white;}
+div.google{display: table; margin:10px auto;padding-bottom:3%;}
 
 p.signup{ font-size:100%;
-          margin-left:16vw;}
+          display: table;
+          margin:0 auto;}
 
 .google-btn {
   width: 184px;
@@ -69,4 +96,39 @@ p.signup{ font-size:100%;
 }
 .google-btn:active {
   background: #1669F2;
+}
+
+
+
+/*
+
+
+.floating-label-group {
+	position: relative;
+	margin-top: 15px;
+	margin-bottom: 25px;
+
+	.floating-label {
+		font-size: 13px;
+		color: #cccccc;
+		position: absolute;
+		pointer-events: none;
+		top: 9px;
+		left: 12px;
+		transition: all 0.1s ease;
+	}
+
+	input:focus ~ .floating-label,
+	input:not(:focus):valid ~ .floating-label {
+		top: -13px;
+		bottom: 0px;
+		left: 20px;
+		font-size: 15px;
+		opacity: 100;
+		color: #404040;
+		z-index: 10 !important;
+		background-color:#fff;
+		padding:4px;
+		
+	}
 }

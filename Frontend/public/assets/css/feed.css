@@ -16,7 +16,7 @@ div#Feedback {
 }
 
 b.head {
-    color: rgb(100, 100, 189);
+    color:#2980B9;
     margin-left: 11em;
     font-size: 3.4vw;
     margin-bottom: .5em;
@@ -30,7 +30,7 @@ b.res {
 }
 
 b.name{
-    color: dodgerblue;
+    color: #2980B9;
     margin-left: 3em;
     margin-right: .5em;
     font-size: 2.3vw;
@@ -40,7 +40,7 @@ b.name{
 div.line {
     width: 87vw;
     height: 3px;
-    background: rgb(100, 100, 189);
+    background:#2980B9;
     margin-left: 2.3vw;
     margin-bottom: 3em;
 }
@@ -48,23 +48,41 @@ div.line {
 div.line2 {
     width: 80vw;
     height: 3px;
-    background: dodgerblue;
+    background: #2980B9;
     margin-left: 6vw;
     margin-bottom: 2em;
 }
 
-#feed {
-    border: none;
-    width: 95%;
-    min-height: 30px !important;
-    text-align: left;
-    display: block;
-    margin-left: 2%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
-    white-space: initial;
+select#selectop
+{
+ width: 15% !important;
+ margin-left:70%;
+ margin-bottom:1em;
 }
-#feed:focus {
-    outline: none !important;
+span.options
+{
+ margin-left: 50%;
 }
 
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    border:2px solid rgb(124, 122, 122);
+    width: 75vw;
+    margin-left:8vw;
+  }
+  .fbh{border:2px solid rgb(124, 122, 122);}
+  
+  td, th {
+    border: 1px solid rgb(197, 194, 194);
+    text-align: left;
+    padding: 8px;
+  }
+
+  #fb{width:35vw !important;
+      word-wrap: break-word;
+      white-space: initial;}
+  
+  tr:nth-child(even) {
+    background-color: #ebe9e9;
+  }
