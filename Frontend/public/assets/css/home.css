@@ -1,27 +1,39 @@
-div.words{float:down; margin-top:2%; padding-bottom:2%;}
-img.icon{margin-left:14%;
-         width:30%;
-         height:28%;}
+body {font-family: Arial, Helvetica, sans-serif;
+        background-color:#f8f9fa;
+        text-align:left;
+       }
+div.words{float:down; margin-top:2%; margin-left:4%; padding-bottom:2%;}
+img.icon{margin-left:7%;
+         width:32%;
+         height:30%;}
 @media screen and (max-width:60%){ img.icon {display:none}}
 p.welcome{color: dodgerblue;
-          font-size:350%;
+          font-size:340%;
           margin-bottom: -.5em; 
           margin-left:14vw;}
-b.quizzie{ color: dodgerblue;
-           font-size:500%; 
+b.quizzie{ color:#2980B9;
+           font-size:520%; 
            margin-bottom: -.2em; 
            margin-left:15vw;}
 p.para {color: dodgerblue; 
-        font-size:100%;
+        font-size:130%;
         margin-left:39%;
         margin-right:1.2%;
         float:left;}
 p.par {color: dodgerblue; 
-       font-size:100%;}
-div.details {margin-top:2em;margin-left:11%}
-button.btn.x{ color:white;
-              margin-left:9%; 
-              margin-right:6%; 
-              background:dodgerblue;}
+       font-size:130%;}
+div.details {margin-top:2em;margin-left:14%}
+button.btn.x{ width:95px;
+              color:white;
+              margin-left:6%; 
+              margin-right:7%; 
+              font-weight:bold;
+              background:#2980B9;
+              outline:none !important;
+        }
 button.btn.y{color:white;
-             background:Red;}
+             width:95px;
+             font-weight:bold;
+             background:Red;
+             outline:none !important;
+        }

@@ -4,8 +4,8 @@ function mylogin() {
     <div id="content" class="modal-content" style="background:azure">
     <div><b class="dia">Are you a student or an organizer?
     </b><br/>
-    <a href="/ui/login/user"><button class="btns" type="button" style="color:white; margin-left:20%; margin-right:12%; background:dodgerblue">Student</button></a>
-    <a href="/ui/login/organizer"><button class="btno" type="button" style="color:white;background:Red;margin-right:16%;">Organizer</button></a>
+    <a href="/ui/login/user"><button class="btns" type="button" style="color:#2980B9; margin-right:6%;">STUDENT</button></a>
+    <a href="/ui/login/organizer"><button class="btno" type="button" style="color:#F50057;">ORGANIZER</button></a>
     </div>
     </div>`
 
@@ -14,10 +14,10 @@ function mylogin() {
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            document.body.style.backgroundColor = "azure";
+            document.body.style.backgroundColor = "#f8f9fa";
         }
     }
-    document.body.style.backgroundColor = "darkgray";
+    document.body.style.backgroundColor = "lightgrey";
 
 }
 
@@ -27,8 +27,8 @@ function mysignup() {
     <div id="content" class="modal-content" style="background:azure">
     <div><b class="dia">Are you a student or an organizer?
     </b><br/>
-    <a href="/ui/signup/user"><button class="btns" type="button" style="color:white; margin-left:20%; margin-right:12%; background:dodgerblue">Student</button></a>
-    <a href="/ui/signup/organizer"><button class="btno" type="button" style="color:white;background:Red;margin-right:16%;">Organizer</button></a>
+    <a href="/ui/signup/user"><button class="btns" type="button" style="color:#2980B9; margin-right:6%;">STUDENT</button></a>
+    <a href="/ui/signup/organizer"><button class="btno" type="button" style="color:#F50057;">ORGANIZER</button></a>
     </div>
     </div>`
 
@@ -37,8 +37,8 @@ function mysignup() {
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            document.body.style.backgroundColor = "azure";
+            document.body.style.backgroundColor = "#f8f9fa";
         }
     }
-    document.body.style.backgroundColor = "darkgray";
+    document.body.style.backgroundColor = "lightgrey";
 }

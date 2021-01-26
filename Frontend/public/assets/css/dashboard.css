@@ -177,11 +177,30 @@ li img.bz {
     text-align: center;
 }
 
-#icon {
-    color: grey;
-    margin-top: .6em;
-    vertical-align: center !important;
+#icon{color:grey;
+    margin-top:.6em;
+    vertical-align:center !important;
 }
+
+.btntick{background-color: #7ff7ad;
+         border-radius: 25px;
+         margin-top:10px;
+         font-size:95%;
+         font-weight: bold;
+         outline:none !important;
+        }
+
+.chip {
+    display: inline-block;
+    padding:5px;
+    margin-bottom:5px;
+    height:28px;
+    font-size:95%;
+    color:  #f53c7d;
+    line-height: 5px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+  }
 
 #snackbar {
     visibility: hidden;
