@@ -23,8 +23,8 @@ const router = express.Router();
 
 router.use(cookieParser());
 
-router.delete("/:questionId", async(req, res, next) => {
-    item.deleteItem(req.params.questionId, false, Question, (err, result) => {
+router.delete("/:questionId", checkAuthAdmin, async(req, res, next) => {
+    item.deleteItem(req.params.questionId, true, Question, (err, result) => {
             if (err) {
                 res.status(400).json({
                     message: "Couldn't delete",
@@ -50,7 +50,7 @@ router.delete("/:questionId", async(req, res, next) => {
 });
 
 router.get("/all/:quizId", async(req, res, next) => {
-    item.getItemByQuery({ quizId: req.params.quizId }, Question, (err, result) => {
+    item.getItemByQuery({ quizId: req.params.quizId, isDeleted: false }, Question, (err, result) => {
         if (err) {
             res.status(400).json({
                 message: "Some Error",
@@ -66,7 +66,7 @@ router.get("/all/:quizId", async(req, res, next) => {
 
 
 router.post("/add", async(req, res, next) => {
-    item.getItemById(req.body.quizId, Quiz, (err, result1) => {
+    item.getSingleItemByQuery({ _id: req.body.quizId, isDeleted: false }, Quiz, (err, result1) => {
             if (err) {
                 res.status(400).json({
                     message: "some error occurred123",
@@ -228,7 +228,7 @@ router.patch(
         updateOps.description = req.body.description
         updateOps.options = JSON.parse(req.body.options)
         updateOps.correctAnswer = req.body.correctAnswer
-        item.updateItemField({ _id: req.params.questionId }, { $set: updateOps }, Question, (err, result) => {
+        item.updateItemField({ _id: req.params.questionId, isDeleted: false }, { $set: updateOps }, Question, (err, result) => {
                 if (result) {
                     res.status(200).json({
                         message: "Question updated",

@@ -172,7 +172,7 @@ exports.updateItemField = function(query, updateDetails, itemModel, cb) {
 
 exports.deleteMultipleItems = function(query, itemModel, cb) {
     console.log('Delete multiple resuorces which match ..' + query);
-    itemModel.deleteMany(query, (err, details) => {
+    itemModel.update(query, { "$set": { "isDeleted": true } }, { "multi": true }, (err, details) => {
         if (err) console.log('ERROR: ' + err);
         cb(err, details);
     })

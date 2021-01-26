@@ -131,7 +131,7 @@ router.post(
 
 ///Get all quiz for student dashboard
 router.get("/all", async(req, res, next) => {
-    item.getItemByQueryWithPopulateAndSelect({ quizType: "public" }, Quiz, "adminId", "-__v", async(err, result) => {
+    item.getItemByQueryWithPopulateAndSelect({ quizType: "public", isDeleted: false }, Quiz, "adminId", "-__v", async(err, result) => {
         if (err) {
             res.status(400).json({
                 message: "An error occurred",
@@ -182,7 +182,7 @@ router.patch("/enroll", checkAuthUser, async(req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    item.getItemById(req.body.quizId, Quiz, (err, result2) => {
+    item.getSingleItemByQuery({ _id: req.body.quizId, isDeleted: false }, Quiz, (err, result2) => {
         if (err) {
             res.status(404).json({
                 message: err,
@@ -195,7 +195,7 @@ router.patch("/enroll", checkAuthUser, async(req, res, next) => {
             }
             const userId = req.user.userId;
             const quizId = req.body.quizId;
-            item.updateItemField({ _id: quizId }, { $push: { usersEnrolled: { userId } } }, Quiz, (err, result) => {
+            item.updateItemField({ _id: quizId, isDeleted: false }, { $push: { usersEnrolled: { userId } } }, Quiz, (err, result) => {
                 if (err) {
                     res.status(404).json({
                         message: err,
@@ -253,7 +253,7 @@ router.patch(
         //     }
         // });
         // console.log(flag)
-        item.getSingleItemByQuery({ quizCode: req.body.quizCode }, Quiz, (err, result2) => {
+        item.getSingleItemByQuery({ quizCode: req.body.quizCode, isDeleted: false }, Quiz, (err, result2) => {
             if (err) {
                 res.status(404).json({
                     message: "Invalid Code",
@@ -265,7 +265,7 @@ router.patch(
                     }
                 }
                 const userId = req.user.userId;
-                item.updateItemField({ quizCode: req.body.quizCode }, { $push: { usersEnrolled: { userId } } }, Quiz, (err, result) => {
+                item.updateItemField({ quizCode: req.body.quizCode, isDeleted: false }, { $push: { usersEnrolled: { userId } } }, Quiz, (err, result) => {
                     if (err) {
                         res.status(404).json({
                             message: err,
@@ -329,12 +329,13 @@ router.patch(
         //     }
         // });
         // console.log(flag)
-        item.getItemById(req.params.quizId, Quiz, (err, result1) => {
+        item.getItemByQuery({ _id: req.params.quizId, isDeleted: false }, Quiz, (err, result) => {
             if (err) {
                 res.status(400).json({
                     message: "Some error",
                 });
-            } else {
+            } else if (result.length > 0) {
+                let result1 = result[0];
                 if (result1.adminId != req.user.userId) {
                     return res.status(401).json({
                         message: "This is not your quiz",
@@ -362,6 +363,10 @@ router.patch(
                         });
                     }
                 })
+            } else {
+                res.status(400).json({
+                    message: "Some error",
+                });
             }
         })
 
@@ -371,7 +376,7 @@ router.patch(
 router.get(
     "/checkAdmin/:quizId",
     async(req, res, next) => {
-        item.getSingleItemByQuery({ _id: req.params.quizId }, Quiz, (err, result) => {
+        item.getSingleItemByQuery({ _id: req.params.quizId, isDeleted: false }, Quiz, (err, result) => {
             if (err) {
                 res.status(400).json({
                     message: "Please enter a correct quizId",
@@ -497,7 +502,7 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    item.getItemById(req.body.quizId, Quiz, async(err, result0) => {
+    item.getSingleItemByQuery({ _id: req.body.quizId, isDeleted: false }, Quiz, async(err, result0) => {
         if (err) {
             return res.status(400).json({
                 message: err.toString(),
@@ -532,7 +537,7 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
                                     for (i = 0; i < numQuiz; i++) {
                                         if (result2.quizzesStarted[i].quizId == req.body.quizId) {
                                             return res.status(405).json({
-                                                message: "Quiz already started",
+                                                message: "Already given the quiz!",
                                             });
                                         }
                                     }
@@ -613,7 +618,7 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
                                     for (i = 0; i < numQuiz; i++) {
                                         if (result2.quizzesStarted[i].quizId == req.body.quizId) {
                                             return res.status(405).json({
-                                                message: "Quiz already started",
+                                                message: "Already given the quiz!",
                                             });
                                         }
                                     }
@@ -669,71 +674,89 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
                             });
                         }
                     } else if (result0.quizStatus == 1) {
-
-                        item.getItemById(req.user.userId, User, async(err, result2) => {
-                            if (err) {
-                                return res.status(400).json({
-                                    message: "Some error Occurred",
-                                });
-                            } else {
-                                for (let i = result.length - 1; i > 0; i--) {
-                                    const j = Math.floor(Math.random() * (i + 1));
-                                    [result[i], result[j]] = [result[j], result[i]];
-                                }
-                                var flag = 0;
-                                var numQuiz = result2.quizzesStarted.length;
-                                var numEnrolled = result2.quizzesEnrolled.length;
-                                for (i = 0; i < numEnrolled; i++) {
-                                    if (result2.quizzesEnrolled[i].quizId == req.body.quizId) {
-                                        flag = 1;
-                                    }
-                                }
-
-                                for (i = 0; i < numQuiz; i++) {
-                                    if (result2.quizzesStarted[i].quizId == req.body.quizId) {
-                                        return res.status(405).json({
-                                            message: "Quiz already started",
-                                        });
-                                    }
-                                }
-                                if (flag === 0) {
-                                    return res.status(409).json({
-                                        message: "You are not enrolled in this quiz",
+                        if (
+                            Date.now() >=
+                            Number(result0.scheduledFor) +
+                            Number(result0.quizDuration * 60 * 1000)
+                        ) {
+                            item.updateItemField({ _id: req.body.quizId }, { $set: { quizStatus: 2 } }, Quiz, (err, result) => {
+                                if (err) {
+                                    return res.status(400).json({
+                                        message: err.toString(),
+                                    });
+                                } else {
+                                    return res.status(402).json({
+                                        message: "Quiz time elapsed",
                                     });
                                 }
-                                // var clientId = questions+req.user.userId
-                                // client.setex(req.user.userId, 3600, JSON.stringify(result));
-                                var quizId = req.body.quizId;
+                            })
+                        } else {
 
-                                item.updateItemField({ _id: req.user.userId }, { $push: { quizzesStarted: { quizId } } }, User, async(err, result1) => {
-                                    if (err) {
-                                        return res.status(400).json({
-                                            message: "some error occurred",
-                                            error: err.toString(),
-                                        });
-                                    } else {
-                                        var data = [];
-                                        for (i = 0; i < result.length; i++) {
-                                            object = {
-                                                quizId: result[i].quizId,
-                                                description: result[i].description,
-                                                options: result[i].options,
-                                                questionId: result[i]._id,
-                                            };
-                                            data.push(object);
+                            item.getItemById(req.user.userId, User, async(err, result2) => {
+                                if (err) {
+                                    return res.status(400).json({
+                                        message: "Some error Occurred",
+                                    });
+                                } else {
+                                    for (let i = result.length - 1; i > 0; i--) {
+                                        const j = Math.floor(Math.random() * (i + 1));
+                                        [result[i], result[j]] = [result[j], result[i]];
+                                    }
+                                    var flag = 0;
+                                    var numQuiz = result2.quizzesStarted.length;
+                                    var numEnrolled = result2.quizzesEnrolled.length;
+                                    for (i = 0; i < numEnrolled; i++) {
+                                        if (result2.quizzesEnrolled[i].quizId == req.body.quizId) {
+                                            flag = 1;
                                         }
-                                        return res.status(200).json({
-                                            message: "Quiz started for " + req.user.name,
-                                            data,
-                                            duration: result0.quizDuration,
-                                            scheduledFor: result0.scheduledFor,
-                                            quizRestart: result0.quizRestart,
-                                            quizStatus: result0.quizStatus,
+                                    }
+
+                                    for (i = 0; i < numQuiz; i++) {
+                                        if (result2.quizzesStarted[i].quizId == req.body.quizId) {
+                                            return res.status(405).json({
+                                                message: "Already given the quiz!",
+                                            });
+                                        }
+                                    }
+                                    if (flag === 0) {
+                                        return res.status(409).json({
+                                            message: "You are not enrolled in this quiz",
                                         });
                                     }
-                                })
-                            }
-                        })
+                                    // var clientId = questions+req.user.userId
+                                    // client.setex(req.user.userId, 3600, JSON.stringify(result));
+                                    var quizId = req.body.quizId;
+
+                                    item.updateItemField({ _id: req.user.userId }, { $push: { quizzesStarted: { quizId } } }, User, async(err, result1) => {
+                                        if (err) {
+                                            return res.status(400).json({
+                                                message: "some error occurred",
+                                                error: err.toString(),
+                                            });
+                                        } else {
+                                            var data = [];
+                                            for (i = 0; i < result.length; i++) {
+                                                object = {
+                                                    quizId: result[i].quizId,
+                                                    description: result[i].description,
+                                                    options: result[i].options,
+                                                    questionId: result[i]._id,
+                                                };
+                                                data.push(object);
+                                            }
+                                            return res.status(200).json({
+                                                message: "Quiz started for " + req.user.name,
+                                                data,
+                                                duration: result0.quizDuration,
+                                                scheduledFor: result0.scheduledFor,
+                                                quizRestart: result0.quizRestart,
+                                                quizStatus: result0.quizStatus,
+                                            });
+                                        }
+                                    })
+                                }
+                            })
+                        }
                     } else {
                         return res.status(402).json({
                             message: "Quiz time elapsed",
@@ -749,13 +772,15 @@ router.patch("/start", checkAuthUser, async(req, res, next) => {
 
 router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
 
-    item.getItemById(req.params.quizId, Quiz, async(err, result0) => {
+    item.getSingleItemByQuery({ _id: req.params.quizId, isDeleted: false }, Quiz, async(err, result0) => {
+        console.log(result0)
         if (err) {
             return res.status(400).json({
                 message: err.toString(),
             });
         } else {
-            item.getItemByQueryWithSelect({ quizId: req.params.quizId }, Question, "-__v", async(err, result) => {
+
+            item.getItemByQueryWithSelect({ quizId: req.params.quizId, isDeleted: false }, Question, "-__v", async(err, result) => {
                 if (err && !result) {
                     return res.status(400).json({
                         message: err.toString(),
@@ -791,14 +816,14 @@ router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
 
 });
 router.get("/:quizId", async(req, res, next) => {
-    item.getItemByIdWithPopulate(req.params.quizId, Quiz, "adminId", (err, result) => {
-        if (err) {
+    item.getItemByQueryWithPopulate({ _id: req.params.quizId, isDeleted: false }, Quiz, "adminId", (err, result) => {
+        if (err || result.length <= 0) {
             res.status(400).json({
                 message: "some error occurred",
             });
         } else {
             res.status(200).json({
-                result,
+                result: result[0],
             });
         }
     })
@@ -836,7 +861,7 @@ router.patch("/finish", checkAuthUser, async(req, res) => {
     //     }
     // });
     // console.log(flag)
-    item.updateItemField({ _id: req.body.quizId }, { $set: { quizStatus: 2 } }, Quiz, (err, result) => {
+    item.updateItemField({ _id: req.body.quizId, isDeleted: false }, { $set: { quizStatus: 2 } }, Quiz, (err, result) => {
         if (err) {
             res.status(400).json({
                 error: err.toString(),
@@ -913,7 +938,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
 
         }
     })
-    item.getItemByQuery({ quizId: quizId }, Question, (err, data) => {
+    item.getItemByQuery({ quizId: quizId, isDeleted: false }, Question, (err, data) => {
             if (err) {
                 res.status(400).json({
                     message: "Some Error",
@@ -1058,7 +1083,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
         // });
 });
 
-router.delete("/delete", async(req, res, next) => {
+router.delete("/delete", checkAuthAdmin, async(req, res, next) => {
     console.log(req.body);
     item.getItemById(req.body.quizId, Quiz, (err, result) => {
         if (err) {
@@ -1083,7 +1108,14 @@ router.delete("/delete", async(req, res, next) => {
                         message: "some error",
                     });
                 } else {
-                    item.deleteItem(req.body.quizId, false, Quiz, (err, result5) => {
+                    item.updateItemField({ _id: req.user.userId }, { $pull: { quizzes: { quizId: req.body.quizId } } }, Admin, (err, result5) => {
+                        if (err) {
+                            return res.status(400).json({
+                                message: "some error",
+                            });
+                        }
+                    })
+                    item.deleteItem(req.body.quizId, true, Quiz, (err, result5) => {
                         if (err) {
                             res.status(400).json({
                                 message: "some error",

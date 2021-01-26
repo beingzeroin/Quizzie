@@ -1,11 +1,10 @@
-
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
-  });
-  
-  if (!localStorage.token)
-      location.href = '/'
-  
+});
+
+if (!localStorage.token)
+    location.href = '/'
+
 function IsPhoneno(phoneno) {
     var regex = /^([7-9][0-9]{9})$/g;
     if (!regex.test(phoneno)) return false;
@@ -67,26 +66,41 @@ function validate() {
         check = false;
     }
     if (c == 1 && d == 1) {
+        $("#1").addClass("is-invalid");
+        $("#2").addClass("is-invalid");
         document.getElementById("nameerror").innerHTML = "Please Enter Name";
         document.getElementById("phoneerror").innerHTML = "Please Enter Mobile Number";
     } else {
         if (c == 0 && d == 0) {
+            $('#1').removeClass('is-invalid');
+            $('#2').removeClass('is-invalid')
+
             document.getElementById("nameerror").innerHTML = "";
             if (e == 1) {
+                $("#2").addClass("is-invalid");
                 document.getElementById("phoneerror").innerHTML = "Please Enter 10 digits Mobile Number";
             } else if (f == 1) {
+                $("#2").addClass("is-invalid");
                 document.getElementById("phoneerror").innerHTML = "Please Enter Valid  Mobile Number";
-            } else
+            } else {
                 document.getElementById("phoneerror").innerHTML = '';
+            }
         } else if (c == 1 && d == 0) {
+            $('#1').removeClass('is-invalid');
+            $('#2').removeClass('is-invalid')
+            $("#1").addClass("is-invalid");
             document.getElementById("nameerror").innerHTML = "Please Enter Name";
             if (e == 1) {
+                $("#2").addClass("is-invalid");
                 document.getElementById("phoneerror").innerHTML = "Please Enter 10 digits Mobile Number";
             } else if (f == 1) {
+                $("#2").addClass("is-invalid");
                 document.getElementById("phoneerror").innerHTML = "Please Enter Valid  Mobile Number";
             } else
                 document.getElementById("phoneerror").innerHTML = '';
         } else if (c == 0 && d == 1) {
+            $('#1').removeClass('is-invalid');
+            $("#2").addClass("is-invalid");
             document.getElementById("nameerror").innerHTML = "";
             document.getElementById("phoneerror").innerHTML = "Please Enter Mobile Number";
         }
@@ -95,51 +109,44 @@ function validate() {
         updatedata({ "name": name, "mobileNumber": mobile });
     }
 }
-$(document).ready(function(){
-    if(localStorage.usertype=="Admin")
-    {
+$(document).ready(function() {
+    if (localStorage.usertype == "Admin") {
         $.ajax({
-            url: "/api/admin/"+localStorage.userid,
+            url: "/api/admin/" + localStorage.userid,
             method: "GET",
             success: function(result) {
                 console.log(result);
                 $("#1").val(result.name);
-                try{
+                try {
                     $("#2").val(result.mobileNumber);
-                }
-                catch(e)
-                {
+                } catch (e) {
                     $("#2").val('');
                 }
-                
-                
+
+
             },
             error: function(err) {
                 console.log(err);
             }
-        }); 
-    }
-    else
-    {
+        });
+    } else {
         $.ajax({
-            url: "/api/user/"+localStorage.userid,
+            url: "/api/user/" + localStorage.userid,
             method: "GET",
             success: function(result) {
                 console.log(result);
                 $("#1").val(result.name);
-                try{
+                try {
                     $("#2").val(result.mobileNumber);
-                }
-                catch(e)
-                {
+                } catch (e) {
                     $("#2").val('');
                 }
-                
-                
+
+
             },
             error: function(err) {
                 console.log(err);
             }
-        }); 
+        });
     }
 });

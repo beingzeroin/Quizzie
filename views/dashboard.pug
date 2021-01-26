@@ -1,4 +1,6 @@
 extends includes/basePage
+//- meta(name='viewport', content='width=device-width, initial-scale=1')
+
 block styles
     link(rel="stylesheet" href="/assets/css/dashboard.css")
     //- link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
@@ -25,7 +27,7 @@ block page-content
                                     .modal-dialog.modal-dialog-centered
                                         .modal-content
                                             div#displayenrollpopup
-                            #show_paginator.mt-5                      
+                            #show_paginator                      
 
                                 
                         #History.tabcontent
@@ -39,6 +41,8 @@ block page-content
 
                             a(href='/ui/updateProfile')
                                 button.btn.btn-primary(type='button') Update Profile
+                    #snackbar Some text some message..
+ 
 block scripts
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')

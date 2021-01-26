@@ -4,24 +4,24 @@ const Quiz = require("./quiz");
 const User = require("./user");
 
 const questionSchema = new mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
-	quizId: { type: mongoose.Schema.Types.ObjectID, ref: "Quiz" },
-	description: {
-		type: String,
-		required: true,
-	},
-	options: [
-		{
-			text: {
-				type: String,
-				required: true,
-			},
-		},
-	],
-	correctAnswer: {
-		type: String,
-		required: true,
-	},
+    _id: mongoose.Schema.Types.ObjectId,
+    quizId: { type: mongoose.Schema.Types.ObjectID, ref: "Quiz" },
+    description: {
+        type: String,
+        required: true,
+    },
+    options: [{
+        text: {
+            type: String,
+            required: true,
+        },
+    }, ],
+    correctAnswer: {
+        type: String,
+        required: true,
+    },
+    isDeleted: { type: Boolean, default: false }
+
 });
 
 module.exports = mongoose.model("Question", questionSchema);

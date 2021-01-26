@@ -1,9 +1,42 @@
-var questionId, QuizDetails, results;
+
+
+var questionId,QuizDetails,results,deletequestionId;
+$("#question").summernote({
+    height: 150, // set editor height
+    minHeight: null, // set minimum height of editor
+    maxHeight: 150, // set maximum height of editor
+    focus: true,
+    toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['style']],
+        ['fontsize', ['fontsize']],
+        ['style', ['bold', 'italic', 'clear']],
+        ['insert', ['link', 'picture', 'table']],
+        ['para', ['ul', 'ol']],
+        ['adv', ['codeview']]
+    ]
+})
+
+$("#questionName").summernote({
+        height: 150, // set editor height
+        minHeight: null, // set minimum height of editor
+        maxHeight: 150, // set maximum height of editor
+        focus: true,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['style']],
+            ['fontsize', ['fontsize']],
+            ['style', ['bold', 'italic', 'clear']],
+            ['insert', ['link', 'picture', 'table']],
+            ['para', ['ul', 'ol']],
+            ['adv', ['codeview']]
+        ]
+    })
+    // $('.note-editable').css('font-size', '18px');
 
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
-
 if (!localStorage.token)
     location.href = '/'
 
@@ -28,21 +61,66 @@ function getdata() {
     const val2 = $("#val2").val()
     const val3 = $("#val3").val()
     const val4 = $("#val4").val()
-    const selected = $("#selectedoption").val()
-    var answer = '';
-    if (selected === 'option1')
-        answer = val1;
-    else if (selected === 'option2')
-        answer = val2
-    else if (selected === 'option3')
-        answer = val3
-    else
-        answer = val4
-    quizId = location.href.split('/').slice(-1)[0]
-    data = { "quizId": quizId, 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
-        //console.log(data);
-    data.options = JSON.stringify(data.options);
-    senddata(data);
+    if (question == '') {
+        $("#question").addClass("is-invalid");
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
+        $("#Question").html('This cannot be empty');
+    } else if (val1 == '') {
+        $("#Question").html('');
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
+        $("#val1").addClass("is-invalid");
+        $("#op1").html('This cannot be empty')
+    } else if (val2 == '') {
+        $("#Question").html('');
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+        $("#val2").addClass("is-invalid");
+        $("#op2").html('This cannot be empty')
+    } else if (val3 == '') {
+        $("#Question").html('');
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
+        $("#val3").addClass("is-invalid");
+        $("#op3").html('This cannot be empty')
+    } else if (val4 == '') {
+        $("#Question").html('');
+        $('#val1').removeClass('is-invalid')
+        $('#val2').removeClass('is-invalid')
+        $('#val3').removeClass('is-invalid')
+        $('#val4').removeClass('is-invalid')
+
+        $("#val4").addClass("is-invalid");
+        $("#op4").html('This cannot be empty')
+    } else {
+        const selected = $("#selectedoption").val()
+        var answer = '';
+        if (selected === 'option1')
+            answer = val1;
+        else if (selected === 'option2')
+            answer = val2
+        else if (selected === 'option3')
+            answer = val3
+        else
+            answer = val4
+        quizId = location.href.split('/').slice(-1)[0]
+        data = { "quizId": quizId, 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
+            //console.log(data);
+        data.options = JSON.stringify(data.options);
+        senddata(data);
+    }
 
 }
 
@@ -59,14 +137,19 @@ function fetchdata() {
                 code += `
                 <div class="accordion-item" style="width:100%;" >
                 <h2 class="accordion-header" id="heading${i+1}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}">
-                <button type="button"  onclick="deletequestion('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </button><button type="button" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </button>${result.result[i].description}  
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;">
+                <span class="mr-3"  data-toggle='modal' data-target="#delModal" onclick="assignquestionfordelete('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </span><span class="mr-3" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </span>${result.result[i].description}  
                 </button>
               </h2>
     <div id="collapse${(i+1)}" class="accordion-collapse collapse" aria-labelledby="heading${(i+1)}" data-bs-parent="#parent">
       <div class="accordion-body">`;
-                for (let j = 0; j < 4; j++) {
-                    code += `<p style="color:black;float:down"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
+      for(let j=0;j<4;j++)
+      {   
+
+        if ((result.result[i].options)[j].text ==result.result[i].correctAnswer)
+        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
+        else
+        code+=`<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
       `
                 }
                 code +=
@@ -107,23 +190,27 @@ function deletequiz() {
     });
 }
 
-function deletequestion(id) {
-    console.log(id);
-    $.ajax({
-        url: "/api/question/" + id,
-        method: "DELETE",
-        success: function(result) {
-            if (result.message == "Deleted") {
-                location.reload();
-            } else {
-                location.reload();
-            }
-        },
-        error: function(err) {
-            console.log(err);
-            location.href = "/ui/editQuiz/" //change this url ....
+function assignquestionfordelete(questionid)
+{
+  deletequestionId=questionid;
+  console.log(deletequestionId);
+}
+function deletequestion()
+{
+  console.log(deletequestionId);
+  $.ajax({
+    url: "/api/question/"+deletequestionId,
+    method: "DELETE",
+    success: function(result) {
+        if(result.message=="Deleted")
+        {
+          location.reload();
         }
-    });
+        else
+        {
+          location.reload();
+        }
+    }});
 }
 
 
@@ -136,8 +223,9 @@ function editquestion(index) {
     option3 = QuizDetails[index].options[2].text
     option4 = QuizDetails[index].options[3].text
     correctAnswer = QuizDetails[index].correctAnswer
-    console.log(correctAnswer, option1, option2, option3, option4);
-    $("#questionName").val(QuizDetails[index].description);
+        // alert(QuizDetails[index].description);
+    $('#questionName').summernote('code', QuizDetails[index].description);
+    // $("#questionName").val(QuizDetails[index].description);
     $("#o1").val(option1);
     $("#o2").val(option2);
     $("#o3").val(option3);
@@ -159,39 +247,85 @@ function updatedata() {
     const val3 = $("#o3").val()
     const val4 = $("#o4").val()
     const selected = $("#selected").val()
-    var answer = '';
-    if (selected === 'option1')
-        answer = val1;
-    else if (selected === 'option2')
-        answer = val2
-    else if (selected === 'option3')
-        answer = val3
-    else
-        answer = val4
-    data = { 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
-    console.log(data);
-    data.options = JSON.stringify(data.options);
-    console.log(data);
-    $.ajax({
-        url: "/api/question/update/" + questionId,
-        method: "PATCH",
-        data: data,
-        success: function(result) {
-            location.reload();
-        },
-        error: function(err) {
-            console.log("Error", err);
-            location.reload(); //change this url ....
-        }
-    });
-}
+    if (question == '<p><br></p>') {
+        $("#questionName").addClass("is-invalid");
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#QuestionName").html('This cannot be empty');
+    } else if (val1 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o1").addClass("is-invalid");
+        $("#O1").html('This cannot be empty')
+    } else if (val2 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o2").addClass("is-invalid");
+        $("#O2").html('This cannot be empty')
+    } else if (val3 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
+        $("#o3").addClass("is-invalid");
+        $("#O3").html('This cannot be empty')
+    } else if (val4 == '') {
+        $("#QuestionName").html('');
+        $('#o1').removeClass('is-invalid')
+        $('#o2').removeClass('is-invalid')
+        $('#o3').removeClass('is-invalid')
+        $("#o4").removeClass('is-invalid')
 
-quizId = location.href.split('/').slice(-1)[0]
-$.ajax({
-    url: "/api/quiz/" + quizId,
+
+        $("#o4").addClass("is-invalid");
+        $("#O4").html('This cannot be empty')
+    } else {
+        var answer = '';
+        if (selected === 'option1')
+            answer = val1;
+        else if (selected === 'option2')
+            answer = val2
+        else if (selected === 'option3')
+            answer = val3
+        else
+            answer = val4
+        data = { 'description': question, 'options': [{ "text": val1 }, { "text": val2 }, { "text": val3 }, { "text": val4 }], 'correctAnswer': answer }
+        console.log(data);
+        data.options = JSON.stringify(data.options);
+        console.log(data);
+        $.ajax({
+            url: "/api/question/update/" + questionId,
+            method: "PATCH",
+            data: data,
+            success: function(result) {
+                location.reload();
+            },
+            error: function(err) {
+                console.log("Error", err);
+                location.reload(); //change this url ....
+            }
+        });
+    }
+}
+function fitToColumn(arrayOfArray) {
+  // get maximum character of each column
+  return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
+}
+quizId=location.href.split('/').slice(-1)[0]  
+  $.ajax({
+    url: "/api/quiz/"+quizId,
     method: "GET",
     success: function(result) {
-        //console.log(result.result);
+        console.log(result.result);
         quizdetails = result.result;
         $("#editbutton").attr("href", "/ui/quiz/updateQuiz/" + quizdetails._id);
         $("#quizName").html(quizdetails.quizName)
@@ -224,6 +358,7 @@ $.ajax({
         console.log(quizdetails);
         results = quizdetails.userResults;
         sort();
+        fill();
     },
     error: function(err) {
         console.log(err);
@@ -260,7 +395,7 @@ function sort() {
     results = sortByFunc($("#selectop").val(), results);
     console.log(results);
     if (results.length == 0)
-        $("#results").html("<h3>No responses Yet !</h3>");
+        $("#results").html(`<h3 class="d-flex justify-content-center" >No responses Yet !</h3>`);
     else {
         code = ``;
         code += `<div class="card ml-2" style="width:85%;">
@@ -268,7 +403,7 @@ function sort() {
         for (let i = 0; i < results.length; i++) {
             code += `<li class="list-group-item"> 
       <a href="/ui/result/${results[i]._id}" style="text-decoration:none;color:black !important;">
-      <span>${results[i].userId.name}</span>
+      <span>${results[i].userId["name"]}</span>
       <p>Marks:${results[i].marks}</p>
       </a>
       </li>`
@@ -310,7 +445,52 @@ function filter() {
 
 }
 
-function feedback() {
+  function fill()
+  {
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
+    };
+    wb.SheetNames.push("Results Sheet");
+    var ws_data = [['S.No' , 'Name','Marks']];
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
+    };
+    wb.SheetNames.push("Results Sheet");
+    var ws_data = [['S.No' , 'Name','Marks']];
+    for(let i=0;i<results.length;i++)
+    {
+      ws_data.push([i+1,results[i].userId["name"],results[i].marks]);
+    }
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    ws['!cols']=fitToColumn(ws_data)
+    wb.Sheets["Results Sheet"] = ws;
+    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+    function s2ab(s) {
+  
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+            
+    }
+    $("#download").click(function(){
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+});
+  }
+  function feedback() {
     var quizId = location.href.split('/').slice(-1)[0];
     window.location.href = "/ui/feedback/" + quizId;
 }
+  
+ 
+  
+  
+  
+ 
+ 

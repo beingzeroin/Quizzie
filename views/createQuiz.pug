@@ -6,19 +6,24 @@ block styles
 block page-content
     .container.CreateQuiz
         .login-form
-            h1(style="color:#5190f5;text-align:center" ) Quiz Details
+            .row
+                h1(style="font-weight: 700!important;color: #2980b9!important;text-align:center;margin:5% 0%;" ) Quiz Details
             .row.form-group.mb-3.d-flex.justify-content-center
                 label.form-label.mt-3#quizname(style="text-align:center") Quiz Name
-                input.form-control.col-12.ml-2.mb-3#quizName(type="text" name="quizName" placeholder="Enter Quiz Name" style="text-align:center;") 
+                input.form-control.col-12.ml-2.mb-3#quizName(type="text" name="quizName" placeholder="Enter Quiz Name" style="text-align:center;border-color:black") 
             .row.d-flex(style="display:inline;")
                 .col
                     span.quiz Select Quiz Date
                     input.form-control.mb-5.col-12#date(type="date" name='date' step="1")
                 .col
                     span.quiz Select Quiz Time
-                    input.form-control.mb-5.col-12#time(type="time" name='time' step="1")
+                    input.form-control.mb-3.col-12#time(type="time" name='time' step="1")
             .row
-                input.form-range.col-12.mb-5#range(type="range" min="5" max="60" step="5" name="quizDuration")
+                label.d-flex.justify-content-center Select Quiz Duration
+                .timer
+                    span.timer-span
+                        span.timer-text 5
+                    input.timer-input(type='range' max='60'  min='5' value='5' step='5' oninput='onInput()')
             .row.d-flex.justify-content-center
                 label.form-label(style="text-align:center") Select Quiz Type
             .row.form-group.d-flex.justify-content-center
@@ -26,4 +31,5 @@ block page-content
                     option(selected='Private' value="Private" ) Private
                     option(value='Public') Public
             .row.mt-5.d-flex.justify-content-center
-                button.btn(type="button" onclick="showdata()" style="background-color:white;border-color:blue;color:blue") Create Quiz
+                button.btn#submit(type="button" onclick="showdata()") CREATE QUIZ
+            h6.text-center#note.mb-1 NOTE: After creating the quiz,you can add questions by editing the quiz in YOUR QUIZZES section of the dashbord 
