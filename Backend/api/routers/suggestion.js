@@ -42,7 +42,7 @@ router.post("/submit", async(req, res) => {
 
 })
 
-router.get('/:quizid', async(req, res) => {
+router.get('/:type', async(req, res) => {
     item.getItemByQuery({ userType: req.params.type },Suggest, (err, result) => {
         if (err) {
             res.status(400).json({
