@@ -77,12 +77,13 @@ block page-content
                                             .dropzone
                                                 section
                                                     div#input
-                                                        input.filestyle.ml-5#file(multiple type='file',accept=".csv", data-input='false', data-iconname='fas fa-plus-circle fa-3x', data-buttonText="")
+                                                        .row
+                                                            .col-5
+                                                            .col-2
+                                                                input.filestyle.ml-5#file(multiple type='file',accept=".csv", data-input='false', data-iconname='fas fa-plus-circle fa-3x', data-buttonText="")
+                                                            .col-5
                                                         p(style='color: rgb(110, 110, 110);') Drag &apos;n&apos; drop or click to select files
-
-
-
-                                                
+                                                          
                                         hr
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question
