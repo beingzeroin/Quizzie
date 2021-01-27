@@ -2,9 +2,8 @@ const JWT = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
     const token = req.header("token")
-        // console.log(req.header['auth-token'])
-    if (!token) return res.redirect('/ui/login/organizer')
-
+    //console.log(req.header('token'))
+    if (!token) res.redirect('/ui/login/organizer')
     try {
         const verified = JWT.verify(token, process.env.jwtSecret);
         req.user = verified;

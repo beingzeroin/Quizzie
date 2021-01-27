@@ -18,6 +18,7 @@ const checkAuth = require("../middleware/checkAuth");
 const checkAuthUser = require("../middleware/checkAuthUser");
 const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 const verifyURL = require("../middleware/verifyURL");
+const question = require("../models/question");
 
 const router = express.Router();
 
@@ -276,7 +277,15 @@ router.post("/csv", async(req, res, next) => {
     //     }
     // });
     // console.log(flag)
-    const { questions } = req.body;
+    console.log(req.body);
+    let questions=[]
+    let z=req.body.data.split("\n");
+    for(var i=0;i<z.length-1;i++)
+    {
+        var k=z[i].split(",");
+        questions.push({"description":k[0],"quizId":req.body.quizId,"options":[{"text":k[1]},{"text":k[2]},{"text":k[3]},{"text":k[4]}],'correctAnswer':k[5].split('\r')[0]})
+    }
+    console.log(questions);
     item.createManyItems(questions, Question, (err, result) => {
             if (err) {
                 res.status(400).json({

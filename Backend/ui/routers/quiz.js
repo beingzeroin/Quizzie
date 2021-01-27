@@ -37,4 +37,7 @@ router.get("/start", (req, res) => {
 router.get("/stats/:quizId", (req, res) => {
     res.render("Stats.pug")
 })
+router.get("/studentResponse/:quizId/:userId/:quizName", (req, res) => {
+    res.render("studentResponse.pug")
+})
 module.exports = router;

@@ -4,7 +4,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  font-family: Arial;
+  font-family: "Montserrat",sans-serif!important;
   background-color:#f8f9fa;
   max-width: 100%;
   overflow-x: hidden;
@@ -13,7 +13,6 @@ h1,hr
 {
     color:rgb(6, 184, 255);
     text-align: center;
-    
 }
 hr
 {

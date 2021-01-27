@@ -73,6 +73,7 @@ router.post(
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
+                topicName:req.body.topicName
             };
             //console.log(quiz);
             item.createitem(quiz, Quiz, (err, result) => {
@@ -104,6 +105,7 @@ router.post(
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
+                topicName:req.body.topicName
             };
             item.createitem(quiz, Quiz, (err, result) => {
                 if (err) {
@@ -347,6 +349,7 @@ router.patch(
                 updateOps.quizName = req.body.quizName
                 updateOps.scheduledFor = req.body.scheduledFor
                 updateOps.quizDuration = req.body.quizDuration
+                updateOps.topicName = req.body.topicName
                 updateOps.quizStatus = 0
 
                 // for (const ops of req.body.updateOps) {
@@ -815,7 +818,7 @@ router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
     })
 
 });
-router.get("/:quizId", async(req, res, next) => {
+router.get("/:quizId",checkAuthAdmin,async(req, res, next) => {
     item.getItemByQueryWithPopulate({ _id: req.params.quizId, isDeleted: false }, Quiz, "adminId", (err, result) => {
         if (err || result.length <= 0) {
             res.status(400).json({

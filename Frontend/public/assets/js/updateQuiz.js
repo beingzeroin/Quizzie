@@ -29,7 +29,8 @@ function showdata()
     var time=$("#time").val();
     var quizName=$("#quizName").val();
     var quizDuration=$("#range").val();
-    var data={'quizName':quizName,'scheduledFor':new Date(date+" "+time).getTime(),'quizDuration':quizDuration}
+    var topicName=$("#quizTopic").val();
+    var data={'quizName':quizName,'scheduledFor':new Date(date+" "+time).getTime(),'quizDuration':quizDuration,'topicName':topicName}
     console.log(data);
     senddata(data);
     
@@ -44,7 +45,8 @@ var quizId=location.href.split('/').slice(-1)[0]
         $("#quizName").val(quizdetails.quizName)
         $("#date").val((new Date(Number(quizdetails.scheduledFor)).getFullYear() + '-' +('0' + (new Date(Number(quizdetails.scheduledFor)).getMonth()+1)).slice(-2)+ '-' +  ('0' + new Date(Number(quizdetails.scheduledFor)).getDate()).slice(-2) ))
         $("#time").val(('0' + (new Date(Number(quizdetails.scheduledFor)).getHours())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getSeconds())).slice(-2))
-         $("#range").val(quizdetails.quizDuration);
+        $("#range").val(quizdetails.quizDuration);
+        $("#quizTopic").val(quizdetails.topicName);
         const timer = document.querySelector(".timer-span");
         const timerText = document.querySelector(".timer-text");
         const input = document.querySelector("input.timer-input");

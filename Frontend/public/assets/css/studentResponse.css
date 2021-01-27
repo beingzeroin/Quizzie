@@ -1,0 +1,128 @@
+body {
+    background: whitesmoke !important;
+}
+
+div.main {
+    margin-left: 3.5vw;
+    margin-top: -2vw;
+    margin-right: 3.5vw;
+    background: white;
+    padding-top: 2%;
+    padding-bottom: 8% !important;
+}
+
+div#questions {
+    padding-bottom: 5vw;
+}
+
+b.head {
+    color: rgb(100, 100, 189);
+    margin-left: 11em;
+    font-size: 3.4vw;
+    margin-bottom: .5em;
+}
+
+b.res {
+    color: dodgerblue;
+    margin-left: 15.1em;
+    font-size: 2.5vw;
+    margin-bottom: .3em;
+}
+
+b.name,
+b.score {
+    color: dodgerblue;
+    margin-left: 3em;
+    margin-right: .5em;
+    font-size: 2.3vw;
+    margin-bottom: 2em;
+}
+
+div.line {
+    width: 87vw;
+    height: 3px;
+    background: rgb(100, 100, 189);
+    margin-left: 2.3vw;
+    margin-bottom: 3em;
+}
+
+div.line2 {
+    width: 80vw;
+    height: 3px;
+    background: dodgerblue;
+    margin-left: 6vw;
+    margin-bottom: 2em;
+}
+
+#question {
+    border: none;
+    width: 95%;
+    min-height: 30px !important;
+    text-align: left;
+    display: block;
+    margin-left: 2%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    white-space: initial;
+}
+
+#question:hover {
+    background-color: azure !important;
+}
+
+#question:focus {
+    outline: none !important;
+}
+
+.para {
+    color: black;
+    font-size: 2vw;
+    float: left;
+    margin-top: -.2em;
+    max-width: 80%;
+}
+
+.right {
+    color: green;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 130%;
+    float: left;
+}
+
+.wrong {
+    color: red !important;
+    margin-top: .3em;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 110%;
+    float: left;
+}
+
+.warn {
+    margin-top: .1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 110%;
+    float: left;
+}
+
+.arrow {
+    color: grey;
+    margin-left: 98%;
+    font-size: 100%;
+}
+
+.odot {
+    margin-bottom: .05em;
+    font-size: 140% !important;
+    margin-left: 2%;
+}
+
+.sol {
+    display: none;
+    margin-bottom: 1em;
+    margin-left: 2%;
+    width: 95% !important;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}

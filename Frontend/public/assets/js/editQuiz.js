@@ -1,6 +1,7 @@
 
 
-var questionId,QuizDetails,results,deletequestionId;
+var questionId,QuizDetails,results,deletequestionId,quizName,quizId;
+quizid=location.href.split('/').slice(-1)[0]
 $("#question").summernote({
     height: 150, // set editor height
     minHeight: null, // set minimum height of editor
@@ -50,7 +51,7 @@ function senddata(data) {
         },
         error: function(err) {
             console.log(err);
-            alert("Please Enter Valid Question") //change this url ....
+           // alert("Please Enter Valid Question") //change this url ....
         }
     });
 }
@@ -132,12 +133,12 @@ function fetchdata() {
         success: function(result) {
             // console.log(result.result);
             QuizDetails = result.result;
-            code = `<div class="accordion" id="parent" >`;
+            code = `<div class="accordion" id="parent"  >`;
             for (let i = 0; i < result.result.length; i++) {
                 code += `
                 <div class="accordion-item" style="width:100%;" >
                 <h2 class="accordion-header" id="heading${i+1}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;color:black !important">
                 <span class="mr-3"  data-toggle='modal' data-target="#delModal" onclick="assignquestionfordelete('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </span><span class="mr-3" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </span>${result.result[i].description}  
                 </button>
               </h2>
@@ -169,6 +170,33 @@ function fetchdata() {
 }
 $(document).ready(function() {
     fetchdata();
+    $("#file").on('change',function(){
+       var file=document.getElementById("file").files[0];
+       if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+           var data=evt.target.result;
+           $.ajax({
+            url: "/api/question/csv",
+            method: "POST",
+            data: {"data":data,"quizId":quizId},
+            success: function(result) {
+                location.reload();
+                console.log("success");
+            },
+            error: function(err) {
+                console.log(err);
+               // alert("Please Enter Valid Question") //change this url ....
+            }
+        });
+           
+        }
+        reader.onerror = function (evt) {
+            alert("error reading file");
+        }
+    }
+    });
 });
 
 function deletequiz() {
@@ -327,6 +355,7 @@ quizId=location.href.split('/').slice(-1)[0]
     success: function(result) {
         console.log(result.result);
         quizdetails = result.result;
+        quizName=quizdetails.quizName
         $("#editbutton").attr("href", "/ui/quiz/updateQuiz/" + quizdetails._id);
         $("#quizName").html(quizdetails.quizName)
         $("#date").html(new Date(Number(quizdetails.scheduledFor)).toDateString())
@@ -344,6 +373,15 @@ quizId=location.href.split('/').slice(-1)[0]
             `
             );
         }
+        $("#topicName").html(
+            `<div class="col">
+        <h6 class="label" >TopicName: </h6>
+        </div>
+        <div class="col">
+        <span class="quiz-detail-text">${quizdetails.topicName}</span>
+        </div>
+        `
+        );
     },
     error: function(err) {
         console.log(err);
@@ -362,7 +400,7 @@ $.ajax({
     },
     error: function(err) {
         console.log(err);
-        alert("Please check Your Quiz Id")
+        //alert("Please check Your Quiz Id")
     }
 });
 
@@ -402,7 +440,7 @@ function sort() {
     <ul class="list-group list-group-flush">`
         for (let i = 0; i < results.length; i++) {
             code += `<li class="list-group-item"> 
-      <a href="/ui/result/${results[i]._id}" style="text-decoration:none;color:black !important;">
+      <a href="/ui/quiz/studentResponse/${quizId}/${results[i].userId._id}/${encodeURIComponent(quizName)}" style="text-decoration:none;color:black !important;">
       <span>${results[i].userId["name"]}</span>
       <p>Marks:${results[i].marks}</p>
       </a>
@@ -431,7 +469,7 @@ function filter() {
       <ul class="list-group list-group-flush">`
         for (let i = 0; i < newRes.length; i++) {
             code += `<li class="list-group-item"> 
-        <a href="/ui/result/${newRes[i]._id}" style="text-decoration:none;color:black !important;">
+        <a href="/ui/quiz/studentResponse/${newRes[i]._id}/${newRes[i].userId._id}/${quizName}" style="text-decoration:none;color:black !important;">
         <span>${newRes[i].userId.name}</span>
         <p>Marks:${newRes[i].marks}</p>
         </a>
