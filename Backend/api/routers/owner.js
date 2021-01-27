@@ -19,6 +19,7 @@ const item = require("../lib/itemlib")
 const checkAuth = require("../middleware/checkAuth");
 const checkAuthOwner = require("../middleware/checkAuthOwner");
 const verifyURL = require("../middleware/verifyURL");
+const checkAuthAdmin = require("../middleware/checkAuthAdmin");
 
 const router = express.Router();
 
@@ -170,8 +171,9 @@ router.post("/login", async(req, res, next) => {
 
 });
 
-router.get("/allQuizzes", async(req, res, next) => {
-    item.getItemByQueryWithPopulate({}, Quiz, "adminId", (err, result) => {
+router.get("/allQuizzes", checkAuthOwner, async(req, res, next) => {
+
+    item.getItemByQueryWithPopulate({ isDeleted: false }, Quiz, "adminId", (err, result) => {
         if (err) {
             res.status(400).json({
                 error: err,
@@ -187,9 +189,9 @@ router.get("/allQuizzes", async(req, res, next) => {
 });
 ///
 router.delete(
-    "/quiz/:quizId",
+    "/quiz/:quizId", checkAuthOwner,
     async(req, res, next) => {
-        item.getItemById(req.params.quizId, Quiz, (err, result) => {
+        item.getSingleItemByQuery({ _id: req.params.quizId, isDeleted: false }, Quiz, (err, result) => {
             if (err) {
                 res.status(400).json({
                     message: "Unexpected",
@@ -222,7 +224,7 @@ router.delete(
                                     message: "cant happen",
                                 });
                             } else {
-                                item.deleteItem(req.params.quizId, false, Quiz, (err, result5) => {
+                                item.deleteItem(req.params.quizId, true, Quiz, (err, result5) => {
                                     if (err) {
                                         res.status(400).json({
                                             message: "Unexpected Error",
@@ -243,7 +245,7 @@ router.delete(
     }
 );
 
-router.get("/allAdmins", async(req, res, next) => {
+router.get("/allAdmins", checkAuthOwner, async(req, res, next) => {
     item.getItemByQueryWithPopulate({}, Admin, {
         path: "quizzes",
 
@@ -263,7 +265,7 @@ router.get("/allAdmins", async(req, res, next) => {
 
 });
 // /
-router.get("/allUsers", async(req, res, next) => {
+router.get("/allUsers", checkAuthOwner, async(req, res, next) => {
     item.getItemByQueryWithPopulate({}, User, {
         path: "quizzesEnrolled",
 

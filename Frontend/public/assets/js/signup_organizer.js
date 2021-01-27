@@ -63,7 +63,15 @@ function signup() {
                 }
             }, //sucess
             error: function(resultData) {
-                    alert(JSON.parse(JSON.stringify(resultData.responseText)));
+                    if (resultData.responseJSON.message == "Unauthorized access") {
+                        location.href = "/"
+                    } else {
+                        var x = document.getElementById("snackbar");
+
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${resultData.responseJSON.message}`
+                        x.className = "show";
+                        setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    }
                 } //error
         });
     }

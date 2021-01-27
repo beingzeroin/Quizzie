@@ -1,4 +1,4 @@
-function signup() {
+function login() {
     //Email verification
     function IsEmail(email) {
         var regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -6,23 +6,10 @@ function signup() {
         else return true;
     }
 
-    //Phone Number verfication
-    function IsPhoneno(phoneno) {
-        var regex = /^([7-9][0-9]{9})$/g;
-        if (!regex.test(phoneno)) return false;
-        else return true;
-    }
-
     var emailid = String(document.getElementsByClassName("email")[0].value);
-    var phoneno = String(document.getElementsByClassName("phone")[0].value);
     var password = String(document.getElementsByClassName("password")[0].value);
-    var name = String(document.getElementsByClassName("name")[0].value);
-    //alert(String(window.location.href));
-    var c = 4;
-    if (name == "") {
-        document.getElementById("namealert").innerHTML = `Please Enter the name!`;
-        c--;
-    } else document.getElementById("namealert").innerHTML = ``;
+    // alert(emailid+phoneno+password+name);
+    var c = 2;
     if (emailid == "") {
         document.getElementById("emailalert").innerHTML = `Please Enter the email!`;
         c--;
@@ -32,43 +19,37 @@ function signup() {
         c--;
     } else document.getElementById("passwordalert").innerHTML = ``;
 
-    if (c == 4) {
+    if (c == 2) {
         if (!IsEmail(emailid)) {
             document.getElementById("emailalert").innerHTML = `Invalid Email!`;
             c--;
         } else document.getElementById("emailalert").innerHTML = ``;
-        if (!IsPhoneno(phoneno) && phoneno != "") {
-            document.getElementById("phonealert").innerHTML = `Invalid PhoneNo.`;
-            c--;
-        } else document.getElementById("phonealert").innerHTML = ``;
     }
 
     //ajax call to create an instance to the user in database
-    if (c == 4) {
+    if (c == 2) {
         $.ajax({
             type: "POST",
-            url: "/api/user/signup",
-            async: false,
+            url: "/api/owner/login",
             data: {
                 email: emailid,
-                name: name,
-                mobileNumber: phoneno,
                 password: password
             },
             success: function(resultData) {
-                if (resultData.message == "Email already exists")
-                    document.getElementById("emailalert").innerHTML = `This email already has an account`;
-                if (resultData.message == "user created") {
-                    window.location.href = '/ui/login/user';
+                if (resultData.message == "Auth successful") {
+                    localStorage.token = resultData.token;
+                    localStorage.userid = resultData.userDetails.userId
+                    localStorage.username = resultData.userDetails.name
+                    localStorage.usertype = resultData.userDetails.userType
+                    window.location.href = '/ui/dashboard/owner';
                 }
             }, //sucess
-            error: function(resultData) {
-                    if (resultData.responseJSON.message == "Unauthorized access") {
+            error: function(error) {
+                    if (error.responseJSON.message == "Unauthorized access") {
                         location.href = "/"
                     } else {
                         var x = document.getElementById("snackbar");
-
-                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${resultData.responseJSON.message}`
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
                         x.className = "show";
                         setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
                     }
@@ -76,4 +57,4 @@ function signup() {
         });
     }
 
-} //End of signup function
+} //End of login function

@@ -17,8 +17,18 @@ function signup() {
     var phoneno = String(document.getElementsByClassName("phone")[0].value);
     var password = String(document.getElementsByClassName("password")[0].value);
     var name = String(document.getElementsByClassName("name")[0].value);
+    var position = String(document.getElementsByClassName("position")[0].value);
+    var code = String(document.getElementsByClassName("code")[0].value);
     //alert(String(window.location.href));
-    var c = 4;
+    var c = 6;
+    if (code == "") {
+        document.getElementById("codealert").innerHTML = `Enter secret code`;
+        c--;
+    } else document.getElementById("codealert").innerHTML = ``;
+    if (position == "") {
+        document.getElementById("positionalert").innerHTML = `Enter board position`;
+        c--;
+    } else document.getElementById("positionalert").innerHTML = ``;
     if (name == "") {
         document.getElementById("namealert").innerHTML = `Please Enter the name!`;
         c--;
@@ -31,44 +41,45 @@ function signup() {
         document.getElementById("passwordalert").innerHTML = `Please Enter the Password!`;
         c--;
     } else document.getElementById("passwordalert").innerHTML = ``;
+    if (!IsPhoneno(phoneno)) {
+        document.getElementById("phonealert").innerHTML = `Invalid PhoneNo.`;
+        c--;
+    } else document.getElementById("phonealert").innerHTML = ``;
 
-    if (c == 4) {
+    if (c == 6) {
         if (!IsEmail(emailid)) {
             document.getElementById("emailalert").innerHTML = `Invalid Email!`;
             c--;
         } else document.getElementById("emailalert").innerHTML = ``;
-        if (!IsPhoneno(phoneno) && phoneno != "") {
+        if (!IsPhoneno(phoneno)) {
             document.getElementById("phonealert").innerHTML = `Invalid PhoneNo.`;
             c--;
         } else document.getElementById("phonealert").innerHTML = ``;
     }
 
     //ajax call to create an instance to the user in database
-    if (c == 4) {
+    if (c == 6) {
         $.ajax({
             type: "POST",
-            url: "/api/user/signup",
-            async: false,
+            url: "/api/owner/signup",
             data: {
                 email: emailid,
                 name: name,
                 mobileNumber: phoneno,
-                password: password
+                password: password,
+                boardPosition: position,
+                signupCode: code
             },
             success: function(resultData) {
-                if (resultData.message == "Email already exists")
-                    document.getElementById("emailalert").innerHTML = `This email already has an account`;
-                if (resultData.message == "user created") {
-                    window.location.href = '/ui/login/user';
-                }
+
+                window.location.href = '/ui/login/owner';
             }, //sucess
-            error: function(resultData) {
-                    if (resultData.responseJSON.message == "Unauthorized access") {
+            error: function(error) {
+                    if (error.responseJSON.message == "Unauthorized access") {
                         location.href = "/"
                     } else {
                         var x = document.getElementById("snackbar");
-
-                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${resultData.responseJSON.message}`
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
                         x.className = "show";
                         setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
                     }

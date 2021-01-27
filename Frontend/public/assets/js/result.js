@@ -3,6 +3,11 @@ $.ajaxSetup({
 });
 if (!localStorage.token) location.href = '/';
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "User")
+    location.href = '/'
+
 function show() {
     var a = [{
             correct: 1,
@@ -34,10 +39,18 @@ function show() {
                 $.ajax({
                     type: "GET",
                     url: "/api/quiz/" + quizId,
+                    headers: { 'token': localStorage.token },
                     success: function(res) {
+                            // alert(JSON.stringify(res))
                             var quizName = res.result.quizName;
                             document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
                         } //success
+                        ,
+                    error: function(err) {
+                        if (err.responseJSON.message == "Unauthorized access") {
+                            location.href = "/ui/dashboard"
+                        }
+                    }
                 }); //inner ajax
                 document.getElementsByClassName("score")[0].innerHTML = `Score: ${(resultData.result).marks } out of ${r.length}`;
                 var h = "";
@@ -50,7 +63,7 @@ function show() {
                         h += `<p class='warn'>&#9888</p>`;
                     else
                         h += `<p class='wrong'>&#9932</p>`;
-                    h +=  `  ${r[i].description}`;
+                    h += `  ${r[i].description}`;
                     h += `<p class='arrow'>&#9660</p>`;
                     h += `</button>`;
                     h += `<div class="sol">`;
@@ -67,6 +80,12 @@ function show() {
                 }
                 document.getElementById("questions").innerHTML = h;
             } //sucess
+            ,
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            }
+        }
 
     });
 

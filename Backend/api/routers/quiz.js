@@ -815,7 +815,7 @@ router.get("/data/:quizId", checkAuthUser, async(req, res, next) => {
     })
 
 });
-router.get("/:quizId", async(req, res, next) => {
+router.get("/:quizId", checkAuth, async(req, res, next) => {
     item.getItemByQueryWithPopulate({ _id: req.params.quizId, isDeleted: false }, Quiz, "adminId", (err, result) => {
         if (err || result.length <= 0) {
             res.status(400).json({
