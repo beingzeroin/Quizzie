@@ -25,11 +25,25 @@ block page-content
                         span.timer-text 5
                     input.timer-input(type='range' max='60'  min='5' value='5' step='5' oninput='onInput()')
             .row.d-flex.justify-content-center
-                label.form-label(style="text-align:center") Select Quiz Type
+                .col
+                    label.form-label(style="text-align:center;margin-right:5%") Select Quiz Type
+                .col
+                    label.form-label(style="text-align:center") Select Quiz Topic
             .row.form-group.d-flex.justify-content-center
-                select.form-control.col-5#quizType(name="quizType")
-                    option(selected='Private' value="Private" ) Private
-                    option(value='Public') Public
+                .col-6
+                    select.form-control#quizType(name="quizType" style="margin-right:5%")
+                        option(selected='Private' value="Private" ) Private
+                        option(value='Public') Public
+                .col-6
+                    select.form-control.col-6#quizTopic(name="topicName")
+                        option(selected='None' value="None" ) None
+                        option(value='arrays') Arrays
+                        option(value='strings') Strings
+                        option(value='stacks') Stacks
+                        option(value='queue') Queues
+                        option(value='LinkedLists') LinkedLists
+                        option(value='graphs') Graphs
+                        option(value='Trees') Trees
             .row.mt-5.d-flex.justify-content-center
                 button.btn#submit(type="button" onclick="showdata()") CREATE QUIZ
             h6.text-center#note.mb-1 NOTE: After creating the quiz,you can add questions by editing the quiz in YOUR QUIZZES section of the dashbord 

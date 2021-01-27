@@ -8,11 +8,11 @@ let userquiz = `<button class="btn btn-success" type="button" onclick="privateQu
         <div class="modal-content">
             <h5 style="text-align:center"><b>JOIN A PRIVATE QUIZ</b></h5>
             <p style="text-align:center">Enter private code of quiz you want to join</p>
-            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:black !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
+            <div class="input-group"><input class="form-control mb-4" id="code" style="border-color:rgba(0, 0, 0, 0.54) !important" type="text" placeholder="ENTER QUIZ CODE" aria-label="ENTER QUIZ CODE" aria-describedby="addon-wrapping" /></div><button class="btn btn-success"  onClick=enrollprivate() type="button">JOIN QUIZ</button>
         </div>
     </div>
 </div>`
-let createquiz = `<a href="/ui/quiz/createQuiz"><button class="btn btn-danger" type="button" style="margin-top:-10%"><i class="fa fa-plus" aria-hidden="true"> </i> CREATE A QUIZ</button></a>`
+let createquiz = `<a href="/ui/quiz/createQuiz"><button type="button"class="button btn" style="margin-top:-10%;background-color:#FF0000;color:white;"><i class="fa fa-plus" aria-hidden="true"> </i> CREATE A QUIZ</button></a>`
 let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizzes</h3>
 <hr style="height:2px;width:100%;background-color:#066EF7;overflow:hidden;position:relative;" />
 <div class="enrolled-list root1">
@@ -118,6 +118,7 @@ if (localStorage.usertype == "User") {
         method: "GET",
         success: function(data) {
             // alert(data.message);
+            //console.log(data);
             let publicquizzes = data.result;
             if ((publicquizzes).length == 0) {
                 document.getElementById("UpcomingQuizzes").innerHTML = `<p>
@@ -130,12 +131,17 @@ if (localStorage.usertype == "User") {
                     if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
-                        code = `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
-            <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
-            <div class="card-body ">
+                        code= `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">`
+                        console.log(publicquizzes[i].topicName);
+            if(publicquizzes[i].topicName==undefined || publicquizzes[i].topicName=="None")
+            code+=`<img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">`
+            else
+            code+=`<img src="/assets/img/icons/${publicquizzes[i].topicName}.png" class="card-img-top" alt="...">`
+
+            code+=`<div class="card-body ">
             <div class="chip">
-                                    <i class='far fa-clock' style='font-size:20px'></i> Remaining
-                                </div>
+            <i class='far fa-clock' style='font-size:20px'></i> Remaining
+            </div>
                 <div class="row">
                     <div class="col-8 nopadding">
                     <p ><b>${publicquizzes[i].quizName}</b></p>
@@ -217,10 +223,14 @@ if (localStorage.usertype == "Admin") {
         method: "GET",
         success: function(result) {
             let yourQuizzes = result.result1.quizzes;
+            //console.log(yourQuizzes);
             for (let i = 0; i < yourQuizzes.length; i++) {
-                code1 += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
-                <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
-                <div class="card-body ">
+                code1 += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">`
+                if(yourQuizzes[i].quizId.topicName==undefined || yourQuizzes[i].quizId.topicName=="None")
+                code1+=`<img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">`
+                else
+                code1+=`<img src="/assets/img/icons/${yourQuizzes[i].quizId.topicName}.png" class="card-img-top" alt="...">`
+                code1+=`<div class="card-body ">
                     <div class="row">
                         <div class="col-8 nopadding">
                         <p ><b>${yourQuizzes[i].quizId.quizName}</b></p>
@@ -276,9 +286,12 @@ if (localStorage.usertype == "Admin") {
                     if (publicquizzes[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {
 
                     } else {
-                        code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
-            <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
-            <div class="card-body ">
+                        code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">`
+                        if(publicquizzes[i].topicName==undefined || publicquizzes[i].topicName=="None")
+                        code+=`<img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">`
+                        else
+                        code+=`<img src="/assets/img/icons/${publicquizzes[i].topicName}.png" class="card-img-top" alt="...">`
+code+=`<div class="card-body ">
                 <div class="row">
                     <div class="col-8 nopadding">
                     <p ><b>${publicquizzes[i].quizName}</b></p>
@@ -383,7 +396,9 @@ function openPage(pageName, elmnt, id) {
         });
     }
     document.getElementById(pageName).style.display = "block";
-    elmnt.style.borderBottom = "3px solid rgb(6, 184, 255)";
+    elmnt.style.borderBottom = "3px solid #2980b9";
+   
+
 }
 
 element = document.getElementById("0");

@@ -57,8 +57,10 @@ block page-content
                     .col
                         h6.label Type :
                     .col
-                        span.quiz-detail-text#type 
+                        span.quiz-detail-text#type
+                .row#topicName 
                 .row#quizcode
+
             .quiz-Questions.mt-5
                 .row
                     h1.ml-auto.mr-auto(style="color:#5190f5;text-align:center !important;") Questions
@@ -71,6 +73,17 @@ block page-content
                                 .modal-body
                                     .container
                                         h5#showquestions.Title.modal-title.text-center New Question
+                                        .row
+                                            .dropzone
+                                                section
+                                                    div#input
+                                                        .row
+                                                            .col-5
+                                                            .col-2
+                                                                input.filestyle.ml-5#file(multiple type='file',accept=".csv", data-input='false', data-iconname='fas fa-plus-circle fa-3x', data-buttonText="")
+                                                            .col-5
+                                                        p(style='color: rgb(110, 110, 110);') Drag &apos;n&apos; drop or click to select files
+                                                          
                                         hr
                                         .row.form-group.mb-3.d-flex.justify-content-center
                                             label.form-label.mt-3(style="text-align:center") Enter Question
@@ -195,6 +208,7 @@ block page-content
 block scripts
     script(src='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js', integrity='sha512-frFP3ZxLshB4CErXkPVEXnd5ingvYYtYhE5qllGdZmcOlRKNEPbufyupfdSTNmoF5ICaQNO6SenXzOZvoGkiIA==', crossorigin='anonymous')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.2.1/bootstrap-filestyle.min.js")
     script(src="/assets/js/xlsx.js")
     script(src="/assets/js/filesaver.js")
     script(src="/assets/js/editQuiz.js")

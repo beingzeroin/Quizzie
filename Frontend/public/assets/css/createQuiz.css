@@ -2,7 +2,6 @@
 {box-sizing: border-box}
 
 body, html {
-  height: 100%;
   margin: 0;
   font-family: Arial;
   background-color:#f8f9fa;
@@ -15,7 +14,6 @@ body, html {
 {
     justify-content: center;
     background-color: white;
-    height: 100%;
     margin-left: 25%;
     margin-right: 25%;
     width:50%;
@@ -40,7 +38,7 @@ button#submit{
 }
 select
 {
-    width: 30% !important;
+    width: 35% !important;
 }
 #note
 {
@@ -106,7 +104,6 @@ body
     width:100%;
 }
 }
-
 .timer-span {
     position: absolute;
     display: flex;

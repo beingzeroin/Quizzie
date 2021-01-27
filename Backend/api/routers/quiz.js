@@ -73,6 +73,7 @@ router.post(
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
+                topicName:req.body.topicName
             };
             //console.log(quiz);
             item.createitem(quiz, Quiz, (err, result) => {
@@ -104,6 +105,7 @@ router.post(
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
+                topicName:req.body.topicName
             };
             item.createitem(quiz, Quiz, (err, result) => {
                 if (err) {
@@ -347,6 +349,7 @@ router.patch(
                 updateOps.quizName = req.body.quizName
                 updateOps.scheduledFor = req.body.scheduledFor
                 updateOps.quizDuration = req.body.quizDuration
+                updateOps.topicName = req.body.topicName
                 updateOps.quizStatus = 0
 
                 // for (const ops of req.body.updateOps) {

@@ -589,6 +589,7 @@ router.patch(
 router.get(
     "/allStudentsQuizResult/:quizId",
     async(req, res, next) => {
+        //console.log(req.params.quizId);
         const populateJson = {
             path: "usersParticipated",
             populate: { path: "userId", select: { name: 1 } }
