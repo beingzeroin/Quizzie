@@ -11,12 +11,12 @@ function mylogin() {
 
     var modal = document.getElementsByClassName("modal")[0];
     modal.style.display = "block";
-    window.onclick = function(event) {
+    window.addEventListener("click",function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
             document.body.style.backgroundColor = "#f8f9fa";
         }
-    }
+    })
     document.body.style.backgroundColor = "lightgrey";
 
 }
