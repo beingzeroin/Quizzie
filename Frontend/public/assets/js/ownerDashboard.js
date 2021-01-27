@@ -12,14 +12,23 @@ if (localStorage.usertype != "Owner")
 
 function openPage(pageName, elmnt, id) {
     var i, tabcontent, tablinks;
+
     if (id == 1) {
+        document.getElementById("3").style.borderBottomColor = "white";
         document.getElementById("2").style.borderBottomColor = "white";
         document.getElementById("0").style.borderBottomColor = "white";
     } else if (id == 2) {
+        document.getElementById("3").style.borderBottomColor = "white";
         document.getElementById("1").style.borderBottomColor = "white";
         document.getElementById("0").style.borderBottomColor = "white";
 
-    } else {
+    } else if(id==3){
+        document.getElementById("0").style.borderBottomColor = "white";
+        document.getElementById("1").style.borderBottomColor = "white";
+        document.getElementById("2").style.borderBottomColor = "white";
+    }
+    else {
+        document.getElementById("3").style.borderBottomColor = "white";
         document.getElementById("1").style.borderBottomColor = "white";
         document.getElementById("2").style.borderBottomColor = "white";
     }
@@ -120,6 +129,60 @@ $.ajax({
         }
         code += `</div>`
         $("#allAdmins").html(code);
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
+    }
+})
+
+$.ajax({
+    url: "/api/suggest/User",
+    method: "GET",
+    success: function(result) {
+        let code = `<div class="list-group">`
+        result = result.result1;
+        for (let i = 0; i < result.length; i++) {
+            code += `<a class="list-group-item list-group-item-action" href="/ui/profile/${result[i].userType}/${result[i].userId}" style="border:0 !important">
+            <div class="row">
+                <div class="col-11">
+                    <p id="quizname" style="color:black;">${result[i].userName}</p>
+                    <p id="author">RequestedFeature:${result[i].description}</p>
+                    <p id="author">${result[i].userType}</p>
+                </div>
+                <div class="col-1"><span class="iconify" data-icon="ion-ios-arrow-forward" data-inline="false" data-width="30" data-height="30" style="margin-top:5px;padding:0% !important"></span></div>
+            </div>
+        </a>`}
+        code += `</div>`
+        $("#allRequestFeatures_u").html(code);
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
+    }
+})
+
+$.ajax({
+    url: "/api/suggest/Admin",
+    method: "GET",
+    success: function(result) {
+        let code = `<div class="list-group">`
+        result = result.result1;
+        for (let i = 0; i < result.length; i++) {
+            code += `<a class="list-group-item list-group-item-action" href="/ui/profile/${result[i].userType}/${result[i].userId}" style="border:0 !important">
+            <div class="row">
+                <div class="col-11">
+                    <p id="quizname" style="color:black;">${result[i].userName}</p>
+                    <p id="author">RequestedFeature:${result[i].description}</p>
+                    <p id="author">${result[i].userType}</p>
+                </div>
+                <div class="col-1"><span class="iconify" data-icon="ion-ios-arrow-forward" data-inline="false" data-width="30" data-height="30" style="margin-top:5px;padding:0% !important"></span></div>
+            </div>
+        </a>`}
+        code += `</div>`
+        $("#allRequestFeatures_a").html(code);
     },
     error: function(err) {
         if (err.responseJSON.message == "Unauthorized access") {

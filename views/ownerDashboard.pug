@@ -7,17 +7,21 @@ block page-content
         .container.dashboard-page
                     h1.dash-head Dashboard
                     .row.tabs
-                        button.btn.col-4#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
-                        button.btn.col-4.Users#1(type="button"  onclick="openPage('Users', this,1)" ) Users
-                        button.btn.col-4#2(type="button" onclick="openPage('Admin', this,2)") Admins
+                        button.btn.col-3#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
+                        button.btn.col-3.Users#1(type="button"  onclick="openPage('Users', this,1)" ) Users
+                        button.btn.col-3#2(type="button" onclick="openPage('Admin', this,2)") Admins
+                        button.btn.col-3#3(type="button" onclick="openPage('RequestFeatures', this,3)") Request_Features
                     .row 
                         #Quizzes.tabcontent
-                            #allquizzes
-                                
+                            #allquizzes    
                         #Users.tabcontent
                             #allUsers
                         #Admin.tabcontent
                             #allAdmins
+                        #RequestFeatures.tabcontent
+                            #allRequestFeatures_u
+                            #allRequestFeatures_a
+
                             
                     #snackbar Some text some message..
  
