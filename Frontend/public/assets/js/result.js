@@ -3,6 +3,11 @@ $.ajaxSetup({
 });
 if (!localStorage.token) location.href = '/';
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "User")
+    location.href = '/'
+
 function show() {
     var a = [{
             correct: 1,
@@ -34,11 +39,18 @@ function show() {
                 $.ajax({
                     type: "GET",
                     url: "/api/quiz/" + quizId,
+                    headers: { 'token': localStorage.token },
                     success: function(res) {
-                            alert(JSON.stringify(res))
+                            // alert(JSON.stringify(res))
                             var quizName = res.result.quizName;
                             document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
                         } //success
+                        ,
+                    error: function(err) {
+                        if (err.responseJSON.message == "Unauthorized access") {
+                            location.href = "/ui/dashboard"
+                        }
+                    }
                 }); //inner ajax
                 document.getElementsByClassName("score")[0].innerHTML = `Score: ${(resultData.result).marks } out of ${r.length}`;
                 var h = "";
@@ -68,6 +80,12 @@ function show() {
                 }
                 document.getElementById("questions").innerHTML = h;
             } //sucess
+            ,
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            }
+        }
 
     });
 

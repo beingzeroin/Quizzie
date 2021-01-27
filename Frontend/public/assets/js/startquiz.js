@@ -22,6 +22,10 @@ $(document).ready(function() {
     }
 });
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "User")
+    location.href = '/'
 $.ajax({
     url: "/api/quiz/data/" + quizid,
     method: "GET",
@@ -60,6 +64,11 @@ $.ajax({
                 data: { quizId: quizid },
                 success: function(result1) {
                     window.location.href = "/ui/dashboard"
+                },
+                error: function(err) {
+                    if (err.responseJSON.message == "Unauthorized access") {
+                        location.href = "/ui/dashboard"
+                    }
                 }
             })
 
@@ -161,6 +170,11 @@ $.ajax({
         });
 
 
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/ui/dashboard"
+        }
     }
 })
 
@@ -433,8 +447,12 @@ function submitans() {
 
         },
         error: function(err) {
-            alert(err.responseJSON.message)
-            window.location.href = "/ui/result/" + questions[0].quizId
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            } else {
+                alert(err.responseJSON.message)
+                window.location.href = "/ui/result/" + questions[0].quizId
+            }
         }
     })
 

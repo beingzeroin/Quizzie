@@ -5,6 +5,11 @@ $.ajaxSetup({
 if (!localStorage.token)
     location.href = '/'
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "Owner")
+    location.href = '/'
+
 function openPage(pageName, elmnt, id) {
     var i, tabcontent, tablinks;
     if (id == 1) {
@@ -57,6 +62,11 @@ $.ajax({
         }
         code += `</div>`
         $("#allquizzes").html(code);
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
     }
 })
 
@@ -81,6 +91,11 @@ $.ajax({
         }
         code += `</div>`
         $("#allUsers").html(code);
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
     }
 })
 
@@ -105,5 +120,10 @@ $.ajax({
         }
         code += `</div>`
         $("#allAdmins").html(code);
+    },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
     }
 })

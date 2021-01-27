@@ -45,10 +45,14 @@ function login() {
                 }
             }, //sucess
             error: function(error) {
-                    var x = document.getElementById("snackbar");
-                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
-                    x.className = "show";
-                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    if (error.responseJSON.message == "Unauthorized access") {
+                        location.href = "/"
+                    } else {
+                        var x = document.getElementById("snackbar");
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
+                        x.className = "show";
+                        setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    }
                 } //error
         });
     }

@@ -44,6 +44,12 @@ function submit() {
                         window.location.href = '/ui/result/' + quizId
                     }
                 } //sucess
+                ,
+            error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
+            }
         })
     }
 }

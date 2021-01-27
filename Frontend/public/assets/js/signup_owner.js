@@ -75,10 +75,14 @@ function signup() {
                 window.location.href = '/ui/login/owner';
             }, //sucess
             error: function(error) {
-                    var x = document.getElementById("snackbar");
-                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
-                    x.className = "show";
-                    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    if (error.responseJSON.message == "Unauthorized access") {
+                        location.href = "/"
+                    } else {
+                        var x = document.getElementById("snackbar");
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+                        x.className = "show";
+                        setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                    }
                 } //error
         });
     }

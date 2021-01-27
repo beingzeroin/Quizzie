@@ -1,6 +1,4 @@
-
-
-var questionId,QuizDetails,results,deletequestionId;
+var questionId, QuizDetails, results, deletequestionId;
 $("#question").summernote({
     height: 150, // set editor height
     minHeight: null, // set minimum height of editor
@@ -40,6 +38,12 @@ $.ajaxSetup({
 if (!localStorage.token)
     location.href = '/'
 
+
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "Admin")
+    location.href = '/'
+
 function senddata(data) {
     $.ajax({
         url: "/api/question/add",
@@ -49,8 +53,12 @@ function senddata(data) {
             location.reload();
         },
         error: function(err) {
-            console.log(err);
-            alert("Please Enter Valid Question") //change this url ....
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            } else {
+                console.log(err);
+                alert("Please Enter Valid Question") //change this url ....
+            }
         }
     });
 }
@@ -143,13 +151,12 @@ function fetchdata() {
               </h2>
     <div id="collapse${(i+1)}" class="accordion-collapse collapse" aria-labelledby="heading${(i+1)}" data-bs-parent="#parent">
       <div class="accordion-body">`;
-      for(let j=0;j<4;j++)
-      {   
+                for (let j = 0; j < 4; j++) {
 
-        if ((result.result[i].options)[j].text ==result.result[i].correctAnswer)
-        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
-        else
-        code+=`<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
+                    if ((result.result[i].options)[j].text == result.result[i].correctAnswer)
+                        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
+                    else
+                        code += `<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
       `
                 }
                 code +=
@@ -163,6 +170,9 @@ function fetchdata() {
             $("#submissions").html(code);
         },
         error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            }
             console.log(err);
         }
     });
@@ -184,33 +194,39 @@ function deletequiz() {
                 location.reload();
         },
         error: function(err) {
-            console.log(err);
-            location.reload(); //change this url ....
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            } else {
+                console.log(err);
+                location.reload(); //change this url ....
+            }
         }
     });
 }
 
-function assignquestionfordelete(questionid)
-{
-  deletequestionId=questionid;
-  console.log(deletequestionId);
+function assignquestionfordelete(questionid) {
+    deletequestionId = questionid;
+    console.log(deletequestionId);
 }
-function deletequestion()
-{
-  console.log(deletequestionId);
-  $.ajax({
-    url: "/api/question/"+deletequestionId,
-    method: "DELETE",
-    success: function(result) {
-        if(result.message=="Deleted")
-        {
-          location.reload();
+
+function deletequestion() {
+    console.log(deletequestionId);
+    $.ajax({
+        url: "/api/question/" + deletequestionId,
+        method: "DELETE",
+        success: function(result) {
+            if (result.message == "Deleted") {
+                location.reload();
+            } else {
+                location.reload();
+            }
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/ui/dashboard"
+            }
         }
-        else
-        {
-          location.reload();
-        }
-    }});
+    });
 }
 
 
@@ -310,19 +326,24 @@ function updatedata() {
                 location.reload();
             },
             error: function(err) {
-                console.log("Error", err);
-                location.reload(); //change this url ....
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/ui/dashboard"
+                } else {
+                    console.log("Error", err);
+                    location.reload(); //change this url ....
+                }
             }
         });
     }
 }
+
 function fitToColumn(arrayOfArray) {
-  // get maximum character of each column
-  return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
+    // get maximum character of each column
+    return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
 }
-quizId=location.href.split('/').slice(-1)[0]  
-  $.ajax({
-    url: "/api/quiz/"+quizId,
+quizId = location.href.split('/').slice(-1)[0]
+$.ajax({
+    url: "/api/quiz/" + quizId,
     method: "GET",
     success: function(result) {
         console.log(result.result);
@@ -346,6 +367,9 @@ quizId=location.href.split('/').slice(-1)[0]
         }
     },
     error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/ui/dashboard"
+        }
         console.log(err);
     }
 });
@@ -361,8 +385,12 @@ $.ajax({
         fill();
     },
     error: function(err) {
-        console.log(err);
-        alert("Please check Your Quiz Id")
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/ui/dashboard"
+        } else {
+            console.log(err);
+            alert("Please check Your Quiz Id")
+        }
     }
 });
 
@@ -445,52 +473,49 @@ function filter() {
 
 }
 
-  function fill()
-  {
+function fill() {
     var wb = XLSX.utils.book_new();
     wb.Props = {
-            Title: "SheetJS",
-            Subject: "Quiz Results",
-            CreatedDate: new Date()
+        Title: "SheetJS",
+        Subject: "Quiz Results",
+        CreatedDate: new Date()
     };
     wb.SheetNames.push("Results Sheet");
-    var ws_data = [['S.No' , 'Name','Marks']];
+    var ws_data = [
+        ['S.No', 'Name', 'Marks']
+    ];
     var wb = XLSX.utils.book_new();
     wb.Props = {
-            Title: "SheetJS",
-            Subject: "Quiz Results",
-            CreatedDate: new Date()
+        Title: "SheetJS",
+        Subject: "Quiz Results",
+        CreatedDate: new Date()
     };
     wb.SheetNames.push("Results Sheet");
-    var ws_data = [['S.No' , 'Name','Marks']];
-    for(let i=0;i<results.length;i++)
-    {
-      ws_data.push([i+1,results[i].userId["name"],results[i].marks]);
+    var ws_data = [
+        ['S.No', 'Name', 'Marks']
+    ];
+    for (let i = 0; i < results.length; i++) {
+        ws_data.push([i + 1, results[i].userId["name"], results[i].marks]);
     }
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
-    ws['!cols']=fitToColumn(ws_data)
+    ws['!cols'] = fitToColumn(ws_data)
     wb.Sheets["Results Sheet"] = ws;
-    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
     function s2ab(s) {
-  
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
-            
+
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+
     }
-    $("#download").click(function(){
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
-});
-  }
-  function feedback() {
+    $("#download").click(function() {
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'test.xlsx');
+    });
+}
+
+function feedback() {
     var quizId = location.href.split('/').slice(-1)[0];
     window.location.href = "/ui/feedback/" + quizId;
 }
-  
- 
-  
-  
-  
- 
- 

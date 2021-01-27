@@ -7,6 +7,10 @@ if (!localStorage.token)
     location.href = '/'
 
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype != "Owner")
+    location.href = '/'
 
 function fetchdata() {
     quizId = location.href.split('/').slice(-1)[0]
@@ -46,6 +50,9 @@ function fetchdata() {
             $("#submissions").html(code);
         },
         error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
             console.log(err);
         }
     });
@@ -64,8 +71,12 @@ function deletequiz() {
             location.href = '/ui/dashboard/owner'
         },
         error: function(err) {
-            console.log(err);
-            location.reload(); //change this url ....
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            } else {
+                console.log(err);
+                location.reload(); //change this url ....
+            }
         }
     });
 }
@@ -100,6 +111,9 @@ $.ajax({
         }
     },
     error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
         console.log(err);
     }
 });
