@@ -12,6 +12,7 @@ const authAdminRoutes = require("./auth-admin");
 const generalRoutes = require("./general");
 const ownerRoutes = require("./owner");
 const feedbackRoutes = require("./feedback");
+const suggestRoutes = require("./suggestion");
 
 
 //IMPORT QUIZ AND USERS
@@ -30,5 +31,7 @@ router.use("/general", generalRoutes);
 router.use("/owner", ownerRoutes);
 router.use("/auth/admin", authAdminRoutes);
 router.use("/feedback", feedbackRoutes);
+router.use("/suggest", suggestRoutes);
+
 
 module.exports = router;

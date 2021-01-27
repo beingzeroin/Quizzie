@@ -160,6 +160,7 @@ if (localStorage.usertype == "User") {
                     
                     }
                 });
+                timer(publicquizzes);
             }
 
         }
@@ -177,22 +178,21 @@ function secondsToHms(d) {
     return hDisplay + mDisplay + sDisplay; 
 }
 setInterval(timer,1000);
-function timer()
-{   
-    $.ajax({
-        url: "/api/quiz/all",
-        method: "GET",
-        success: function(data) {
-            // alert(data.message);
-            let result = data.result;
+var result,flag=0;
+function timer(res)
+{   if(flag==0)result=res;
+    var c=0;
     for(var i=0;i<result.length;i++)
-    {   
+    {    if (result[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {} 
+        else{
         var sec= Math.round(new Date()/1000);
         var quiztime=Number(result[i].scheduledFor)/1000;
-        var dtitle=secondsToHms(sec-quiztime);
-        document.getElementsByClassName("chip")[i].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+        var dtitle=secondsToHms(quiztime-sec);
+        document.getElementsByClassName("chip")[c].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+        c++;}
     }
-   }})//success
+    flag=1;
+
 }
 
 if (localStorage.usertype == "Admin") {
