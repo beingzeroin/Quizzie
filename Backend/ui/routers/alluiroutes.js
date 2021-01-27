@@ -41,5 +41,8 @@ router.get("/feedbackform/:quizId", (req, res) => {
 router.get("/feedback/:quizId", (req, res) => {
     res.render('feedbacks.pug');
 })
+router.get("/profile/:userType/:userId", (req, res) => {
+    res.render('profile.pug');
+})
 
 module.exports = router

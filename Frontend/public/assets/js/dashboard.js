@@ -37,6 +37,10 @@ let enrolledQuizzes = `<h3 style="padding-top:3%;color:#066EF7;">Enrolled Quizze
 
 if (!localStorage.token)
     location.href = '/'
+
+
+if (localStorage.usertype == "Owner")
+    location.href = '/'
 if (localStorage.usertype == "User") {
 
     $(document).ready(function() {
@@ -99,6 +103,11 @@ if (localStorage.usertype == "User") {
 
                 document.getElementById("enrolledQuizzes").innerHTML = code
             }
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
 
@@ -130,16 +139,18 @@ if (localStorage.usertype == "User") {
             code+=`<img src="/assets/img/icons/${publicquizzes[i].topicName}.png" class="card-img-top" alt="...">`
 
             code+=`<div class="card-body ">
+            <div class="chip">
+            <i class='far fa-clock' style='font-size:20px'></i> Remaining
+            </div>
                 <div class="row">
                     <div class="col-8 nopadding">
                     <p ><b>${publicquizzes[i].quizName}</b></p>
-                    <span style="font-size: small;">By :${publicquizzes[i].adminId.name}</span>
+                    <span style="font-size:small;">By :${publicquizzes[i].adminId.name}</span>
                     </div>
                     <div class="col nopadding">
                     `
 
-                        code += `<button type="button" class="btn btn-light" style="float:right;background-color:white;border: none;" onClick="enrollQuizpopup('${(publicquizzes[i]._id)}','${publicquizzes[i].quizName}')"><i class="fas fa-check"></i></button>`
-
+                        code += `<button type="button" class="btntick"style="float:right;border: none;" onClick="enrollQuizpopup('${(publicquizzes[i]._id)}','${publicquizzes[i].quizName}')">Enroll</button>`
                         code += `</div>
                 </div>
           
@@ -161,14 +172,48 @@ if (localStorage.usertype == "User") {
                             ans += publicQuizzes[i];
                         }
                         document.getElementById("UpcomingQuizzes").innerHTML = ans
+
                     }
                 });
-
-
+                timer(publicquizzes);
             }
 
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
+}
+
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? "hr, " : "hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? "min, " : "mins, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? "sec" : "secs") : "";
+    return hDisplay + mDisplay + sDisplay;
+}
+setInterval(timer,1000);
+var result,flag=0;
+function timer(res)
+{   if(flag==0)result=res;
+    var c=0;
+    for(var i=0;i<result.length;i++)
+    {    if (result[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {} 
+        else{
+        var sec= Math.round(new Date()/1000);
+        var quiztime=Number(result[i].scheduledFor)/1000;
+        var dtitle=secondsToHms(quiztime-sec);
+        document.getElementsByClassName("chip")[c].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+        c++;}
+    }
+    flag=1;
+
 }
 
 if (localStorage.usertype == "Admin") {
@@ -217,6 +262,11 @@ if (localStorage.usertype == "Admin") {
 
 
             document.getElementById("userdata").innerHTML = userdata
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
 
@@ -263,6 +313,11 @@ code+=`<div class="card-body ">
 
             }
 
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
 }
@@ -332,6 +387,11 @@ function openPage(pageName, elmnt, id) {
                      </button> </a>`;
                 }
                 document.getElementById("test").innerHTML = h;
+            },
+            error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
             }
         });
     }
@@ -383,7 +443,9 @@ function showdata() {
 
         },
         error: function(err) {
-            console.log(err);
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     });
 }
@@ -426,6 +488,11 @@ function UnEnrollPopup(quizid) {
 
             document.getElementById("displayunenrollpopup").innerHTML = code
 
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
     modal.style.display = "block";
@@ -468,7 +535,6 @@ function startQuizPopup(quizid, name) {
     modal.style.display = "block";
     $(".closepopup").click(() => {
         modal.style.display = "none";
-
     })
     window.onclick = function(event) {
         if (event.target == modal) {
@@ -488,12 +554,16 @@ function startQuiz(quizid) {
             location.href = '/ui/quiz/start?quizid=' + quizid;
         },
         error: function(error) {
-            // alert(err.responseJSON.message)
-            //quizstart
-            var x = document.getElementById("snackbar");
-            x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
-            x.className = "show";
-            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+            if (error.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            } else {
+                // alert(err.responseJSON.message)
+                //quizstart
+                var x = document.getElementById("snackbar");
+                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+                x.className = "show";
+                setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+            }
         }
     })
 
@@ -508,6 +578,11 @@ function enrollQuiz(quizid) {
         method: "PATCH",
         success: function(result) {
             location.reload()
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
 }
@@ -519,6 +594,11 @@ function unenroll(quizid) {
         method: "PATCH",
         success: function(result) {
             location.reload()
+        },
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
         }
     })
 
@@ -536,17 +616,20 @@ function enrollprivate() {
             location.reload()
         },
         error: function(error) {
-            var x = document.getElementById("snackbar");
-            if (error.responseJSON.message === "Invalid Code")
-                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> this quiz code doesnot exists!`
-            else
-                x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
-            x.className = "show";
-            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
-            document.getElementById("code").value = ''
-                // alert(error.responseJSON.message)
-                ////invalid code
-
+            if (error.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            } else {
+                var x = document.getElementById("snackbar");
+                if (error.responseJSON.message === "Invalid Code")
+                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> this quiz code doesnot exists!`
+                else
+                    x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
+                x.className = "show";
+                setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+                document.getElementById("code").value = ''
+                    // alert(error.responseJSON.message)
+                    ////invalid code
+            }
         }
     })
 }

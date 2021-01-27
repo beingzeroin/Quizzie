@@ -1,6 +1,6 @@
 extends includes/basePage
 block scripts
-    script(src="/assets/js/result.js")
+    script(src="/assets/js/profile.js")
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,16 +12,8 @@ block styles
 block page-content
     body
         div.main(style=' padding-bottom:2%')
-            b.head Results
-            a(href="/ui/dashboard" style="margin-left:40%")
+            b.head Profile
+            a(href="/ui/dashboard/owner" style="margin-left:40%")
                 i(class="fas fa-home" style="font-size:180%;color:black;") 
             div.line
-            div(style="padding-bottom:2%;float:down")
-                
-                b.name Quiz:  
-                br
-                b.score Score:
-
-            b.res Responses
-            div.line2
-            div#questions
+            div#profile(style="margin:0 auto; display:table;padding-bottom:2%;float:down")

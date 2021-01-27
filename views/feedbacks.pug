@@ -18,6 +18,14 @@ block page-content
                 b.name Quiz:  
             b.res Responses
             div.line2
+            select#selectop(name="" onchange="sort()")
+                option#op1(value="none") None
+                option#op2(value=5) Rating 5
+                option#op3(value=4) Rating 4
+                option#op4(value=3) Rating 3
+                option#op5(value=2) Rating 2
+                option#op6(value=1) Rating 1
+
             div#Feedback
             #show_paginator.mt-5.d-flex.justify-content-center
 block scripts

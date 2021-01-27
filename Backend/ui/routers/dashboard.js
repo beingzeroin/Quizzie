@@ -32,4 +32,7 @@ router.get("/", (req, res) => {
     //     })
     // }
 })
+router.get("/owner", (req, res) => {
+    res.render("ownerDashboard.pug")
+})
 module.exports = router

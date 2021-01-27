@@ -17,4 +17,7 @@ router.get("/user", (req, res) => {
 router.get("/organizer", (req, res) => {
     res.render('login_organizer.pug');
 })
+router.get("/owner", (req, res) => {
+    res.render('login_owner.pug')
+})
 module.exports = router

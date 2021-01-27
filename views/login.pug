@@ -5,10 +5,10 @@ block styles
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 block page-content
     body
-        div.main(style=' padding-bottom:16%')
-            p.head(style='margin-left:18vw')
+        div.main
+            p.head
                 b Login Now
-            div(style='margin-left:30%;padding-bottom:3%')
+            div.google
                 a(href="/api/auth/google")
                     .google-btn
                         .google-icon-wrapper
@@ -20,7 +20,7 @@ block page-content
             p#emailalert
             input.password(type='password' placeholder='Password')
             p#passwordalert
-            button.btn(type="button" onclick='login()' href="/dashboard") Login
+            button.btn(type="button" onclick='login()' href="/dashboard") LOGIN
       
             a(href="/ui/signup/user")
                 p.signup Don't have an account? Join the Quizzie now!
