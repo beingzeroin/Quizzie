@@ -117,8 +117,9 @@ p.signup{ font-size:100%;
     box-shadow: 0 0 6px #4285f4;
 }
 
-.google-btn:active {background: #1669F2;}
-
+.google-btn:active {
+    background: #1669F2;
+}
 
 
 /*

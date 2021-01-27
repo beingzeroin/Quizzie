@@ -1,0 +1,22 @@
+extends includes/basePage
+block styles
+    link(rel="stylesheet" href="/assets/css/login_owner.css")
+    
+block page-content
+    .container.signUp#sign
+        .login-form
+            .row
+                h1.signup-text(style="font-weight: 700!important;color: #2980b9!important;text-align:center;margin-top:35%" ) Owner Login
+            .row.form-floating.mb-1.mt-5.d-flex.justify-content-center          
+                input#floatingEmail.form-control.col-8.ml-2.mb-1.email(type="text" name="email" placeholder="Email" style="width:80% !important") 
+                label(for='floatingEmail',style="margin-left:10% !important;color:grey") Email
+                p#emailalert
+            .row.form-floating.mb-1.d-flex.justify-content-center          
+                input#floatingPassword.form-control.col-8.ml-2.mb-1.password(type="password" name="password" placeholder="Password" style="width:80% !important")
+                label(for='floatingPassword',style="margin-left:10% !important;color:grey") Password
+                p#passwordalert 
+            .row.mt-5.d-flex.justify-content-center
+                button.btn#submit(type="button" onclick="login()") LOGIN
+            #snackbar Some text some message..
+block scripts
+     script(src="/assets/js/login_owner.js")

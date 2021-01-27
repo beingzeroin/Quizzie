@@ -49,7 +49,7 @@ router.delete("/:questionId", checkAuthAdmin, async(req, res, next) => {
         //     });
 });
 
-router.get("/all/:quizId", async(req, res, next) => {
+router.get("/all/:quizId", checkAuth, async(req, res, next) => {
     item.getItemByQuery({ quizId: req.params.quizId, isDeleted: false }, Question, (err, result) => {
         if (err) {
             res.status(400).json({

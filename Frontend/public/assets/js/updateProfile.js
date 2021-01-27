@@ -5,6 +5,11 @@ $.ajaxSetup({
 if (!localStorage.token)
     location.href = '/'
 
+if (!localStorage.token)
+    location.href = '/'
+if (localStorage.usertype == "Owner")
+    location.href = '/'
+
 function IsPhoneno(phoneno) {
     var regex = /^([7-9][0-9]{9})$/g;
     if (!regex.test(phoneno)) return false;
@@ -22,6 +27,9 @@ function updatedata(data) {
                 location.href = "/ui/dashboard";
             },
             error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
                 console.log(err);
             }
         });
@@ -35,6 +43,9 @@ function updatedata(data) {
                 location.href = "/ui/dashboard";
             },
             error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
                 console.log(err);
             }
         });
@@ -126,6 +137,9 @@ $(document).ready(function() {
 
             },
             error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
                 console.log(err);
             }
         });
@@ -145,6 +159,9 @@ $(document).ready(function() {
 
             },
             error: function(err) {
+                if (err.responseJSON.message == "Unauthorized access") {
+                    location.href = "/"
+                }
                 console.log(err);
             }
         });

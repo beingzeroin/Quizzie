@@ -2,7 +2,8 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 if (!localStorage.token) location.href = '/';
-var filter=0;
+var filter = 0;
+
 function show() {
     var quizId = location.href.split('/').slice(-1)[0];
     $.ajax({
@@ -17,17 +18,24 @@ function show() {
                             var quizName = res.result.quizName;
                             document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
                         } //success
+                        ,
+                    error: function(err) {
+                        if (err.responseJSON.message == "Unauthorized access") {
+                            location.href = "/"
+                        }
+                    }
                 }); //inner ajax
                 let feedbacks = [];
                 //let ans=``;
-                var visit=($("#selectop").val());
+                var visit = ($("#selectop").val());
                 console.log(visit);
-                var flag=0,c=0;
-                var h =``;
-                if(visit=="none") flag=1;
-                   for (var i = 0; i < r.length; i++) {
-                    if(visit==r[i].rating || flag)
-                    {   c++;
+                var flag = 0,
+                    c = 0;
+                var h = ``;
+                if (visit == "none") flag = 1;
+                for (var i = 0; i < r.length; i++) {
+                    if (visit == r[i].rating || flag) {
+                        c++;
                         console.log(visit);
                         h = `<div class="container">
                                 <tr>
@@ -37,23 +45,24 @@ function show() {
                                     <td>${r[i].rating}</td>
                                 </tr>
                              </div>`;
-                    //ans+=h;
-                    feedbacks.push(h);
+                        //ans+=h;
+                        feedbacks.push(h);
                     }
                 }
-                
-                let len = parseInt((feedbacks.length + 9) /10);
-                console.log(len);
-                if(filter!=0)
-                { var pageData = $('#show_paginator').data();
-                  console.log(pageData);
 
-                  if ( ! pageData.twbsPagination.options.totalPages ==len){
-                         $('#show_paginator').twbsPagination('destroy');
-                         $('#show_paginator').twbsPagination('init');
-                         $('#show_paginator').load('/ui/feedback/'+quizId);}
-                  pageData = $('#show_paginator').data();
-                  console.log(pageData);
+                let len = parseInt((feedbacks.length + 9) / 10);
+                console.log(len);
+                if (filter != 0) {
+                    var pageData = $('#show_paginator').data();
+                    console.log(pageData);
+
+                    if (!pageData.twbsPagination.options.totalPages == len) {
+                        $('#show_paginator').twbsPagination('destroy');
+                        $('#show_paginator').twbsPagination('init');
+                        $('#show_paginator').load('/ui/feedback/' + quizId);
+                    }
+                    pageData = $('#show_paginator').data();
+                    console.log(pageData);
                 }
                 $('#show_paginator').twbsPagination({
                     totalPages: len,
@@ -68,25 +77,31 @@ function show() {
                                                <th class="fbh">Feedback</th> 
                                                <th class="fbh">Rating</th>
                                             </tr>`;
-                        
-                        
-                        for (let i = index; i < index + 10 && i < feedbacks.length; i++) 
+
+
+                        for (let i = index; i < index + 10 && i < feedbacks.length; i++)
                             ans += feedbacks[i];
-                        ans+=`</table>`;
+                        ans += `</table>`;
                         //console.log(ans);
-                        document.getElementById("Feedback").innerHTML = ans; 
+                        document.getElementById("Feedback").innerHTML = ans;
                     }
                 });
-                
-               //document.getElementById("Feedback").innerHTML = ans;
-               document.getElementsByClassName("res")[0].innerHTML =`Responses(${c})`;
+
+                //document.getElementById("Feedback").innerHTML = ans;
+                document.getElementsByClassName("res")[0].innerHTML = `Responses(${c})`;
             } //sucess
+            ,
+        error: function(err) {
+            if (err.responseJSON.message == "Unauthorized access") {
+                location.href = "/"
+            }
+        }
     });
 }
 show();
 
-function sort()
-{filter++;
- console.log("Filter applied");
- show();
+function sort() {
+    filter++;
+    console.log("Filter applied");
+    show();
 }
