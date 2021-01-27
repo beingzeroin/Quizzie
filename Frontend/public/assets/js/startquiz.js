@@ -1,6 +1,10 @@
 $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
+var x = document.getElementById("snackbar");
+x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> switching the tab submits the test`
+x.className = "show";
+setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
 let tabswitch = 0;
 let result, questions;
 let currentquestion = 0;
@@ -150,10 +154,12 @@ $.ajax({
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
         document.addEventListener('visibilitychange', function() {
             if (document.visibilityState == 'hidden' && !tabswitch) {
+                // confirm("Press a button!");
                 submitans();
                 tabswitch = 1;
             }
         });
+
 
     }
 })

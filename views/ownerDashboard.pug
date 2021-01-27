@@ -9,13 +9,15 @@ block page-content
                     .row.tabs
                         button.btn.col-4#0(type="button" onclick="openPage('Quizzes', this,0)") Quizzes
                         button.btn.col-4.Users#1(type="button"  onclick="openPage('Users', this,1)" ) Users
-                        button.btn.col-4#2(type="button" onclick="openPage('Admin', this,2)") Admin
+                        button.btn.col-4#2(type="button" onclick="openPage('Admin', this,2)") Admins
                     .row 
                         #Quizzes.tabcontent
                             #allquizzes
                                 
                         #Users.tabcontent
+                            #allUsers
                         #Admin.tabcontent
+                            #allAdmins
                             
                     #snackbar Some text some message..
  

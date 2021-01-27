@@ -35,6 +35,7 @@ function show() {
                     type: "GET",
                     url: "/api/quiz/" + quizId,
                     success: function(res) {
+                            alert(JSON.stringify(res))
                             var quizName = res.result.quizName;
                             document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
                         } //success
@@ -50,7 +51,7 @@ function show() {
                         h += `<p class='warn'>&#9888</p>`;
                     else
                         h += `<p class='wrong'>&#9932</p>`;
-                    h +=  `  ${r[i].description}`;
+                    h += `  ${r[i].description}`;
                     h += `<p class='arrow'>&#9660</p>`;
                     h += `</button>`;
                     h += `<div class="sol">`;

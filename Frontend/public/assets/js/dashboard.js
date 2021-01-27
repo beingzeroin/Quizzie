@@ -484,7 +484,6 @@ function startQuizPopup(quizid, name) {
     modal.style.display = "block";
     $(".closepopup").click(() => {
         modal.style.display = "none";
-
     })
     window.onclick = function(event) {
         if (event.target == modal) {
