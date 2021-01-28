@@ -31,7 +31,7 @@ function show() {
         }
     ]
     var quizId = location.href.split('/').slice(-1)[0];
-    var flag=0;
+    var flag=1;
     $.ajax({
         type: "GET",
         url: "/api/user/studentQuizResult/" + quizId,
@@ -68,8 +68,8 @@ function show() {
                      <h4> <label style="color:#2980B9">Score</label> : ${(resultData.result).marks } out of ${r.length}</h4>
                 </div>`;
                 console.log(flag);
-               
-                var h = "";
+                if(flag)
+                {var h = "";
                 for (var i = 0; i < r.length; i++) {
                     h += `<div class="container">
                           <button type="button" id="question" class="btn" onclick="drop(${i})">`;
@@ -94,7 +94,7 @@ function show() {
                     }
                     h += `</div></div>`;
                 }
-                document.getElementById("questions").innerHTML = h;
+                document.getElementById("questions").innerHTML = h;}
               
                
             } //sucess
@@ -126,6 +126,7 @@ function drop(i) {
 }
 
 function display()
-{   document.getElementById("questions").style.display="none";
+{   flag=0;
+    document.getElementById("questions").style.display="none";
     document.getElementById("error").innerHTML =`<h2 style="display:table;margin:auto">The Quiz Is Still Alive...!!!<h2>`;
 }
