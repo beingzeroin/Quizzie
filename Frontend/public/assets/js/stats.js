@@ -26,8 +26,8 @@ function pieChart() {
         data.addRow([key.toString(), piedata[key]]);
     }
     var options = {
-        width: $(window).width() * 0.8,
-        height: $(window).height() * 0.8,
+        width: $(window).width() * 0.7,
+        height: $(window).height() * 0.7,
         fontSize: 20,
         title: 'Marks Obtained',
         legend: { position: "top" },
@@ -38,7 +38,7 @@ function pieChart() {
 
     var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
     chart1.draw(data, options);
-    doc.addImage(chart1.getImageURI(), -40, 0);
+    doc.addImage(chart1.getImageURI(), -10, 0);
     //chart.draw(data);
 }
 
@@ -62,7 +62,7 @@ function barChart() {
 
     var chart2 = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
     chart2.draw(data, options);
-    doc.addImage(chart2.getImageURI(), 0, 130);
+    doc.addImage(chart2.getImageURI(), 0, 110);
     //chart.draw(data);
 }
 
@@ -88,7 +88,7 @@ function LineChart() {
 
     var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
     chart.draw(data, options);
-    doc.addImage(chart.getImageURI(), 0, 210);
+    doc.addImage(chart.getImageURI(), 0, 200);
     //chart.draw(data);
 }
 
@@ -97,7 +97,7 @@ $.ajax({
     url: "/api/admin/allStudentsQuizResult/" + quizId,
     method: "GET",
     success: function(quizdetails) {
-        console.log(quizdetails);
+        //console.log(quizdetails);
         quizdetails = quizdetails.userResults;
         if (quizdetails.length == 0)
             alert("No Responses for Your Quiz");
@@ -117,14 +117,14 @@ $.ajax({
                 minmarks = Math.min(minmarks, quizdetails[i].marks)
                 maxmarks = Math.max(maxmarks, quizdetails[i].marks)
                 total += quizdetails[i].marks
-                console.log((quizdetails[i].timeEnded), quizdetails[i].timeStarted)
+                //console.log((quizdetails[i].timeEnded), quizdetails[i].timeStarted)
                 linedata.push([quizdetails[i].userId["name"], (quizdetails[i].timeEnded - quizdetails[i].timeStarted) / (1000 * 60)]);
             }
             average = total / (quizdetails.length);
             google.charts.setOnLoadCallback(pieChart);
             google.charts.setOnLoadCallback(barChart);
             google.charts.setOnLoadCallback(LineChart);
-            console.log(piedata, maxmarks, minmarks, total, linedata);
+            //console.log(piedata, maxmarks, minmarks, total, linedata);
         }
     },
     error: function(err) {
