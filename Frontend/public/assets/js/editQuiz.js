@@ -464,12 +464,13 @@ function filter() {
             String(response.marks) ===
             searchwith.trim().toLowerCase()
         );
+        console.log(encodeURIComponent(quizName));
         code = ``;
         code += `<div class="card ml-2" style="width:85%;">
       <ul class="list-group list-group-flush">`
         for (let i = 0; i < newRes.length; i++) {
             code += `<li class="list-group-item"> 
-        <a href="/ui/quiz/studentResponse/${newRes[i]._id}/${newRes[i].userId._id}/${quizName}" style="text-decoration:none;color:black !important;">
+        <a href="/ui/quiz/studentResponse/${newRes[i]._id}/${newRes[i].userId._id}/${encodeURIComponent(quizName)}" style="text-decoration:none;color:black !important;">
         <span>${newRes[i].userId.name}</span>
         <p>Marks:${newRes[i].marks}</p>
         </a>

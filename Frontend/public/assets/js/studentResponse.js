@@ -4,8 +4,8 @@ $.ajaxSetup({
 if (!localStorage.token) location.href = '/';
 var data;
 function show() {
-    var quizName = location.href.split('/').slice(-1)[0];
-    var userId = decodeURIComponent(location.href.split('/').slice(-2)[0]);
+    var quizName = decodeURIComponent(location.href.split('/').slice(-1)[0]);
+    var userId = location.href.split('/').slice(-2)[0];
     var quizId = location.href.split('/').slice(-3)[0];
     document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
     $.ajax({
