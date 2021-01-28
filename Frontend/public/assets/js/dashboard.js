@@ -198,21 +198,22 @@ function secondsToHms(d) {
     var sDisplay = s > 0 ? s + (s == 1 ? "sec" : "secs") : "";
     return hDisplay + mDisplay + sDisplay;
 }
-setInterval(timer,1000);
-var result,flag=0;
-function timer(res)
-{   if(flag==0)result=res;
-    var c=0;
-    for(var i=0;i<result.length;i++)
-    {    if (result[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {} 
-        else{
-        var sec= Math.round(new Date()/1000);
-        var quiztime=Number(result[i].scheduledFor)/1000;
-        var dtitle=secondsToHms(quiztime-sec);
-        document.getElementsByClassName("chip")[c].innerHTML=`<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
-        c++;}
+setInterval(timer, 1000);
+var result, flag = 0;
+
+function timer(res) {
+    if (flag == 0) result = res;
+    var c = 0;
+    for (var i = 0; i < result.length; i++) {
+        if (result[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {} else {
+            var sec = Math.round(new Date() / 1000);
+            var quiztime = Number(result[i].scheduledFor) / 1000;
+            var dtitle = secondsToHms(quiztime - sec);
+            document.getElementsByClassName("chip")[c].innerHTML = `<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+            c++;
+        }
     }
-    flag=1;
+    flag = 1;
 
 }
 
