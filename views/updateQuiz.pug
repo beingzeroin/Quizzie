@@ -23,5 +23,15 @@ block page-content
                     span.timer-span
                         span.timer-text 5
                     input.timer-input#range(type='range' max='60'  min='5' value='5' step='5' oninput='onInput()')
+            .row.form-group.d-flex.justify-content-center
+                select.form-control.col-6#quizTopic(name="topicName")
+                    option(selected='None' value="None" ) None
+                    option(value='arrays') Arrays
+                    option(value='strings') Strings
+                    option(value='stacks') Stacks
+                    option(value='queue') Queues
+                    option(value='LinkedLists') LinkedLists
+                    option(value='graphs') Graphs
+                    option(value='Trees') Trees
             .row.mt-5.d-flex.justify-content-center
                 button.btn#submit(type="button" onclick="showdata()" ) UPDATE QUIZ

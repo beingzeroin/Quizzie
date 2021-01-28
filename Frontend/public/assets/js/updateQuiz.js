@@ -31,13 +31,14 @@ function senddata(data) {
         }
     });
 }
-
-function showdata() {
-    var date = $("#date").val();
-    var time = $("#time").val();
-    var quizName = $("#quizName").val();
-    var quizDuration = $("#range").val();
-    var data = { 'quizName': quizName, 'scheduledFor': new Date(date + " " + time).getTime(), 'quizDuration': quizDuration }
+function showdata()
+{
+    var date=$("#date").val();
+    var time=$("#time").val();
+    var quizName=$("#quizName").val();
+    var quizDuration=$("#range").val();
+    var topicName=$("#quizTopic").val();
+    var data={'quizName':quizName,'scheduledFor':new Date(date+" "+time).getTime(),'quizDuration':quizDuration,'topicName':topicName}
     console.log(data);
     senddata(data);
 
@@ -50,9 +51,10 @@ $.ajax({
         //console.log(result.result.quizName);
         quizdetails = result.result;
         $("#quizName").val(quizdetails.quizName)
-        $("#date").val((new Date(Number(quizdetails.scheduledFor)).getFullYear() + '-' + ('0' + (new Date(Number(quizdetails.scheduledFor)).getMonth() + 1)).slice(-2) + '-' + ('0' + new Date(Number(quizdetails.scheduledFor)).getDate()).slice(-2)))
-        $("#time").val(('0' + (new Date(Number(quizdetails.scheduledFor)).getHours())).slice(-2) + ':' + ('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2) + ':' + ('0' + (new Date(Number(quizdetails.scheduledFor)).getSeconds())).slice(-2))
+        $("#date").val((new Date(Number(quizdetails.scheduledFor)).getFullYear() + '-' +('0' + (new Date(Number(quizdetails.scheduledFor)).getMonth()+1)).slice(-2)+ '-' +  ('0' + new Date(Number(quizdetails.scheduledFor)).getDate()).slice(-2) ))
+        $("#time").val(('0' + (new Date(Number(quizdetails.scheduledFor)).getHours())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getMinutes())).slice(-2)+ ':'+('0' + (new Date(Number(quizdetails.scheduledFor)).getSeconds())).slice(-2))
         $("#range").val(quizdetails.quizDuration);
+        $("#quizTopic").val(quizdetails.topicName);
         const timer = document.querySelector(".timer-span");
         const timerText = document.querySelector(".timer-text");
         const input = document.querySelector("input.timer-input");

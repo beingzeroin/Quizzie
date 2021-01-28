@@ -43,7 +43,8 @@ function showdata() {
     var quizName = $("#quizName").val();
     var quizDuration = $(".timer-input").val();
     var milliseconds = new Date(date + " " + time);
-    var data = { 'quizName': quizName, 'scheduledFor': milliseconds.getTime(), 'quizDuration': quizDuration, 'quizType': quizType }
+    var topicName=$("#quizTopic").val();
+    var data = { 'quizName': quizName, 'scheduledFor': milliseconds.getTime(), 'quizDuration': quizDuration, 'quizType': quizType,'topicName':topicName }
     console.log(data);
     senddata(data);
 }

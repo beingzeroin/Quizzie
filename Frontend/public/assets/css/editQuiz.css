@@ -85,6 +85,12 @@ button:active {
     position: relative;
 }
 
+.accordion-button:focus,
+.accordion-button:active {
+    outline: none !important;
+    box-shadow: none !important;
+    color:black !important;
+}
 select {
     width: 35% !important;
 }
@@ -99,3 +105,19 @@ li.list-group-item {
 p {
     margin: 0
 }
+.dropzone {
+    padding: 5% 3% 3%;
+    text-align: center;
+    background-color: #ccc;
+    margin: 0 5% 3%;
+    border-radius: 5px;
+    width:90%;
+}
+div#input
+{
+    display: block;
+    align-items: center;
+    text-align: center;
+    
+}
+

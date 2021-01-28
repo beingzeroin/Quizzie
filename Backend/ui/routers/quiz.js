@@ -37,7 +37,9 @@ router.get("/start", (req, res) => {
 router.get("/stats/:quizId", (req, res) => {
     res.render("Stats.pug")
 })
-
+router.get("/studentResponse/:quizId/:userId/:quizName", (req, res) => {
+    res.render("studentResponse.pug")
+})
 router.get("/owner/:quizid", (req, res) => {
     res.render("ownerQuizDetails.pug")
 })

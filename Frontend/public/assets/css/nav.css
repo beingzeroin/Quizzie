@@ -1,4 +1,4 @@
-.modal {
+#suggestpopup {
   display: none;
   /* Hidden by default */
   position: fixed;
@@ -24,7 +24,7 @@
 
 /* Modal Content */
 
-.modal-content {
+#mm2 {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;

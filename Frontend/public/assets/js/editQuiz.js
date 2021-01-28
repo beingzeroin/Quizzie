@@ -1,4 +1,7 @@
-var questionId, QuizDetails, results, deletequestionId;
+
+
+var questionId,QuizDetails,results,deletequestionId,quizName,quizId;
+quizid=location.href.split('/').slice(-1)[0]
 $("#question").summernote({
     height: 150, // set editor height
     minHeight: null, // set minimum height of editor
@@ -38,12 +41,6 @@ $.ajaxSetup({
 if (!localStorage.token)
     location.href = '/'
 
-
-if (!localStorage.token)
-    location.href = '/'
-if (localStorage.usertype != "Admin")
-    location.href = '/'
-
 function senddata(data) {
     $.ajax({
         url: "/api/question/add",
@@ -53,12 +50,8 @@ function senddata(data) {
             location.reload();
         },
         error: function(err) {
-            if (err.responseJSON.message == "Unauthorized access") {
-                location.href = "/ui/dashboard"
-            } else {
-                console.log(err);
-                alert("Please Enter Valid Question") //change this url ....
-            }
+            console.log(err);
+           // alert("Please Enter Valid Question") //change this url ....
         }
     });
 }
@@ -140,23 +133,24 @@ function fetchdata() {
         success: function(result) {
             // console.log(result.result);
             QuizDetails = result.result;
-            code = `<div class="accordion" id="parent" >`;
+            code = `<div class="accordion" id="parent"  >`;
             for (let i = 0; i < result.result.length; i++) {
                 code += `
                 <div class="accordion-item" style="width:100%;" >
                 <h2 class="accordion-header" id="heading${i+1}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i+1}" aria-expanded="true" aria-controls="collapse${i+1}" style="font-size:20px;max-width:100%;color:black !important">
                 <span class="mr-3"  data-toggle='modal' data-target="#delModal" onclick="assignquestionfordelete('${result.result[i]._id}')"> <i class="fas fa-trash"></i> </span><span class="mr-3" data-toggle='modal' data-target="#updatequestions"  onclick="editquestion('${i}')"> <i class="fas fa-pen"></i> </span>${result.result[i].description}  
                 </button>
               </h2>
     <div id="collapse${(i+1)}" class="accordion-collapse collapse" aria-labelledby="heading${(i+1)}" data-bs-parent="#parent">
       <div class="accordion-body">`;
-                for (let j = 0; j < 4; j++) {
+      for(let j=0;j<4;j++)
+      {   
 
-                    if ((result.result[i].options)[j].text == result.result[i].correctAnswer)
-                        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
-                    else
-                        code += `<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
+        if ((result.result[i].options)[j].text ==result.result[i].correctAnswer)
+        code += `<p  style="color:green;">&#8857 &nbsp  ${(result.result[i].options)[j].text}</p>`;
+        else
+        code+=`<p style="color:black;"> &#8857 &nbsp   ${result.result[i].options[j].text} </p> 
       `
                 }
                 code +=
@@ -170,15 +164,39 @@ function fetchdata() {
             $("#submissions").html(code);
         },
         error: function(err) {
-            if (err.responseJSON.message == "Unauthorized access") {
-                location.href = "/ui/dashboard"
-            }
             console.log(err);
         }
     });
 }
 $(document).ready(function() {
     fetchdata();
+    $("#file").on('change',function(){
+       var file=document.getElementById("file").files[0];
+       if (file) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+           var data=evt.target.result;
+           $.ajax({
+            url: "/api/question/csv",
+            method: "POST",
+            data: {"data":data,"quizId":quizId},
+            success: function(result) {
+                location.reload();
+                console.log("success");
+            },
+            error: function(err) {
+                console.log(err);
+               // alert("Please Enter Valid Question") //change this url ....
+            }
+        });
+           
+        }
+        reader.onerror = function (evt) {
+            alert("error reading file");
+        }
+    }
+    });
 });
 
 function deletequiz() {
@@ -194,39 +212,33 @@ function deletequiz() {
                 location.reload();
         },
         error: function(err) {
-            if (err.responseJSON.message == "Unauthorized access") {
-                location.href = "/ui/dashboard"
-            } else {
-                console.log(err);
-                location.reload(); //change this url ....
-            }
+            console.log(err);
+            location.reload(); //change this url ....
         }
     });
 }
 
-function assignquestionfordelete(questionid) {
-    deletequestionId = questionid;
-    console.log(deletequestionId);
+function assignquestionfordelete(questionid)
+{
+  deletequestionId=questionid;
+  console.log(deletequestionId);
 }
-
-function deletequestion() {
-    console.log(deletequestionId);
-    $.ajax({
-        url: "/api/question/" + deletequestionId,
-        method: "DELETE",
-        success: function(result) {
-            if (result.message == "Deleted") {
-                location.reload();
-            } else {
-                location.reload();
-            }
-        },
-        error: function(err) {
-            if (err.responseJSON.message == "Unauthorized access") {
-                location.href = "/ui/dashboard"
-            }
+function deletequestion()
+{
+  console.log(deletequestionId);
+  $.ajax({
+    url: "/api/question/"+deletequestionId,
+    method: "DELETE",
+    success: function(result) {
+        if(result.message=="Deleted")
+        {
+          location.reload();
         }
-    });
+        else
+        {
+          location.reload();
+        }
+    }});
 }
 
 
@@ -326,28 +338,24 @@ function updatedata() {
                 location.reload();
             },
             error: function(err) {
-                if (err.responseJSON.message == "Unauthorized access") {
-                    location.href = "/ui/dashboard"
-                } else {
-                    console.log("Error", err);
-                    location.reload(); //change this url ....
-                }
+                console.log("Error", err);
+                location.reload(); //change this url ....
             }
         });
     }
 }
-
 function fitToColumn(arrayOfArray) {
-    // get maximum character of each column
-    return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
+  // get maximum character of each column
+  return arrayOfArray[0].map((a, i) => ({ wch: Math.max(...arrayOfArray.map(a2 => a2[i].toString().length)) }));
 }
-quizId = location.href.split('/').slice(-1)[0]
-$.ajax({
-    url: "/api/quiz/" + quizId,
+quizId=location.href.split('/').slice(-1)[0]  
+  $.ajax({
+    url: "/api/quiz/"+quizId,
     method: "GET",
     success: function(result) {
         console.log(result.result);
         quizdetails = result.result;
+        quizName=quizdetails.quizName
         $("#editbutton").attr("href", "/ui/quiz/updateQuiz/" + quizdetails._id);
         $("#quizName").html(quizdetails.quizName)
         $("#date").html(new Date(Number(quizdetails.scheduledFor)).toDateString())
@@ -365,11 +373,17 @@ $.ajax({
             `
             );
         }
+        $("#topicName").html(
+            `<div class="col">
+        <h6 class="label" >TopicName: </h6>
+        </div>
+        <div class="col">
+        <span class="quiz-detail-text">${quizdetails.topicName}</span>
+        </div>
+        `
+        );
     },
     error: function(err) {
-        if (err.responseJSON.message == "Unauthorized access") {
-            location.href = "/ui/dashboard"
-        }
         console.log(err);
     }
 });
@@ -385,12 +399,8 @@ $.ajax({
         fill();
     },
     error: function(err) {
-        if (err.responseJSON.message == "Unauthorized access") {
-            location.href = "/ui/dashboard"
-        } else {
-            console.log(err);
-            alert("Please check Your Quiz Id")
-        }
+        console.log(err);
+        //alert("Please check Your Quiz Id")
     }
 });
 
@@ -430,7 +440,7 @@ function sort() {
     <ul class="list-group list-group-flush">`
         for (let i = 0; i < results.length; i++) {
             code += `<li class="list-group-item"> 
-      <a href="/ui/result/${results[i]._id}" style="text-decoration:none;color:black !important;">
+      <a href="/ui/quiz/studentResponse/${quizId}/${results[i].userId._id}/${encodeURIComponent(quizName)}" style="text-decoration:none;color:black !important;">
       <span>${results[i].userId["name"]}</span>
       <p>Marks:${results[i].marks}</p>
       </a>
@@ -459,7 +469,7 @@ function filter() {
       <ul class="list-group list-group-flush">`
         for (let i = 0; i < newRes.length; i++) {
             code += `<li class="list-group-item"> 
-        <a href="/ui/result/${newRes[i]._id}" style="text-decoration:none;color:black !important;">
+        <a href="/ui/quiz/studentResponse/${newRes[i]._id}/${newRes[i].userId._id}/${quizName}" style="text-decoration:none;color:black !important;">
         <span>${newRes[i].userId.name}</span>
         <p>Marks:${newRes[i].marks}</p>
         </a>
@@ -473,49 +483,52 @@ function filter() {
 
 }
 
-function fill() {
+  function fill()
+  {
     var wb = XLSX.utils.book_new();
     wb.Props = {
-        Title: "SheetJS",
-        Subject: "Quiz Results",
-        CreatedDate: new Date()
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
     };
     wb.SheetNames.push("Results Sheet");
-    var ws_data = [
-        ['S.No', 'Name', 'Marks']
-    ];
+    var ws_data = [['S.No' , 'Name','Marks']];
     var wb = XLSX.utils.book_new();
     wb.Props = {
-        Title: "SheetJS",
-        Subject: "Quiz Results",
-        CreatedDate: new Date()
+            Title: "SheetJS",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
     };
     wb.SheetNames.push("Results Sheet");
-    var ws_data = [
-        ['S.No', 'Name', 'Marks']
-    ];
-    for (let i = 0; i < results.length; i++) {
-        ws_data.push([i + 1, results[i].userId["name"], results[i].marks]);
+    var ws_data = [['S.No' , 'Name','Marks']];
+    for(let i=0;i<results.length;i++)
+    {
+      ws_data.push([i+1,results[i].userId["name"],results[i].marks]);
     }
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
-    ws['!cols'] = fitToColumn(ws_data)
+    ws['!cols']=fitToColumn(ws_data)
     wb.Sheets["Results Sheet"] = ws;
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
+    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
     function s2ab(s) {
-
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-        return buf;
-
+  
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+            
     }
-    $("#download").click(function() {
-        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'test.xlsx');
-    });
-}
-
-function feedback() {
+    $("#download").click(function(){
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+});
+  }
+  function feedback() {
     var quizId = location.href.split('/').slice(-1)[0];
     window.location.href = "/ui/feedback/" + quizId;
 }
+  
+ 
+  
+  
+  
+ 
+ 
