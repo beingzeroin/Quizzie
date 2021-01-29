@@ -29,13 +29,10 @@ b.res {
     margin-bottom: .3em;
 }
 
-b.name,
-b.score {
-    color:#2980B9;
+div.name,
+div.score {
     margin-left: 3em;
-    margin-right: .5em;
     font-size: 2.3vw;
-    margin-bottom: 2em;
 }
 
 div.line {

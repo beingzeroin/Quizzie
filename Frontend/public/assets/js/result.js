@@ -31,19 +31,30 @@ function show() {
         }
     ]
     var quizId = location.href.split('/').slice(-1)[0];
+    var flag=1;
     $.ajax({
         type: "GET",
         url: "/api/user/studentQuizResult/" + quizId,
         success: function(resultData) {
                 var r = resultData.result.responses;
+                //console.log(resultData.result);
                 $.ajax({
                     type: "GET",
                     url: "/api/quiz/" + quizId,
                     headers: { 'token': localStorage.token },
                     success: function(res) {
-                            // alert(JSON.stringify(res))
+                             //console.log(JSON.stringify(res))
+                             var sec = Math.round(new Date());
+                             var endtime = Number(res.result.scheduledFor) + Number((res.result.quizDuration) *60000)
+                             var check=sec-endtime;
+                             console.log(check);
+                             if(check<0) {console.log("No"); display();}
+                             //console.log(res.result.scheduledFor,res.result.quizDuration)
                             var quizName = res.result.quizName;
-                            document.getElementsByClassName("name")[0].innerHTML = `Quiz: ${quizName}`;
+                            document.getElementsByClassName("name")[0].innerHTML = `
+                            <div class = "row">
+                                <h4> <label style="color:#2980B9">QuizName </label> : ${quizName} </h4>
+                            </div>`;
                         } //success
                         ,
                     error: function(err) {
@@ -52,8 +63,13 @@ function show() {
                         }
                     }
                 }); //inner ajax
-                document.getElementsByClassName("score")[0].innerHTML = `Score: ${(resultData.result).marks } out of ${r.length}`;
-                var h = "";
+                document.getElementsByClassName("score")[0].innerHTML = `
+                <div class = "row">
+                     <h4> <label style="color:#2980B9">Score</label> : ${(resultData.result).marks } out of ${r.length}</h4>
+                </div>`;
+                console.log(flag);
+                if(flag)
+                {var h = "";
                 for (var i = 0; i < r.length; i++) {
                     h += `<div class="container">
                           <button type="button" id="question" class="btn" onclick="drop(${i})">`;
@@ -78,7 +94,9 @@ function show() {
                     }
                     h += `</div></div>`;
                 }
-                document.getElementById("questions").innerHTML = h;
+                document.getElementById("questions").innerHTML = h;}
+              
+               
             } //sucess
             ,
         error: function(err) {
@@ -105,4 +123,10 @@ function drop(i) {
         x.style.display = "none";
         z.innerHTML = `&#9660`;
     }
+}
+
+function display()
+{   flag=0;
+    document.getElementById("questions").style.display="none";
+    document.getElementById("error").innerHTML =`<h2 style="display:table;margin:auto">The Quiz Is Still Alive...!!!<h2>`;
 }
