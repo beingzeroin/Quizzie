@@ -36,12 +36,13 @@ function login() {
                 password: password
             },
             success: function(resultData) {
+                console.log(resultData);
                 if (resultData.message == "Auth successful") {
                     localStorage.token = resultData.token;
                     localStorage.userid = resultData.userDetails.userId
                     localStorage.username = resultData.userDetails.name
                     localStorage.usertype = resultData.userDetails.userType
-                    window.location.href = '/ui/dashboard';
+                    //window.location.href = '/ui/dashboard';
                 }
             }, //sucess
             error: function(error) {

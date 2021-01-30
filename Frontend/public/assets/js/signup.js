@@ -59,7 +59,7 @@ function signup() {
                 if (resultData.message == "Email already exists")
                     document.getElementById("emailalert").innerHTML = `This email already has an account`;
                 if (resultData.message == "user created") {
-                    window.location.href = '/ui/login/user';
+                    window.location.href = '/ui/verify/user';
                 }
             }, //sucess
             error: function(resultData) {
