@@ -756,10 +756,11 @@ router.get("/getAccuracy/:quizid", checkAuthUser, (req, res, next) => {
             for (let i = 0; i < result.length; i++) {
                 let responses = result[i].responses;
                 for (let j = 0; j < responses.length; j++) {
-                    if (responses[i].quesId == req.query.problemid) {
-                        if (responses[i].selected == responses[i].correctAnswer)
+                    if (responses[j].quesId == req.query.problemid) {
+                        console.log(responses[j].selected, responses[j].correctAnswer)
+                        if (responses[j].selected == responses[j].correctAnswer)
                             correct++;
-                        else if (responses[i].selectedOption != null)
+                        else if (responses[j].selected != null)
                             wrong++;
                         break;
                     }
