@@ -73,7 +73,7 @@ router.post(
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
-                topicName:req.body.topicName
+                topicName: req.body.topicName
             };
             //console.log(quiz);
             item.createitem(quiz, Quiz, (err, result) => {
@@ -105,7 +105,7 @@ router.post(
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
-                topicName:req.body.topicName
+                topicName: req.body.topicName
             };
             item.createitem(quiz, Quiz, (err, result) => {
                 if (err) {
@@ -914,6 +914,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
     var quizId = req.body.quizId;
     const timeEnded = req.body.timeEnded;
     const timeStarted = req.body.timeStarted;
+    const submissionStatus = req.body.submissionStatus;
     var responses = [];
     var score = 0;
     item.getItemById(req.body.quizId, Quiz, (err, result9) => {
@@ -973,6 +974,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                 responses,
                                 timeEnded,
                                 timeStarted,
+                                submissionStatus
                             },
                         }
                     }, User, (err, result) => {
@@ -989,6 +991,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                         responses,
                                         timeEnded,
                                         timeStarted,
+                                        submissionStatus
                                     },
                                 },
                             }, Quiz, (err, result7) => {
@@ -1004,6 +1007,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                         responses,
                                         timeEnded,
                                         timeStarted,
+                                        submissionStatus
                                     });
                                 }
                             })

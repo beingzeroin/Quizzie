@@ -743,4 +743,31 @@ router.post("/resetpass", verifyURL, async(req, res) => {
         });
 });
 
+router.get("/getAccuracy/:quizid", checkAuthUser, (req, res, next) => {
+    item.getSingleItemByQuery({ _id: req.params.quizid, isDeleted: false }, Quiz, (err, result) => {
+        if (err) {
+            res.status(400).json({
+                message: "some error occured",
+            });
+        } else {
+            result = result.usersParticipated;
+            let correct = 0,
+                wrong = 0;
+            for (let i = 0; i < result.length; i++) {
+                let responses = result[i].responses;
+                for (let j = 0; j < responses.length; j++) {
+                    if (responses[i].quesId == req.query.problemid) {
+                        if (responses[i].selected == responses[i].correctAnswer)
+                            correct++;
+                        else if (responses[i].selectedOption != null)
+                            wrong++;
+                        break;
+                    }
+                }
+            }
+            res.status(200).json({ correct: correct, wrong: wrong })
+        }
+    })
+
+})
 module.exports = router;

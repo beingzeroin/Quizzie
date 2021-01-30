@@ -9,7 +9,8 @@ let tabswitch = 0;
 let result, questions;
 let currentquestion = 0;
 let ansdata = []
-
+let ansstatus = []
+let questionids = []
 let buttons = document.getElementById("display")
 let heading = document.getElementById("heading")
 let time = document.getElementById("timedisplay")
@@ -22,6 +23,30 @@ $(document).ready(function() {
     }
 });
 
+function getAccuracy(i) {
+    $.ajax({
+        url: "/api/user/getAccuracy/" + quizid,
+        method: "GET",
+        data: { problemid: questionids[i] },
+        success: function(result1) {
+            alert(JSON.stringify(result1))
+            $("#accuracy").html(`Accuracy :${result1.correct}`)
+        },
+        error: function(err) {
+            alert(JSON.stringify(err))
+        }
+    })
+}
+
+function countnum(n) {
+    let c = 0;
+    for (let i = 0; i < ansstatus.length; i++) {
+        if (ansstatus[i] == n)
+            c++;
+    }
+    return c;
+}
+
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype != "User")
@@ -32,17 +57,19 @@ $.ajax({
     success: function(result1) {
 
         result = result1
-        console.log(result)
-
-
+            // console.log(result)
 
 
 
         questions = result.data;
+        console.log(JSON.stringify(questions))
         let quenumbers = ``
         for (let i = 0; i < questions.length; i++) {
-            quenumbers += `<li onClick=quedisplay('${i}')>${i+1}</li>`
+            quenumbers += `<li onClick=quedisplay('${i}') class=${i}>${i+1}</li>`
+            ansstatus.push(0);
+            questionids.push(questions[i].questionId)
         }
+        console.log(questionids)
         que.innerHTML = quenumbers
         let code = ``
         for (let i = 0; i < questions.length; i++) {
@@ -74,6 +101,8 @@ $.ajax({
 
 
         }
+        getAccuracy(currentquestion);
+
 
 
         var x = setInterval(function() {
@@ -152,22 +181,49 @@ $.ajax({
 
             } else {
                 $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+                ansstatus[currentquestion] = 1;
+                $("#NA").html(`   Not Answered(${countnum(0)})`)
+                $("#REV").html(`   Review(${countnum(2)}) `)
+                $("#ANS").html(`    Answered(${countnum(1)}) `)
             }
             $(`li:nth-child(${currentquestion+1})`).addClass("answered");
 
-
+            checkvalue()
 
         });
 
-
+        $("#NA").html(`   Not Answered(${countnum(0)})`)
+        $("#REV").html(`   Review(${countnum(2)}) `)
+        $("#ANS").html(`    Answered(${countnum(1)}) `)
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState == 'hidden' && !tabswitch) {
-                // confirm("Press a button!");
-                submitans();
-                tabswitch = 1;
-            }
-        });
+        // document.addEventListener('visibilitychange', function() {
+        //     if (document.visibilityState == 'hidden') {
+        //         tabswitch++;
+        //         if (tabswitch >= 3) {
+        //             submitans("tabswitch");
+        //         } else {
+        //             let modal = document.getElementById("tabswitch");
+        //             let code = `<p style="text-align:center;font-weight:500;font-size:20px">Your quiz will be submitted if you leave this page!</p>`
+        //             code += `<div class="text-center"><button type="button" class="btn btn-danger closepopup" >OK</button>
+        //    </div>
+        //     `
+        //             document.getElementById("displaytabswitch").innerHTML = code
+        //             modal.style.display = "block";
+        //             $(".closepopup").click(() => {
+        //                     modal.style.display = "none";
+
+        //                 })
+        //                 // window.onclick = function(event) {
+        //                 //         if (event.target == modal) {
+        //                 //             modal.style.display = "none";
+        //                 //         }
+        //                 //     }
+        //                 // // confirm("Press a button!");
+        //                 // submitans();
+        //                 // tabswitch = 1;
+        //         }
+        //     }
+        // });
 
 
     },
@@ -228,6 +284,9 @@ function next() {
 
     }
     buttons.innerHTML = code
+    $("#NA").html(`   Not Answered(${countnum(0)})`)
+    $("#REV").html(`   Review(${countnum(2)}) `)
+    $("#ANS").html(`    Answered(${countnum(1)}) `)
 
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
     $('input[type=radio]').change(function() {
@@ -240,12 +299,17 @@ function next() {
 
         } else {
             $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+            ansstatus[currentquestion] = 1;
+            $("#NA").html(`   Not Answered(${countnum(0)})`)
+            $("#REV").html(`   Review(${countnum(2)}) `)
+            $("#ANS").html(`    Answered(${countnum(1)}) `)
         }
         $(`li:nth-child(${currentquestion+1})`).addClass("answered");
-
+        checkvalue();
 
     });
     $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
+    getAccuracy(currentquestion);
 
 }
 
@@ -304,7 +368,9 @@ function prev() {
     }
     buttons.innerHTML = code
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
-
+    $("#NA").html(`   Not Answered(${countnum(0)})`)
+    $("#REV").html(`   Review(${countnum(2)}) `)
+    $("#ANS").html(`    Answered(${countnum(1)}) `)
     $('input[type=radio]').change(function() {
 
         ansdata[currentquestion].selectedOption = this.value;
@@ -315,12 +381,17 @@ function prev() {
 
         } else {
             $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+            ansstatus[currentquestion] = 1
+            $("#NA").html(`   Not Answered(${countnum(0)})`)
+            $("#REV").html(`   Review(${countnum(2)}) `)
+            $("#ANS").html(`    Answered(${countnum(1)}) `)
         }
         $(`li:nth-child(${currentquestion+1})`).addClass("answered");
 
-
+        checkvalue();
     });
     $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
+    getAccuracy(currentquestion);
 
 }
 
@@ -382,7 +453,9 @@ function quedisplay(i) {
 
     }
     buttons.innerHTML = code
-
+    $("#NA").html(`   Not Answered(${countnum(0)})`)
+    $("#REV").html(`   Review(${countnum(2)}) `)
+    $("#ANS").html(`    Answered(${countnum(1)}) `)
     heading.innerHTML = `<h2 style="color:#2980b9"class="mt-2"> QUESTION ${currentquestion+1} OF ${questions.length}</h2>`
     $('input[type=radio]').change(function() {
 
@@ -394,14 +467,19 @@ function quedisplay(i) {
 
         } else {
             $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
+            ansstatus[currentquestion] = 1
+            $("#NA").html(`   Not Answered(${countnum(0)})`)
+            $("#REV").html(`   Review(${countnum(2)}) `)
+            $("#ANS").html(`    Answered(${countnum(1)}) `)
         }
         $(`li:nth-child(${currentquestion+1})`).addClass("answered");
 
 
-
+        checkvalue()
 
     });
     $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
+    getAccuracy(currentquestion);
 
 }
 
@@ -425,7 +503,9 @@ function submitpopup() {
 }
 
 
-function submitans() {
+function submitans(status) {
+    if (status == undefined)
+        status = 'normal'
     $.ajax({
         url: "/api/quiz/checkSubmission/" + questions[0].quizId,
         method: "GET",
@@ -438,6 +518,7 @@ function submitans() {
                     questions: JSON.stringify(ansdata),
                     timeStarted: result.scheduledFor,
                     timeEnded: Date.now(),
+                    submissionStatus: status
                 },
                 success: function(result) {
                     window.location.href = "/ui/feedbackform/" + questions[0].quizId
@@ -461,11 +542,68 @@ function submitans() {
 function review() {
     $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(255, 184, 0)');
     $(`li:nth-child(${currentquestion+1})`).toggleClass('review');
+    ansstatus[currentquestion] = 2
     if ($(`li:nth-child(${currentquestion+1})`).hasClass('review') == false) {
         if ($(`li:nth-child(${currentquestion+1})`).hasClass('answered')) {
+            ansstatus[currentquestion] = 1
+
             $(`li:nth-child(${currentquestion+1})`).css("background-color", 'rgb(108, 165, 76)');
         } else {
+            ansstatus[currentquestion] = 0
+
             $(`li:nth-child(${currentquestion+1})`).css("background-color", '');
         }
+    }
+    $("#NA").html(`   Not Answered(${countnum(0)})`)
+    $("#REV").html(`   Review(${countnum(2)}) `)
+    $("#ANS").html(`    Answered(${countnum(1)}) `)
+    checkvalue()
+}
+
+$('input[type=checkbox]').change(function() {
+    checkvalue()
+});
+
+function checkvalue() {
+    let val1 = $("#exampleCheck1").val;
+    let val2 = $("#exampleCheck2").val;
+    let check1 = document.getElementById("exampleCheck1").checked
+    let check2 = document.getElementById("exampleCheck2").checked
+    if (check1 && check2) {
+        let l1 = questions.length;
+        let c1 = ``
+        for (let i = 0; i < l1; i++) {
+            if ($(`.${i}`).hasClass("review")) {
+                c1 += `<li onClick=quedisplay('${i}') style="background-color:rgb(255, 184, 0)" >${i+1}</li>`
+
+            } else if ($(`.${i}`).hasClass("review") == false && $(`.${i}`).hasClass("answered") == false) {
+                c1 += `<li onClick=quedisplay('${i}') >${i+1}</li>`
+            }
+        }
+        $("#que").css("display", "none");
+        $("#que1").html(c1)
+    } else if (check1) {
+        let l1 = questions.length;
+        let c1 = ``
+        for (let i = 0; i < l1; i++) {
+            if ($(`.${i}`).hasClass("review")) {
+                c1 += `<li onClick=quedisplay('${i}') style="background-color:rgb(255, 184, 0)" >${i+1}</li>`
+            }
+        }
+        $("#que").css("display", "none");
+        $("#que1").html(c1)
+    } else if (check2) {
+        let l1 = questions.length;
+        let c1 = ``
+        for (let i = 0; i < l1; i++) {
+            if ($(`.${i}`).hasClass("review") == false && $(`.${i}`).hasClass("answered") == false) {
+                c1 += `<li onClick=quedisplay('${i}') >${i+1}</li>`
+            }
+        }
+        $("#que").css("display", "none");
+        $("#que1").html(c1)
+    } else {
+        $("#que").css("display", "block");
+        $("#que1").html('')
     }
 }

@@ -30,41 +30,57 @@ block page-content
     //-         p(style="margin:0%;text-align:center;color:red;width:100%") Time Remaining
     //-         .timer#timedisplay(style="margin:0%;text-align:center")
     div#spacing
-        .quiz-page.container
-            .wpProQuiz_reviewDiv.mt-2.mb-4(style='')
-                .wpProQuiz_reviewQuestion
-                    ol(style='margin-top: 0px !important')
-                    #que
-                    div(style='display: none; top: 0px;')
-                .wpProQuiz_reviewLegend
-                    ol
-                        li
-                        span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
-                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")     Answered           
-                        br(style="display:none")            
-                        li
-                        span.wpProQuiz_reviewColor(style='background-color: #FFB800;')
-                        span.wpProQuiz_reviewText.mr-3(style="  font-size: 20px;")  Review  
-                        br(style="display:none")                         
-                        li
-                        span.wpProQuiz_reviewColor(style='background-color:white;border-style: groove;')
-                        span.wpProQuiz_reviewText(style="  font-size: 20px;")  Not Answered   
-                        
-                div(style='clear: both;')
-                input(type='button', value='mark as review', name='review', onclick='review()')
+        #tabswitch.modal
+            .modal-dialog.modal-dialog-centered
+                .modal-content
+                    div#displaytabswitch
+        .row
+            .col-lg-3.col-md-4.col-sm-5
+                input#exampleCheck1.form-check-input(type='checkbox').ml-2
+                label.form-check-label(for='exampleCheck1').ml-4 reviewed
+                input#exampleCheck2.form-check-input(type='checkbox').ml-2
+                label.form-check-label(for='exampleCheck2').ml-4 unanswered
+                .wpProQuiz_reviewDiv.mt-2.mb-2(style='')
+                    .wpProQuiz_reviewQuestion
+                        ol(style='margin-top: 0px !important')
+                        #que
+                        #que1
+                        div(style='display: none; top: 0px;')
+                    .wpProQuiz_reviewLegend
+                        ol
+                            li
+                            span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                            span.wpProQuiz_reviewText.mr-3(style="  font-size: 100% !important;")#ANS     Answered(0)           
+                            br(style="display:none")            
+                            li
+                            span.wpProQuiz_reviewColor(style='background-color: #FFB800;')
+                            span.wpProQuiz_reviewText.mr-3(style="   font-size: 100% !important;")#REV  Review(0)  
+                            br(style="display:block")                         
+                            li
+                            span.wpProQuiz_reviewColor(style='background-color:white;border-style: groove;')
+                            span.wpProQuiz_reviewText(style="  font-size: 100% !important;")#NA  Not Answered(0)   
+                            
+                    div(style='clear: both;')
 
- 
-                //- .wpProQuiz_reviewLegend
-                //-     ol
-                //-     li
-                //-         span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
-                //-         span.wpProQuiz_reviewText Answered
-                //-     li
-                      
-                        
 
-            .row    
-                .col
+                    //- .wpProQuiz_reviewLegend
+                    //-     ol
+                    //-     li
+                    //-         span.wpProQuiz_reviewColor(style='background-color: #6CA54C;')
+                    //-         span.wpProQuiz_reviewText Answered
+                    //-     li
+                            
+                            
+   
+            .col
+                div#d1
+                    .row
+                        .col-2
+                                p#accuracy(style="float:left !important") guk
+                        .col-10
+                    
+                            div(style="width:100% !important").d-flex.justify-content-end#reviewbtn
+                                button.btn.btn-sm.mb-3(type='button', value='mark as review', name='review', onclick='review()') mark as review
                     #display
 block scripts
         script(src="/assets/js/startquiz.js")
