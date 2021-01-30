@@ -1,6 +1,6 @@
 
 
-var questionId,QuizDetails,results,deletequestionId,quizName,quizId;
+var questionId,QuizDetails,results,deletequestionId,quizName,quizId,feedbacks;
 quizid=location.href.split('/').slice(-1)[0]
 $("#question").summernote({
     height: 150, // set editor height
@@ -390,6 +390,18 @@ quizId=location.href.split('/').slice(-1)[0]
 quizId = location.href.split('/').slice(-1)[0]
 $("#stats").attr("href", "/ui/quiz/stats/" + quizId);
 $.ajax({
+    type: "GET",
+    url: "/api/feedback/" + quizId,
+    success: function(resultData) {
+            feedbacks = resultData.result1;
+        },
+    error: function(err) {
+        if (err.responseJSON.message == "Unauthorized access") {
+            location.href = "/"
+        }
+    }
+});
+$.ajax({
     url: "/api/admin/allStudentsQuizResult/" + quizId,
     method: "GET",
     success: function(quizdetails) {
@@ -486,25 +498,26 @@ function filter() {
 
   function fill()
   {
+    //console.log(feedbacks);
+    var fmap={}
+    for(var i=0;i<feedbacks.length;i++)
+        fmap[feedbacks[i].userId]=(feedbacks[i].rating);
+    //console.log(fmap);
     var wb = XLSX.utils.book_new();
     wb.Props = {
-            Title: "SheetJS",
+            Title: "Sheet",
             Subject: "Quiz Results",
             CreatedDate: new Date()
     };
-    wb.SheetNames.push("Results Sheet");
-    var ws_data = [['S.No' , 'Name','Marks']];
-    var wb = XLSX.utils.book_new();
-    wb.Props = {
-            Title: "SheetJS",
-            Subject: "Quiz Results",
-            CreatedDate: new Date()
-    };
-    wb.SheetNames.push("Results Sheet");
-    var ws_data = [['S.No' , 'Name','Marks']];
+    wb.SheetNames.push("Quiz Results Sheet1");
+    var ws_data = [['S.No' , 'Name','Marks','Rating']];
     for(let i=0;i<results.length;i++)
     {
-      ws_data.push([i+1,results[i].userId["name"],results[i].marks]);
+        if(fmap[results[i].userId._id]!=undefined)
+      ws_data.push([i+1,results[i].userId["name"],results[i].marks,fmap[results[i].userId._id]]);
+      else
+      ws_data.push([i+1,results[i].userId["name"],results[i].marks," "]);
+
     }
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
     ws['!cols']=fitToColumn(ws_data)
@@ -519,7 +532,7 @@ function filter() {
             
     }
     $("#download").click(function(){
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Results.xlsx');
 });
   }
   function feedback() {
@@ -527,6 +540,8 @@ function filter() {
     window.location.href = "/ui/feedback/" + quizId;
 }
   
+
+
  
   
   
