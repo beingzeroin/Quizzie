@@ -201,34 +201,34 @@ $.ajax({
         $("#REV").html(`   Review(${countnum(2)}) `)
         $("#ANS").html(`    Answered(${countnum(1)}) `)
         $('input[name="' + 'ans' + '"][value="' + ansdata[currentquestion].selectedOption + '"]').prop('checked', true);
-        // document.addEventListener('visibilitychange', function() {
-        //     if (document.visibilityState == 'hidden') {
-        //         tabswitch++;
-        //         if (tabswitch >= 3) {
-        //             submitans("tabswitch");
-        //         } else {
-        //             let modal = document.getElementById("tabswitch");
-        //             let code = `<p style="text-align:center;font-weight:500;font-size:20px">Your quiz will be submitted if you leave this page!</p>`
-        //             code += `<div class="text-center"><button type="button" class="btn btn-danger closepopup" >OK</button>
-        //    </div>
-        //     `
-        //             document.getElementById("displaytabswitch").innerHTML = code
-        //             modal.style.display = "block";
-        //             $(".closepopup").click(() => {
-        //                     modal.style.display = "none";
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState == 'hidden') {
+                tabswitch++;
+                if (tabswitch >= 3) {
+                    submitans("tabswitch");
+                } else {
+                    let modal = document.getElementById("tabswitch");
+                    let code = `<p style="text-align:center;font-weight:500;font-size:20px">Your quiz will be submitted if you leave this page!</p>`
+                    code += `<div class="text-center"><button type="button" class="btn btn-danger closepopup" >OK</button>
+           </div>
+            `
+                    document.getElementById("displaytabswitch").innerHTML = code
+                    modal.style.display = "block";
+                    $(".closepopup").click(() => {
+                            modal.style.display = "none";
 
-        //                 })
-        //                 // window.onclick = function(event) {
-        //                 //         if (event.target == modal) {
-        //                 //             modal.style.display = "none";
-        //                 //         }
-        //                 //     }
-        //                 // // confirm("Press a button!");
-        //                 // submitans();
-        //                 // tabswitch = 1;
-        //         }
-        //     }
-        // });
+                        })
+                        // window.onclick = function(event) {
+                        //         if (event.target == modal) {
+                        //             modal.style.display = "none";
+                        //         }
+                        //     }
+                        // // confirm("Press a button!");
+                        // submitans();
+                        // tabswitch = 1;
+                }
+            }
+        });
 
 
     },
