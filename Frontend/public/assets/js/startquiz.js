@@ -29,7 +29,7 @@ function getAccuracy(i) {
         method: "GET",
         data: { problemid: questionids[i] },
         success: function(result1) {
-            alert(JSON.stringify(result1))
+            // alert(JSON.stringify(result1))
             $("#accuracy").html(`Accuracy :${result1.correct}`)
         },
         error: function(err) {
