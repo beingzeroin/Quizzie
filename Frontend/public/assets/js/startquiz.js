@@ -29,8 +29,13 @@ function getAccuracy(i) {
         method: "GET",
         data: { problemid: questionids[i] },
         success: function(result1) {
-            // alert(JSON.stringify(result1))
-            $("#accuracy").html(`Accuracy :${result1.correct}`)
+            let acc = 0
+                // alert(JSON.stringify(result1))
+            if ((result1.correct + result1.wrong)) {
+                acc = (result1.correct / (result1.correct + result1.wrong)) * 100
+                acc = acc.toFixed(2)
+            }
+            $("#accuracy").html(`Accuracy :${acc}% <p> <small class='text-muted'>Solved :${result1.correct}  Attempted : ${result1.correct+ result1.wrong} </small>`)
         },
         error: function(err) {
             alert(JSON.stringify(err))
