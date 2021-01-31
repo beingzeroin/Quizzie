@@ -1,0 +1,26 @@
+extends includes/basePage
+block styles
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    link(rel="stylesheet" href="/assets/css/login.css")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+block page-content
+    body
+        div.main
+            p.head
+                b Verify E-mail
+            div(style="display:table;margin:10px auto; ")
+                .MuiPaper-root.MuiAlert-root.MuiAlert-standardInfo.MuiPaper-elevation0(role='alert')
+                    .MuiAlert-icon
+                        svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeInherit(focusable='false' viewbox='0 0 24 24' aria-hidden='true')
+                            path(d='M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z')
+                    .MuiAlert-message A verification email was sent to Your Mail...
+
+            input.sid(type='text' placeholder='Verification Code')
+            p#sidalert
+            
+            button.btn(type="button" onclick='verify()' href="/dashboard") Verify
+            #snackbar Some text some message..
+
+
+        block scripts
+            script(src="/assets/js/verify.js")

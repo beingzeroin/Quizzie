@@ -82,16 +82,19 @@ if (localStorage.usertype == "User") {
             Sorry! No quizzes available  at the moment</p> `
             } else {
                 let quizzesenrolled = ans.result1.quizzesEnrolled;
-                console.log( quizzesenrolled);
+                //console.log( quizzesenrolled);
                 let code = ``;
                 for (let i = 0; i < quizzesenrolled.length; i++) {
                     code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">`
-                    console.log( quizzesenrolled[i].quizId.topicName)
+                    //console.log( quizzesenrolled[i].quizId.topicName)
                     if( quizzesenrolled[i].quizId.topicName==undefined ||  quizzesenrolled[i].quizId.topicName=="None")
                     code+=`<img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">`
                     else
                     code+=`<img src="/assets/img/icons/${quizzesenrolled[i].quizId.topicName}.png" class="card-img-top" alt="...">`        
                code+=`<div class="card-body">
+               <div class="chip-x">
+                <i class='far fa-clock' style='font-size:20px'></i>Time Remaining
+               </div>
                 <div class="row">
                 <div class="col-4 nopadding">
                 <p  >${quizzesenrolled[i].quizId.quizName}</p>
@@ -107,6 +110,7 @@ if (localStorage.usertype == "User") {
                 }
 
                 document.getElementById("enrolledQuizzes").innerHTML = code
+                enrolledtimer(quizzesenrolled);
             }
         },
         error: function(err) {
@@ -115,6 +119,23 @@ if (localStorage.usertype == "User") {
             }
         }
     })
+
+if (localStorage.usertype == "User") {setInterval(enrolledtimer, 1000);}
+var result1, flag1 = 0;
+function enrolledtimer(res) {
+        //console.log(JSON.stringify(res));
+        if (flag1 == 0) result1 = res;
+        for (var i = 0; i < result1.length; i++) {
+                var sec = Math.round(new Date() / 1000);
+                var quiztime = Number(result1[i].quizId.scheduledFor) / 1000;
+                if(quiztime - sec>0)
+                {var dtitle = secondsToHms(quiztime - sec);
+                document.getElementsByClassName("chip-x")[i].innerHTML = `<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;}
+                else {document.getElementsByClassName("chip-x")[i].innerHTML="<i class='far fa-clock' style='font-size:20px'></i>";}
+        }
+        flag1 = 1;
+    
+}
 
 
 
@@ -180,7 +201,7 @@ if (localStorage.usertype == "User") {
 
                     }
                 });
-                timer(publicquizzes);
+                timerupcoming(publicquizzes);
             }
 
         },
@@ -198,23 +219,25 @@ function secondsToHms(d) {
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? "hr, " : "hrs, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? "min, " : "mins, ") : "";
+    var hDisplay = h > 0 ? h + (h == 1 ? "hr " : "hrs ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? "min " : "mins ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? "sec" : "secs") : "";
     return hDisplay + mDisplay + sDisplay;
 }
-setInterval(timer, 1000);
+if (localStorage.usertype == "User") {setInterval(timerupcoming, 1000);}
 var result, flag = 0;
 
-function timer(res) {
+function timerupcoming(res) {
     if (flag == 0) result = res;
     var c = 0;
     for (var i = 0; i < result.length; i++) {
         if (result[i].usersEnrolled.find(item => item.userId == localStorage.userid)) {} else {
             var sec = Math.round(new Date() / 1000);
             var quiztime = Number(result[i].scheduledFor) / 1000;
-            var dtitle = secondsToHms(quiztime - sec);
-            document.getElementsByClassName("chip")[c].innerHTML = `<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;
+            if(quiztime - sec>0)
+            {var dtitle = secondsToHms(quiztime - sec);
+            document.getElementsByClassName("chip")[c].innerHTML = `<i class='far fa-clock' style='font-size:20px'></i> ${dtitle}`;}
+            else {document.getElementsByClassName("chip")[c].innerHTML="<i class='far fa-clock' style='font-size:20px'></i>";}
             c++;
         }
     }
@@ -557,7 +580,7 @@ function startQuiz(quizid) {
         success: function(result) {
             // var strJSON = encodeURIComponent(JSON.stringify(result));
 
-            location.href = '/ui/quiz/start?quizid=' + quizid;
+            location.href = '/ui/quiz/start?quizid=' + quizid+"&starttime="+Date.now();
         },
         error: function(error) {
             if (error.responseJSON.message == "Unauthorized access") {

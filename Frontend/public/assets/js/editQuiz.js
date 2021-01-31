@@ -543,7 +543,7 @@ function getunrolled()
 }
   function fill()
   {
-    //console.log(feedbacks);
+    console.log(feedbacks);
     var fmap={}
     for(var i=0;i<feedbacks.length;i++)
         fmap[feedbacks[i].userId]=[feedbacks[i].rating,feedbacks[i].description];

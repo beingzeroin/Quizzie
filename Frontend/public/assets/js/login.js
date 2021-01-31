@@ -36,6 +36,7 @@ function login() {
                 password: password
             },
             success: function(resultData) {
+                console.log(resultData);
                 if (resultData.message == "Auth successful") {
                     localStorage.token = resultData.token;
                     localStorage.userid = resultData.userDetails.userId
@@ -49,7 +50,7 @@ function login() {
                         location.href = "/"
                     } else {
                         var x = document.getElementById("snackbar");
-                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Invalid Credentials`
+                        x.innerHTML = `<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ${error.responseJSON.message}`
                         x.className = "show";
                         setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
                     }

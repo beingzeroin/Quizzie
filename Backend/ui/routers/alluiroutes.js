@@ -45,4 +45,15 @@ router.get("/profile/:userType/:userId", (req, res) => {
     res.render('profile.pug');
 })
 
+router.get("/verify/:userType", (req, res) => {
+    res.render('verify.pug');
+})
+
+router.get("/forgotpassword/:userType", (req, res) => {
+    res.render('forgotpassword.pug');
+})
+
+router.get("/resetpassword/:userType", (req, res) => {
+    res.render('resetpass.pug');
+})
 module.exports = router
