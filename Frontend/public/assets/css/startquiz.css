@@ -1,5 +1,5 @@
 #spacing {
-    margin-left: 15%;
+    margin-left: 1%;
     margin-right: 15%;
 }
 
@@ -82,6 +82,13 @@ input[type='radio'] {
 .submit-button {
     background-color: red !important;
     border-color: rgb(145, 0, 0) !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    #spacing {
+        margin-left: 1%;
+        margin-right: 5%;
+    }
 }
 
 @media only screen and (max-width: 440px) {
@@ -241,12 +248,26 @@ input[type='radio'] {
 }
 
 .wpProQuiz_reviewQuestion {
-    max-height: 46pt;
+    /* min-height: 46pt; */
+    max-height: 310px !important;
+    width: 93%;
     overflow: auto
 }
 
 .wpProQuiz_checkPage h3 {
     margin: 10px 0
+}
+
+#reviewbtn {
+    display: flex;
+    justify-content: end;
+}
+
+@media screen and (min-width:576px) {
+    #reviewbtn button:hover {
+        background-color: rgba(255, 184, 0, 0.7) !important;
+        font-weight: 400;
+    }
 }
 
 .wpProQuiz_checkPage ol,
@@ -279,13 +300,13 @@ input[type='radio'] {
     margin: 0 1px 1px 0!important;
     border: 1px solid #cfcfcf;
     padding: 3px 0!important;
-    width: 40px!important;
+    width: 19%!important;
     text-align: center!important;
     background-color: #fff;
     cursor: pointer!important;
     list-style-type: none!important;
     background-image: none!important;
-    font-size: 23px!important
+    font-size: 90%!important
 }
 
 .wpProQuiz_reviewLegend {
@@ -384,5 +405,33 @@ h4>p {
     to {
         bottom: 0;
         opacity: 0;
+    }
+}
+
+@media screen and (max-width:576px) {
+    br {
+        display: none !important;
+    }
+    .wpProQuiz_reviewQuestion {
+        max-height: 75px !important;
+        width: 100%;
+    }
+    .wpProQuiz_checkPage li,
+    .wpProQuiz_reviewQuestion li {
+        float: left!important;
+        margin: 0 1px 1px 0!important;
+        border: 1px solid #cfcfcf;
+        padding: 3px 0!important;
+        width: 34px!important;
+        text-align: center!important;
+        background-color: #fff;
+        cursor: pointer!important;
+        list-style-type: none!important;
+        background-image: none!important;
+        font-size: 18px!important
+    }
+    #reviewbtn {
+        display: flex;
+        justify-content: start !important;
     }
 }
