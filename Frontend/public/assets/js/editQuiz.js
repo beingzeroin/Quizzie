@@ -1,6 +1,6 @@
 
 
-var questionId,QuizDetails,results,deletequestionId,quizName,quizId,feedbacks;
+var questionId,QuizDetails,results,deletequestionId,quizName,quizId,feedbacks,unSubmittedEnrolls;
 quizid=location.href.split('/').slice(-1)[0]
 $("#question").summernote({
     height: 150, // set editor height
@@ -409,6 +409,7 @@ $.ajax({
         results = quizdetails.userResults;
         sort();
         fill();
+        getunrolled();
     },
     error: function(err) {
         console.log(err);
@@ -450,7 +451,7 @@ function sort() {
         code = ``;
         code += `<div class="card ml-2" style="width:85%;">
     <ul class="list-group list-group-flush">`
-        for (let i = 0; i < results.length; i++) {
+        for (var i = 0; i < results.length; i++) {
             code += `<li class="list-group-item"> 
       <a href="/ui/quiz/studentResponse/${quizId}/${results[i].userId._id}/${encodeURIComponent(quizName)}" style="text-decoration:none;color:black !important;">
       <span>${results[i].userId["name"]}</span>
@@ -495,13 +496,57 @@ function filter() {
     }
 
 }
-
+function getunrolled()
+{
+    var ws_data1=[["S.No","Name"]];
+    $.ajax({
+        url: "/api/quiz/unSubmittedEnrolls/" + quizId,
+        method: "GET",
+        success: function(data) {
+            var wb = XLSX.utils.book_new();
+            wb.Props = {
+            Title: "Sheet",
+            Subject: "Quiz Results",
+            CreatedDate: new Date()
+            };
+            wb.SheetNames.push("Sheet1");
+            unSubmittedEnrolls=data.result;
+            console.log(unSubmittedEnrolls);
+            for(var i=0;i<unSubmittedEnrolls.length;i++)
+            {
+             ws_data1.push([i+1,unSubmittedEnrolls[i].name])
+            }
+            var ws1 = XLSX.utils.aoa_to_sheet(ws_data1);
+            console.log(ws1);
+            ws1['!cols']=fitToColumn(ws_data1)
+            wb.Sheets["Sheet1"] = ws1;
+            var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+            function s2ab(s) {
+  
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+            }
+    $("#unsubmitted").click(function(){
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Unsubmitted_List.xlsx');
+    });
+            
+        },
+        error: function(err) {
+            console.log(err);
+            //alert("Please check Your Quiz Id")
+        }
+       
+    }); 
+    return ws_data1;
+}
   function fill()
   {
-    //console.log(feedbacks);
+    console.log(feedbacks);
     var fmap={}
     for(var i=0;i<feedbacks.length;i++)
-        fmap[feedbacks[i].userId]=(feedbacks[i].rating);
+        fmap[feedbacks[i].userId]=[feedbacks[i].rating,feedbacks[i].description];
     //console.log(fmap);
     var wb = XLSX.utils.book_new();
     wb.Props = {
@@ -509,19 +554,30 @@ function filter() {
             Subject: "Quiz Results",
             CreatedDate: new Date()
     };
-    wb.SheetNames.push("Quiz Results Sheet1");
-    var ws_data = [['S.No' , 'Name','Marks','Rating']];
+    wb.SheetNames.push("Sheet1");
+    
+    var ws_data = [['S.No' , 'Name','Marks','Submissions Status','Rating',"Description"]];
+    // var ws_data1=[["S.No","Name"]]
     for(let i=0;i<results.length;i++)
     {
         if(fmap[results[i].userId._id]!=undefined)
-      ws_data.push([i+1,results[i].userId["name"],results[i].marks,fmap[results[i].userId._id]]);
+        {
+            if(results[i].submissionStatus!=undefined)
+            ws_data.push([i+1,results[i].userId["name"],results[i].marks,results[i].submissionStatus,fmap[results[i].userId._id][0],fmap[results[i].userId._id][1]]);
+            else
+            ws_data.push([i+1,results[i].userId["name"],results[i].marks," ",fmap[results[i].userId._id][0],fmap[results[i].userId._id][1]]);
+        }
       else
-      ws_data.push([i+1,results[i].userId["name"],results[i].marks," "]);
-
+      {
+        if(results[i].submissionStatus!=undefined)
+            ws_data.push([i+1,results[i].userId["name"],results[i].marks,results[i].submissionStatus," "," "]);
+            else
+            ws_data.push([i+1,results[i].userId["name"],results[i].marks," "," "," "]);
+      }
     }
     var ws = XLSX.utils.aoa_to_sheet(ws_data);
     ws['!cols']=fitToColumn(ws_data)
-    wb.Sheets["Results Sheet"] = ws;
+    wb.Sheets["Sheet1"] = ws;
     var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
     function s2ab(s) {
   
@@ -532,19 +588,12 @@ function filter() {
             
     }
     $("#download").click(function(){
+       // console.log(s2ab(wbout));
       saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Results.xlsx');
 });
   }
+
   function feedback() {
     var quizId = location.href.split('/').slice(-1)[0];
     window.location.href = "/ui/feedback/" + quizId;
 }
-  
-
-
- 
-  
-  
-  
- 
- 

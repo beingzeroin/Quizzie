@@ -521,7 +521,7 @@ function submitans(status) {
                 data: {
                     quizId: questions[0].quizId,
                     questions: JSON.stringify(ansdata),
-                    timeStarted: result.scheduledFor,
+                    timeStarted:starttime,
                     timeEnded: Date.now(),
                     submissionStatus: status
                 },
