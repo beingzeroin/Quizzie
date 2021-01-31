@@ -20,7 +20,10 @@ block page-content
             p#emailalert
             input.password(type='password' placeholder='Password')
             p#passwordalert
+            a(href="/ui/forgotpassword/user")
+                p.forgot Forgot_password
             button.btn(type="button" onclick='login()' href="/dashboard") LOGIN
+            
       
             a(href="/ui/signup/user")
                 p.signup Don't have an account? Join the Quizzie now!

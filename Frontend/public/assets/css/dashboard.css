@@ -192,7 +192,7 @@ li img.bz {
     outline: none !important;
 }
 
-.chip {
+.chip,.chip-x {
     display: inline-block;
     padding: 5px;
     margin-bottom: 5px;

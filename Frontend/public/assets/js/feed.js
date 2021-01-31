@@ -2,7 +2,7 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 if (!localStorage.token) location.href = '/';
-var filter = 0;
+//var filter = 0;
 
 function show() {
     var quizId = location.href.split('/').slice(-1)[0];
@@ -25,12 +25,16 @@ function show() {
                         }
                     }
                 }); //inner ajax
-                let feedbacks = [];
-                //let ans=``;
+                //let feedbacks = [];
+                let ans = `<table> <tr class="fbh">
+                                               <th class="fbh">UserName</th>
+                                               <th class="fbh">UserId</th>
+                                               <th class="fbh">Feedback</th> 
+                                               <th class="fbh">Rating</th>
+                                            </tr>`;
                 var visit = ($("#selectop").val());
                 console.log(visit);
-                var flag = 0,
-                    c = 0;
+                var flag = 0,c=0;
                 var h = ``;
                 if (visit == "none") flag = 1;
                 for (var i = 0; i < r.length; i++) {
@@ -45,13 +49,14 @@ function show() {
                                     <td>${r[i].rating}</td>
                                 </tr>
                              </div>`;
-                        //ans+=h;
-                        feedbacks.push(h);
+                        ans+=h;
+                        //feedbacks.push(h);
                     }
                 }
-
+                /*
                 let len = parseInt((feedbacks.length + 9) / 10);
                 console.log(len);
+                
                 if (filter != 0) {
                     var pageData = $('#show_paginator').data();
                     console.log(pageData);
@@ -71,12 +76,6 @@ function show() {
                     prev: 'Prev',
                     onPageClick: function(pageload, page) {
                         let index = (page - 1) * 10;
-                        let ans = `<table> <tr class="fbh">
-                                               <th class="fbh">UserName</th>
-                                               <th class="fbh">UserId</th>
-                                               <th class="fbh">Feedback</th> 
-                                               <th class="fbh">Rating</th>
-                                            </tr>`;
 
 
                         for (let i = index; i < index + 10 && i < feedbacks.length; i++)
@@ -85,9 +84,9 @@ function show() {
                         //console.log(ans);
                         document.getElementById("Feedback").innerHTML = ans;
                     }
-                });
+                }); */
 
-                //document.getElementById("Feedback").innerHTML = ans;
+                document.getElementById("Feedback").innerHTML = ans;
                 document.getElementsByClassName("res")[0].innerHTML = `Responses(${c})`;
             } //sucess
             ,
@@ -101,7 +100,7 @@ function show() {
 show();
 
 function sort() {
-    filter++;
+    //filter++;
     console.log("Filter applied");
     show();
 }

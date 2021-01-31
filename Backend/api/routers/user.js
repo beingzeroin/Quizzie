@@ -107,37 +107,8 @@ router.post("/resendVerificationEmail", verifyURL, async(req, res, next) => {
 });
 
 ///Verify email
-router.patch("/verifyEmail", verifyURL, async(req, res, next) => {
-    if (!req.body.captcha) {
-        return res.status(400).json({
-            message: "No recaptcha token",
-        });
-    }
-    var flag = 0;
-    console.log(req.verifyURL)
-    request(req.verifyURL, (err, response, body) => {
-        body = JSON.parse(body);
-        console.log(err)
-        console.log(body)
-        try {
-            if (!body.success || body.score < 0.4) {
-                flag = 1
-                return res.status(401).json({
-                    message: "Something went wrong",
-                });
-            }
-            if (err) {
-                return res.status(401).json({
-                    message: err.toString(),
-                });
-            }
-        } catch (err) {
-            return res.status(500).json({
-                error: err
-            })
-        }
-    });
-    console.log(flag)
+router.patch("/verifyEmail",async(req, res, next) => {
+    //console.log(req.body)
     const { verificationKey } = req.body;
     await User.findOne({ verificationKey })
         .then(async(user) => {
@@ -340,7 +311,9 @@ router.post("/login", async(req, res, next) => {
                         message: "Auth failed",
                     });
                 }
-                if (result) {
+                if(user[0].isEmailVerified)
+                {if (result) {
+                    console.log(result)
                     const token = jwt.sign({
                             userType: user[0].userType,
                             userId: user[0]._id,
@@ -354,6 +327,7 @@ router.post("/login", async(req, res, next) => {
                     );
                     // req.header['auth-token'] = token;
                     return res.status(200).json({
+                       
                         message: "Auth successful",
                         userDetails: {
                             userType: user[0].userType,
@@ -361,13 +335,20 @@ router.post("/login", async(req, res, next) => {
                             name: user[0].name,
                             email: user[0].email,
                             mobileNumber: user[0].mobileNumber,
+                            isEmailVerified: user[0].isEmailVerified,
                         },
                         token: token,
                     });
                 }
+
                 res.status(401).json({
                     message: "Auth failed1",
                 });
+            }
+            console.log("Not Verified")
+            res.status(401).json({
+                message: "Your Is Email Not Verified",
+            });
             });
         }
     });
@@ -612,8 +593,8 @@ router.patch(
     }
 );
 
-router.post("/forgot", verifyURL, (req, res) => {
-    if (!req.body.captcha) {
+router.post("/forgot", (req, res) => {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
@@ -641,7 +622,7 @@ router.post("/forgot", verifyURL, (req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     var email = req.body.email;
     User.findOne({ email: email }, (err, userData) => {
         if (!err && userData != null) {
@@ -679,13 +660,13 @@ router.post("/forgot", verifyURL, (req, res) => {
     });
 });
 
-router.post("/resetpass", verifyURL, async(req, res) => {
-    if (!req.body.captcha) {
+router.post("/resetpass", async(req, res) => {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
     }
-    var flag = 0;
+    var flag = 0; 
     request(req.verifyURL, (err, response, body) => {
         body = JSON.parse(body);
         console.log(err)
@@ -708,7 +689,7 @@ router.post("/resetpass", verifyURL, async(req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     let resetKey = req.body.resetKey;
     let newPassword = req.body.newPassword;
 
