@@ -50,9 +50,13 @@ input{       font-size:100%;
 }
 p#namealert,p#emailalert,
 p#passwordalert,p#phonealert{     padding-bottom:1%;
-                                  margin-left:7.8vw;;
+                                  margin-left:7.8vw;
                                   font-size:70%;
                                   color:red; }
+p.forgot{padding-bottom:1%;
+         margin-left:7.8vw;
+         font-size:100%;
+         color:black;}
 
 button.btn{ 
   display: table; margin:2vw auto;

@@ -629,7 +629,7 @@ router.get(
 );
 
 router.post("/forgot", verifyURL, (req, res) => {
-    if (!req.body.captcha) {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
@@ -658,7 +658,7 @@ router.post("/forgot", verifyURL, (req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     var email = req.body.email;
     Admin.findOne({ email: email }, (err, userData) => {
         if (!err && userData != null) {
@@ -698,8 +698,8 @@ router.post("/forgot", verifyURL, (req, res) => {
     });
 });
 
-router.post("/resetpass", verifyURL, async(req, res) => {
-    if (!req.body.captcha) {
+router.post("/resetpass", async(req, res) => {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
@@ -728,7 +728,7 @@ router.post("/resetpass", verifyURL, async(req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     let resetKey = req.body.resetKey;
     let newPassword = req.body.newPassword;
 

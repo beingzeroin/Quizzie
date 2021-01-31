@@ -593,8 +593,8 @@ router.patch(
     }
 );
 
-router.post("/forgot", verifyURL, (req, res) => {
-    if (!req.body.captcha) {
+router.post("/forgot", (req, res) => {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
@@ -622,7 +622,7 @@ router.post("/forgot", verifyURL, (req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     var email = req.body.email;
     User.findOne({ email: email }, (err, userData) => {
         if (!err && userData != null) {
@@ -660,13 +660,13 @@ router.post("/forgot", verifyURL, (req, res) => {
     });
 });
 
-router.post("/resetpass", verifyURL, async(req, res) => {
-    if (!req.body.captcha) {
+router.post("/resetpass", async(req, res) => {
+    /*if (!req.body.captcha) {
         return res.status(400).json({
             message: "No recaptcha token",
         });
     }
-    var flag = 0;
+    var flag = 0; 
     request(req.verifyURL, (err, response, body) => {
         body = JSON.parse(body);
         console.log(err)
@@ -689,7 +689,7 @@ router.post("/resetpass", verifyURL, async(req, res) => {
             })
         }
     });
-    console.log(flag)
+    console.log(flag) */
     let resetKey = req.body.resetKey;
     let newPassword = req.body.newPassword;
 
