@@ -82,11 +82,16 @@ if (localStorage.usertype == "User") {
             Sorry! No quizzes available  at the moment</p> `
             } else {
                 let quizzesenrolled = ans.result1.quizzesEnrolled;
+                console.log( quizzesenrolled);
                 let code = ``;
                 for (let i = 0; i < quizzesenrolled.length; i++) {
-                    code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">
-                <img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">
-                <div class="card-body">
+                    code += `<div class="card mr-5 mt-5 d-flex justify-content-between" style="width: 15rem;display:inline-block !important;">`
+                    console.log( quizzesenrolled[i].quizId.topicName)
+                    if( quizzesenrolled[i].quizId.topicName==undefined ||  quizzesenrolled[i].quizId.topicName=="None")
+                    code+=`<img src="/assets/img/icons/bzfavicon.png" class="card-img-top" alt="...">`
+                    else
+                    code+=`<img src="/assets/img/icons/${quizzesenrolled[i].quizId.topicName}.png" class="card-img-top" alt="...">`        
+               code+=`<div class="card-body">
                 <div class="row">
                 <div class="col-4 nopadding">
                 <p  >${quizzesenrolled[i].quizId.quizName}</p>

@@ -1318,6 +1318,45 @@ router.get("/checkSubmission/:quizid", checkAuthUser, async(req, res, next) => {
         })
     })
 })
-
+router.get("/unSubmittedEnrolls/:quizid",checkAuthAdmin,async(req, res, next) => {
+    const quizid = req.params.quizid;
+    item.getSingleItemByQuery({ _id: quizid, isDeleted: false }, Quiz, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                message: "error",
+            });
+        } else {
+            const usersEnrolled = data.usersEnrolled;
+            const usersParticipated = data.usersParticipated;
+            const unParticipated = [];
+            console.log(usersEnrolled)
+            for (let i = 0; i < usersParticipated.length; i++)
+                console.log(usersParticipated[i].userId)
+            for (let i = 0; i < usersEnrolled.length; i++) {
+                let flag = 0;
+                for (let j = 0; j < usersParticipated.length; j++) {
+                    if (String(usersParticipated[j].userId) == String(usersEnrolled[i].userId)) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0) {
+                    unParticipated.push(usersEnrolled[i].userId)
+                }
+            }
+             console.log(unParticipated)
+            item.getItemByQuery({ _id: { $in: unParticipated } }, User, (err, result1) => {
+                if (err) {
+                    return res.status(400).json({
+                        message: "error",
+                    });
+                } else {
+                    let r1 = []
+                    return res.status(200).json({ result: result1 })
+                }
+            })
+        }
+    })
+})
 
 module.exports = router;
