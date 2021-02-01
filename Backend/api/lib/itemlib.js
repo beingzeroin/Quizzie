@@ -177,6 +177,7 @@ exports.deleteMultipleItems = function(query, itemModel, cb) {
         cb(err, details);
     })
 }
+
 exports.deleteItem = function(id, softDelete, itemModel, cb) {
     console.log('Delete Resource ' + id);
     // cb(null, null); // Disabled Delete
