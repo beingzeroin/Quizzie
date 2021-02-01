@@ -38,7 +38,7 @@ function pieChart() {
 
     var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
     chart1.draw(data, options);
-    doc.addImage(chart1.getImageURI(), -10, 15);
+    doc.addImage(chart1.getImageURI(), -20, 15);
     //chart.draw(data);
 }
 
@@ -54,15 +54,15 @@ function barChart() {
     var options = {
         title: 'Highest / Average/ Lowest',
         legend: { position: "none" },
-        width: $(window).width() / 2,
-        height: $(window).height() / 2,
+        width: $(window).width()*0.45,
+        height: $(window).height()*0.45,
         fontSize: 20,
         // 'chartArea': {'left':'15%'}
     }
 
     var chart2 = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
     chart2.draw(data, options);
-    doc.addImage(chart2.getImageURI(), 0, 115);
+    doc.addImage(chart2.getImageURI(), 0, 125);
     //chart.draw(data);
 }
 
@@ -80,8 +80,8 @@ function LineChart() {
         pointSize: 2,
         hAxis: { titleTextStyle: { color: '#333' } },
         legend: { position: "none" },
-        width: $(window).width() / 2,
-        height: $(window).height() / 2,
+        width: $(window).width()*0.45,
+        height: $(window).height()*0.45,
         fontSize: 20,
 
     };
