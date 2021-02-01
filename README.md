@@ -17,11 +17,10 @@ Open Sourced Quiz Portal which can be used for any event.
 - Users can signup/sign in using Google to make the flow easier
 - Detailed ananlysis of quiz for both organizers and users
 
-
-<img src="https://photos.app.goo.gl/wdjjC4oix3Pghren7.png" alt="Project Screenshots">
+## Architecture
+<img src="Frontend/public/assets/img/Screenshot/architecture.jpeg" alt="Project Screenshots">
 
 ## Screenshots
-<img src="https://i.ibb.co/1Q0D9vX/home-screen.png" alt="Project Screenshots">
 
 <br>
 <img src="https://i.ibb.co/T14Nz0Y/Create-quiz.png" alt="Project Screenshots">
