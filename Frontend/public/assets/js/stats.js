@@ -38,7 +38,7 @@ function pieChart() {
 
     var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
     chart1.draw(data, options);
-    doc.addImage(chart1.getImageURI(), -10, 0);
+    doc.addImage(chart1.getImageURI(), -10, 15);
     //chart.draw(data);
 }
 
@@ -62,7 +62,7 @@ function barChart() {
 
     var chart2 = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
     chart2.draw(data, options);
-    doc.addImage(chart2.getImageURI(), 0, 110);
+    doc.addImage(chart2.getImageURI(), 0, 115);
     //chart.draw(data);
 }
 
@@ -88,7 +88,7 @@ function LineChart() {
 
     var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
     chart.draw(data, options);
-    doc.addImage(chart.getImageURI(), 0, 200);
+    doc.addImage(chart.getImageURI(), 0, 210);
     //chart.draw(data);
 }
 
@@ -99,8 +99,10 @@ $.ajax({
     success: function(quizdetails) {
         //console.log(quizdetails);
         quizdetails = quizdetails.userResults;
+        doc.text(120,10, 'No of Students Participated:'+quizdetails.length);
+        $("#label").html(`No. of Students Participated : ${quizdetails.length}`)
         if (quizdetails.length == 0)
-            alert("No Responses for Your Quiz");
+            console.log("No Responses for Your Quiz");
         else {
             piedata = {}
             minmarks = Infinity
@@ -109,6 +111,7 @@ $.ajax({
                 []
             ]
             total = 0
+            console.log(quizdetails);
             for (let i = 0; i < quizdetails.length; i++) {
                 if (quizdetails[i].marks in piedata)
                     piedata[quizdetails[i].marks] += 1;

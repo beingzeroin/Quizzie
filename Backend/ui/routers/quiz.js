@@ -31,7 +31,7 @@ router.get('/updateQuiz/:quizId', (req, res) => {
 
 router.get("/start", (req, res) => {
     let data = (req.query.quizid)
-    res.render("startquiz.pug", { quizid: data })
+    res.render("startquiz.pug", { quizid: data,starttime:req.query.starttime })
 })
 
 router.get("/stats/:quizId", (req, res) => {

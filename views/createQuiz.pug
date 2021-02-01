@@ -26,12 +26,12 @@ block page-content
                     input.timer-input(type='range' max='60'  min='5' value='5' step='5' oninput='onInput()')
             .row.d-flex.justify-content-center
                 .col
-                    label.form-label(style="text-align:center;margin-right:5%") Select Quiz Type
+                    label.form-label.ml-5(style="text-align:center;margin-right:5%") Select Quiz Type
                 .col
                     label.form-label(style="text-align:center") Select Quiz Topic
             .row.form-group.d-flex.justify-content-center
                 .col-6
-                    select.form-control#quizType(name="quizType" style="margin-right:5%")
+                    select.form-control.ml-5#quizType(name="quizType" style="margin-right:5%")
                         option(selected='Private' value="Private" ) Private
                         option(value='Public') Public
                 .col-6
@@ -46,4 +46,5 @@ block page-content
                         option(value='Trees') Trees
             .row.mt-5.d-flex.justify-content-center
                 button.btn#submit(type="button" onclick="showdata()") CREATE QUIZ
-            h6.text-center#note.mb-1 NOTE: After creating the quiz,you can add questions by editing the quiz in YOUR QUIZZES section of the dashbord 
+            .row.h6.text-center#note.mt-2.mb-2 NOTE: After creating the quiz,you can add questions by editing the quiz in YOUR QUIZZES section of the dashbord 
+            .row.mb-3

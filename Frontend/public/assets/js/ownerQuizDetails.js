@@ -63,11 +63,7 @@ $(document).ready(function() {
 
 function deletequiz() {
     let quizId = location.href.split('/').slice(-1)[0]
-<<<<<<< HEAD
-        // alert(quizId)
-=======
-    //alert(quizId)
->>>>>>> e3fce672336088f37f52b8e07e0d922123ef9603
+        //alert(quizId)
     $.ajax({
         url: "/api/owner/quiz/" + quizId,
         method: "DELETE",

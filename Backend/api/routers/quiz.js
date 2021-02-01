@@ -73,7 +73,7 @@ router.post(
                 quizType: req.body.quizType.toLowerCase(),
                 quizCode: shortid.generate(),
                 quizRestart: 0,
-                topicName:req.body.topicName
+                topicName: req.body.topicName
             };
             //console.log(quiz);
             item.createitem(quiz, Quiz, (err, result) => {
@@ -105,7 +105,7 @@ router.post(
                 scheduledFor: req.body.scheduledFor,
                 quizDuration: req.body.quizDuration,
                 quizType: req.body.quizType.toLowerCase(),
-                topicName:req.body.topicName
+                topicName: req.body.topicName
             };
             item.createitem(quiz, Quiz, (err, result) => {
                 if (err) {
@@ -914,6 +914,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
     var quizId = req.body.quizId;
     const timeEnded = req.body.timeEnded;
     const timeStarted = req.body.timeStarted;
+    const submissionStatus = req.body.submissionStatus;
     var responses = [];
     var score = 0;
     item.getItemById(req.body.quizId, Quiz, (err, result9) => {
@@ -973,6 +974,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                 responses,
                                 timeEnded,
                                 timeStarted,
+                                submissionStatus
                             },
                         }
                     }, User, (err, result) => {
@@ -989,6 +991,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                         responses,
                                         timeEnded,
                                         timeStarted,
+                                        submissionStatus
                                     },
                                 },
                             }, Quiz, (err, result7) => {
@@ -1004,6 +1007,7 @@ router.post("/check", checkAuthUser, async(req, res, next) => {
                                         responses,
                                         timeEnded,
                                         timeStarted,
+                                        submissionStatus
                                     });
                                 }
                             })
@@ -1318,6 +1322,45 @@ router.get("/checkSubmission/:quizid", checkAuthUser, async(req, res, next) => {
         })
     })
 })
-
+router.get("/unSubmittedEnrolls/:quizid",checkAuthAdmin,async(req, res, next) => {
+    const quizid = req.params.quizid;
+    item.getSingleItemByQuery({ _id: quizid, isDeleted: false }, Quiz, (err, data) => {
+        if (err) {
+            return res.status(400).json({
+                message: "error",
+            });
+        } else {
+            const usersEnrolled = data.usersEnrolled;
+            const usersParticipated = data.usersParticipated;
+            const unParticipated = [];
+            console.log(usersEnrolled)
+            for (let i = 0; i < usersParticipated.length; i++)
+                console.log(usersParticipated[i].userId)
+            for (let i = 0; i < usersEnrolled.length; i++) {
+                let flag = 0;
+                for (let j = 0; j < usersParticipated.length; j++) {
+                    if (String(usersParticipated[j].userId) == String(usersEnrolled[i].userId)) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0) {
+                    unParticipated.push(usersEnrolled[i].userId)
+                }
+            }
+             console.log(unParticipated)
+            item.getItemByQuery({ _id: { $in: unParticipated } }, User, (err, result1) => {
+                if (err) {
+                    return res.status(400).json({
+                        message: "error",
+                    });
+                } else {
+                    let r1 = []
+                    return res.status(200).json({ result: result1 })
+                }
+            })
+        }
+    })
+})
 
 module.exports = router;

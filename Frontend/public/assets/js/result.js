@@ -2,12 +2,11 @@ $.ajaxSetup({
     headers: { 'token': localStorage.token }
 });
 if (!localStorage.token) location.href = '/';
-
+var f=0;
 if (!localStorage.token)
     location.href = '/'
 if (localStorage.usertype != "User")
     location.href = '/'
-
 function show() {
     var a = [{
             correct: 1,
@@ -48,13 +47,42 @@ function show() {
                              var endtime = Number(res.result.scheduledFor) + Number((res.result.quizDuration) *60000)
                              var check=sec-endtime;
                              console.log(check);
-                             if(check<0) {console.log("No"); display();}
+                             if(check<0) {console.log("No"); display();f=1;}
+                             
+                                var quizName = res.result.quizName;
+                                document.getElementsByClassName("name")[0].innerHTML = `
+                                <div class = "row">
+                                    <h4> <label style="color:#2980B9">QuizName </label> : ${quizName} </h4>
+                                </div>`;
+                                if(flag && !f)
+                                {var h = "";
+                                for (var i = 0; i < r.length; i++) {
+                                    h += `<div class="container">
+                                          <button type="button" id="question" class="btn" onclick="drop(${i})">`;
+                                    if (r[i].selected == r[i].correctAnswer)
+                                        h += `<p class='right'>&#10003;</p>`;
+                                    else if (r[i].selected == null)
+                                        h += `<p class='warn'>&#9888</p>`;
+                                    else
+                                        h += `<p class='wrong'>&#9932</p>`;
+                                    h += `  ${r[i].description}`;
+                                    h += `<p class='arrow'>&#9660</p>`;
+                                    h += `</button>`;
+                                    h += `<div class="sol">`;
+                                    for (var j = 0; j < (r[i].options).length; j++) {
+                                        h += `<div style="float:down">`;
+                                        if ((r[i].options)[j].text == r[i].correctAnswer)
+                                            h += `<p class='odot fa-2x' style="color:green;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
+                                        else if (r[i].selected == (r[i].options)[j].text)
+                                            h += `<p class='odot fa-2x' style="color:red;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
+                                        else h += `<p class='odot fa-2x' style="color:grey;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
+                                        h += `</div>`;
+                                    }
+                                    h += `</div></div>`;
+                                }
+                                document.getElementById("questions").innerHTML = h;}
                              //console.log(res.result.scheduledFor,res.result.quizDuration)
-                            var quizName = res.result.quizName;
-                            document.getElementsByClassName("name")[0].innerHTML = `
-                            <div class = "row">
-                                <h4> <label style="color:#2980B9">QuizName </label> : ${quizName} </h4>
-                            </div>`;
+                           
                         } //success
                         ,
                     error: function(err) {
@@ -68,33 +96,7 @@ function show() {
                      <h4> <label style="color:#2980B9">Score</label> : ${(resultData.result).marks } out of ${r.length}</h4>
                 </div>`;
                 console.log(flag);
-                if(flag)
-                {var h = "";
-                for (var i = 0; i < r.length; i++) {
-                    h += `<div class="container">
-                          <button type="button" id="question" class="btn" onclick="drop(${i})">`;
-                    if (r[i].selected == r[i].correctAnswer)
-                        h += `<p class='right'>&#10003;</p>`;
-                    else if (r[i].selected == null)
-                        h += `<p class='warn'>&#9888</p>`;
-                    else
-                        h += `<p class='wrong'>&#9932</p>`;
-                    h += `  ${r[i].description}`;
-                    h += `<p class='arrow'>&#9660</p>`;
-                    h += `</button>`;
-                    h += `<div class="sol">`;
-                    for (var j = 0; j < (r[i].options).length; j++) {
-                        h += `<div style="float:down">`;
-                        if ((r[i].options)[j].text == r[i].correctAnswer)
-                            h += `<p class='odot fa-2x' style="color:green;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
-                        else if (r[i].selected == (r[i].options)[j].text)
-                            h += `<p class='odot fa-2x' style="color:red;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
-                        else h += `<p class='odot fa-2x' style="color:grey;float:down">&#8857 ${(r[i].options)[j].text}</p>`;
-                        h += `</div>`;
-                    }
-                    h += `</div></div>`;
-                }
-                document.getElementById("questions").innerHTML = h;}
+               
               
                
             } //sucess
